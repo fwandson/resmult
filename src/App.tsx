@@ -1,15 +1,17 @@
-import { Typography } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import 'fontsource-roboto';
 import theme from 'src/theme';
 import GlobalStyles from './components/GlobalStyles';
+import Routes from 'src/routes';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Typography>Ola mundo</Typography>
-      <Typography variant="h1">Teste</Typography>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
