@@ -5,6 +5,7 @@ import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import RouterWithLayout from './RouterWithLayout';
 import NAMES from './names';
+import NotFound from 'src/pages/NotFound';
 
 const Routes = () => {
   return (
@@ -19,6 +20,11 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.DASHBOARD}
         component={Dashboard}
+      />
+      <RouterWithLayout
+        layout={MainLayout}
+        path={NAMES.NOT_FOUND}
+        component={NotFound}
       />
     </Switch>
   );
