@@ -15,6 +15,8 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import NAMES from 'src/routes/names';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from './schema';
 
 interface LoginFromData {
   email: string;
@@ -29,6 +31,7 @@ const Login: React.FC = () => {
       email: 'moreira.ericson@gmail.com ',
       password: '123456',
     },
+    resolver: yupResolver(schema),
   });
 
   // TODO: implementar a validação
