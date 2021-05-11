@@ -20,6 +20,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
+  Book as BookIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
 import NAMES from 'src/routes/names';
@@ -36,6 +37,11 @@ const items = [
     href: NAMES.DASHBOARD,
     icon: BarChartIcon,
     title: 'Dashboard',
+  },
+  {
+    href: NAMES.TURMAS,
+    icon: BookIcon,
+    title: 'Minhas Turmas',
   },
   {
     href: '/app/customers',

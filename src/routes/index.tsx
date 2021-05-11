@@ -6,6 +6,7 @@ import Login from 'src/pages/Login';
 import RouterWithLayout from './RouterWithLayout';
 import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
+import Turmas from 'src/pages/Turmas';
 
 const Routes = () => {
   return (
@@ -20,6 +21,11 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.DASHBOARD}
         component={Dashboard}
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.TURMAS}
+        component={Turmas}
       />
       <RouterWithLayout
         layout={MainLayout}
