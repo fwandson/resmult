@@ -1,4 +1,5 @@
 import { Switch } from 'react-router-dom';
+import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
@@ -9,7 +10,7 @@ const Routes = () => {
     <Switch>
       <RouterWithLayout layout={MainLayout} path="/" exact component={Login} />
       <RouterWithLayout
-        layout={MainLayout}
+        layout={DashboardLayout}
         path="/dashboard"
         component={Dashboard}
       />
