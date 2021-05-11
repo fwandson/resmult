@@ -4,14 +4,20 @@ import MainLayout from 'src/layouts/MainLayout';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import RouterWithLayout from './RouterWithLayout';
+import NAMES from './names';
 
 const Routes = () => {
   return (
     <Switch>
-      <RouterWithLayout layout={MainLayout} path="/" exact component={Login} />
+      <RouterWithLayout
+        layout={MainLayout}
+        path={NAMES.LOGIN}
+        component={Login}
+        exact
+      />
       <RouterWithLayout
         layout={DashboardLayout}
-        path="/dashboard"
+        path={NAMES.DASHBOARD}
         component={Dashboard}
       />
     </Switch>

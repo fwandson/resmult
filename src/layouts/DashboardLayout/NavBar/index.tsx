@@ -22,16 +22,18 @@ import {
   Users as UsersIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
+import NAMES from 'src/routes/names';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
+  avatar:
+    'https://avatars.githubusercontent.com/u/1212015?s=400&u=886cb9225f7bce0e75a240523834326ebdfeb49a&v=4',
+  jobTitle: 'Desenvolvedor Pleno',
+  name: 'Ericson Moreira',
 };
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: NAMES.DASHBOARD,
     icon: BarChartIcon,
     title: 'Dashboard',
   },
@@ -56,7 +58,7 @@ const items = [
     title: 'Settings',
   },
   {
-    href: '/login',
+    href: NAMES.LOGIN,
     icon: LockIcon,
     title: 'Login',
   },

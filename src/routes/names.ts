@@ -2,6 +2,6 @@
  * Colocar aqui as rotas
  */
 export default {
-  LOGIN: '/',
+  LOGIN: '/login',
   DASHBOARD: '/dashboard',
 };
