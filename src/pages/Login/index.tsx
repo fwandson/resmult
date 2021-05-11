@@ -12,9 +12,30 @@ import { Helmet } from 'react-helmet';
 import GenericInput from 'src/components/inputs/GenericInput';
 import { ContainerWrapper } from './styles';
 import { useForm } from 'react-hook-form';
+import { useCallback } from 'react';
+import { useHistory } from 'react-router';
+import NAMES from 'src/routes/names';
+
+interface LoginFromData {
+  email: string;
+  password: string;
+}
 
 const Login: React.FC = () => {
-  const { control } = useForm();
+  const history = useHistory();
+
+  const { control, handleSubmit } = useForm<LoginFromData>({
+    defaultValues: {
+      email: 'moreira.ericson@gmail.com ',
+      password: '123456',
+    },
+  });
+
+  // TODO: implementar a validação
+  const onSubmit = useCallback((data: LoginFromData) => {
+    console.log(JSON.stringify(data, null, 2));
+    history.push(NAMES.DASHBOARD);
+  }, []);
 
   return (
     <>
@@ -23,7 +44,7 @@ const Login: React.FC = () => {
       </Helmet>
       <ContainerWrapper>
         <Container maxWidth="sm">
-          <Card component="form">
+          <Card component="form" onSubmit={handleSubmit(onSubmit)}>
             <CardContent>
               <Box marginBottom={4}>
                 <Typography color="textPrimary" variant="h2">
@@ -50,7 +71,7 @@ const Login: React.FC = () => {
                     fullWidth
                     label="Senha"
                     name="password"
-                    type="email"
+                    type="password"
                     variant="outlined"
                   />
                 </Grid>
