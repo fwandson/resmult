@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Route, RouteProps } from 'react-router-dom';
+import CustomRouter, { CustomRouterProps } from './CustomRouter';
 
-interface RouterWithLayoutProps extends RouteProps {
+interface RouterWithLayoutProps extends CustomRouterProps {
   layout: any;
   component: any;
 }
@@ -10,7 +10,7 @@ const RouterWithLayout = (props: RouterWithLayoutProps) => {
   const { component: Component, layout: Layout, ...rest } = props;
 
   return (
-    <Route
+    <CustomRouter
       {...rest}
       render={(matchProps) => (
         <Layout>

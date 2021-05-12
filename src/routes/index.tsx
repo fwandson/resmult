@@ -21,11 +21,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.DASHBOARD}
         component={Dashboard}
+        isPrivate
       />
       <RouterWithLayout
         layout={DashboardLayout}
         path={NAMES.TURMAS}
         component={Turmas}
+        isPrivate
       />
       <RouterWithLayout
         layout={MainLayout}
