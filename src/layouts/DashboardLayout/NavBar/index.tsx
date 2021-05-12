@@ -25,6 +25,8 @@ import {
 import NavItem from './NavItem';
 import NAMES from 'src/routes/names';
 
+// TODO: criar um useUserInfo hook para prover os dados do usuário.
+// Tomando cuidado para não prover dados importantes.
 const user = {
   avatar:
     'https://avatars.githubusercontent.com/u/1212015?s=400&u=886cb9225f7bce0e75a240523834326ebdfeb49a&v=4',
@@ -59,7 +61,7 @@ const items = [
     title: 'Account',
   },
   {
-    href: '/app/settings',
+    href: NAMES.SETTINGS,
     icon: SettingsIcon,
     title: 'Settings',
   },

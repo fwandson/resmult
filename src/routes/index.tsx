@@ -7,6 +7,7 @@ import RouterWithLayout from './RouterWithLayout';
 import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
 import Turmas from 'src/pages/Turmas';
+import Settings from 'src/pages/Settings';
 
 const Routes = () => {
   return (
@@ -27,6 +28,12 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.TURMAS}
         component={Turmas}
+        isPrivate
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.SETTINGS}
+        component={Settings}
         isPrivate
       />
       <RouterWithLayout
