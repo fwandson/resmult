@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-// import { Outlet } from 'react-router-dom';
 import { Hidden, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import IconButtonBack from 'src/components/IconButtonBack';
 import NavBar from './NavBar';
-import TopBar from './TopBar';
 import NavBottomBar from './NavBottomBar';
+import TopBar from './TopBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,10 @@ const DashboardLayout: React.FC = ({ children }) => {
       />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
-          <div className={classes.content}>{children}</div>
+          <div className={classes.content}>
+            <IconButtonBack />
+            {children}
+          </div>
         </div>
       </div>
       <Hidden mdUp>

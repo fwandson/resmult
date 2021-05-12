@@ -1,14 +1,17 @@
 import { Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
+import { Container } from './styles';
 
 const Turmas: React.FC = () => {
   return (
-    <div>
+    <>
       <Helmet>
         <title>Turmas | Sagu</title>
       </Helmet>
-      <Typography variant="h1">Turmas</Typography>
-    </div>
+      <Container>
+        <Typography>Teste</Typography>
+      </Container>
+    </>
   );
 };
 
