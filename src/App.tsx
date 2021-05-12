@@ -7,6 +7,7 @@ import theme from 'src/theme';
 import GlobalStyles from './components/GlobalStyles';
 import CustonToastContainer from './config/CustonToastContainer';
 import { AuthProvider } from './context/AuthContext';
+import { LoadingProvider } from './context/LoadingContext';
 
 function App() {
   return (
@@ -14,9 +15,11 @@ function App() {
       <GlobalStyles />
       <CustonToastContainer />
       <BrowserRouter>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
+        <LoadingProvider>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </LoadingProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
