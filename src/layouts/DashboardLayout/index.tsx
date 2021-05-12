@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 // import { Outlet } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { Hidden, makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import NavBottomBar from './NavBottomBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,9 @@ const DashboardLayout: React.FC = ({ children }) => {
           <div className={classes.content}>{children}</div>
         </div>
       </div>
+      <Hidden mdUp>
+        <NavBottomBar />
+      </Hidden>
     </div>
   );
 };
