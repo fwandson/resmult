@@ -26,6 +26,7 @@ interface LoginFromData {
 const Login: React.FC = () => {
   const history = useHistory();
 
+  // TODO: remover esses valores default
   const { control, handleSubmit } = useForm<LoginFromData>({
     defaultValues: {
       email: 'moreira.ericson@gmail.com ',
