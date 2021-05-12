@@ -30,7 +30,6 @@ const TextMaskCPF: React.FC<TextMaskCPFProps> = (props) => {
         /\d/,
         /\d/,
       ]}
-      showMask
     />
   );
 };

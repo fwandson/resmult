@@ -17,9 +17,10 @@ import { useHistory } from 'react-router';
 import NAMES from 'src/routes/names';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from './schema';
+import InputCPF from 'src/components/inputs/InputCPF';
 
 interface LoginFromData {
-  email: string;
+  cpf: string;
   password: string;
 }
 
@@ -29,8 +30,8 @@ const Login: React.FC = () => {
   // TODO: remover esses valores default
   const { control, handleSubmit } = useForm<LoginFromData>({
     defaultValues: {
-      email: 'moreira.ericson@gmail.com ',
-      password: '123456',
+      cpf: '',
+      password: '',
     },
     resolver: yupResolver(schema),
   });
@@ -60,12 +61,11 @@ const Login: React.FC = () => {
               </Box>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <GenericInput
+                  <InputCPF
                     control={control}
                     fullWidth
-                    label="Email Address"
-                    name="email"
-                    type="email"
+                    label="CPF"
+                    name="cpf"
                     variant="outlined"
                   />
                 </Grid>
