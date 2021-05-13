@@ -1,5 +1,6 @@
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
+import TurmaCardInfo from 'src/components/TurmaCardInfo';
 import { Container } from './styles';
 
 const Turmas: React.FC = () => {
@@ -9,7 +10,81 @@ const Turmas: React.FC = () => {
         <title>Turmas | Sagu</title>
       </Helmet>
       <Container>
-        <Typography>Teste</Typography>
+        <Typography variant="h1" gutterBottom>
+          Minhas turmas
+        </Typography>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TurmaCardInfo
+              nome="Teste"
+              descricao="descrição"
+              quantAlunos={10}
+            />
+          </Grid>
+        </Grid>
       </Container>
     </>
   );
