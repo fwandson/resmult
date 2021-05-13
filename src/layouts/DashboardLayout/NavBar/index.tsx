@@ -20,6 +20,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Book as BookIcon,
+  PenTool as PenToolIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
 import NAMES from 'src/routes/names';
@@ -58,6 +59,11 @@ const items = [
     href: NAMES.SETTINGS,
     icon: SettingsIcon,
     title: 'Settings',
+  },
+  {
+    href: NAMES.TYPOGRAPHY,
+    icon: PenToolIcon,
+    title: 'Typography',
   },
   {
     href: NAMES.LOGIN,

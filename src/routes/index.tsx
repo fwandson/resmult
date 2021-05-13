@@ -10,6 +10,7 @@ import Turmas from 'src/pages/Turmas';
 import Settings from 'src/pages/Settings';
 import Ofertas from 'src/pages/Ofertas';
 import TurmaDetails from 'src/pages/TurmaDetails';
+import TypographyPage from 'src/pages/Typography';
 
 const Routes = () => {
   return (
@@ -49,6 +50,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.SETTINGS}
         component={Settings}
+        isPrivate
+      />
+      {/* Essa rota apenas é informativa */}
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.TYPOGRAPHY}
+        component={TypographyPage}
         isPrivate
       />
       <RouterWithLayout
