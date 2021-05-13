@@ -6,8 +6,8 @@ const IconButtonBack: React.FC<IconButtonProps> = (props) => {
   const history = useHistory();
 
   return (
-    <IconButton {...props}>
-      <ArrowLeftIcon size={16} onClick={() => history.go(-1)} />
+    <IconButton {...props} onClick={() => history.go(-1)}>
+      <ArrowLeftIcon size={16} />
     </IconButton>
   );
 };
