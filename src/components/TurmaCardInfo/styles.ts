@@ -6,3 +6,9 @@ export const CardActions = styled(CardActionsMUI)`
   align-items: center;
   justify-content: flex-end;
 `;
+
+export const DatesWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

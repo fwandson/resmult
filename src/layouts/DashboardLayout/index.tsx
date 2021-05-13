@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     overflow: 'auto',
     padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(10),
+    },
   },
 }));
 
