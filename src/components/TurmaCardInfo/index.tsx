@@ -1,8 +1,11 @@
 import { Button, Card, CardContent, Typography, Chip } from '@material-ui/core';
 import { ArrowRight as ArrowRightIcon } from 'react-feather';
+import { useHistory } from 'react-router';
+import NAMES from 'src/routes/names';
 import { CardActions, DatesWrapper } from './styles';
 
 export interface TurmaCardInfoProps {
+  id: number;
   nome: string;
   descricao: string;
   quantAlunos: number;
@@ -12,7 +15,9 @@ export interface TurmaCardInfoProps {
 
 // TODO: falta refinar layout desse component
 const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
-  const { nome, quantAlunos, descricao, inicio, fim } = props;
+  const { id, nome, quantAlunos, descricao, inicio, fim } = props;
+
+  const history = useHistory();
 
   return (
     <Card elevation={2}>
@@ -40,6 +45,9 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
           variant="contained"
           color="primary"
           endIcon={<ArrowRightIcon size={16} />}
+          onClick={() =>
+            history.push(NAMES.TURMA_DETAILS.replace(':id', String(id)))
+          }
         >
           Gerenciar
         </Button>

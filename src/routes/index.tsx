@@ -9,6 +9,7 @@ import NotFound from 'src/pages/NotFound';
 import Turmas from 'src/pages/Turmas';
 import Settings from 'src/pages/Settings';
 import Ofertas from 'src/pages/Ofertas';
+import TurmaDetails from 'src/pages/TurmaDetails';
 
 const Routes = () => {
   return (
@@ -29,6 +30,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.TURMAS}
         component={Turmas}
+        isPrivate
+        exact
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.TURMA_DETAILS}
+        component={TurmaDetails}
         isPrivate
       />
       <RouterWithLayout

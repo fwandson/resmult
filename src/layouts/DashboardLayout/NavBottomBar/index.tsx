@@ -47,7 +47,7 @@ const NavBottomBar: React.FC = () => {
   const { pathname } = useLocation();
 
   const getCurrentValue = useCallback(() => {
-    return findIndex(items, (item) => item.href.includes(pathname));
+    return findIndex(items, (item) => pathname.includes(item.href));
   }, [pathname]);
 
   return (
