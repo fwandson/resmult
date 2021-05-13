@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto',
+    padding: theme.spacing(2),
   },
 }));
 

@@ -38,6 +38,7 @@ const items = [
   },
 ];
 
+// TODO: usar o useLocation para definir qual icone está selecionado
 const NavBottomBar: React.FC = () => {
   const classes = useStyles();
 
