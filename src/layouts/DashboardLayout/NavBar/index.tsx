@@ -19,7 +19,6 @@ import {
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
-  Users as UsersIcon,
   Book as BookIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
@@ -46,14 +45,9 @@ const items = [
     title: 'Minhas Turmas',
   },
   {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers',
-  },
-  {
-    href: '/app/products',
+    href: NAMES.OFERTAS,
     icon: ShoppingBagIcon,
-    title: 'Products',
+    title: 'Ofertas',
   },
   {
     href: '/app/account',

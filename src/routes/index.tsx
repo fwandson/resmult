@@ -8,6 +8,7 @@ import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
 import Turmas from 'src/pages/Turmas';
 import Settings from 'src/pages/Settings';
+import Ofertas from 'src/pages/Ofertas';
 
 const Routes = () => {
   return (
@@ -28,6 +29,12 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.TURMAS}
         component={Turmas}
+        isPrivate
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.OFERTAS}
+        component={Ofertas}
         isPrivate
       />
       <RouterWithLayout

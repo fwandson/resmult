@@ -41,7 +41,7 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
           color="primary"
           endIcon={<ArrowRightIcon size={16} />}
         >
-          Ir para a Turma
+          Gerenciar
         </Button>
       </CardActions>
     </Card>
