@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getBaseURL = () => {
+export const getBaseURL = () => {
   const url = {
     development: process.env.REACT_APP_API_BASE_URL_DEV,
     production: process.env.REACT_APP_API_BASE_URL_PROD,
