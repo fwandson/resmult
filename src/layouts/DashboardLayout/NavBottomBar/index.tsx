@@ -3,13 +3,14 @@ import {
   BottomNavigationAction,
   makeStyles,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { findIndex } from 'lodash';
+import { useCallback } from 'react';
 import {
   BarChart as BarChartIcon,
   Book as BookIcon,
   Settings as SettingsIcon,
 } from 'react-feather';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import NAMES from 'src/routes/names';
 
 const useStyles = makeStyles({
@@ -38,20 +39,20 @@ const items = [
   },
 ];
 
-// TODO: usar o useLocation para definir qual icone está selecionado
 const NavBottomBar: React.FC = () => {
   const classes = useStyles();
 
   const history = useHistory();
 
-  const [value, setValue] = useState(0);
+  const { pathname } = useLocation();
+
+  const getCurrentValue = useCallback(() => {
+    return findIndex(items, (item) => item.href.includes(pathname));
+  }, [pathname]);
 
   return (
     <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
+      value={getCurrentValue()}
       showLabels
       className={classes.root}
     >
