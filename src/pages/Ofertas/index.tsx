@@ -1,5 +1,19 @@
 import { Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
+import GenericTable, { HeadCell } from 'src/components/GenericTable';
+
+const headCells: HeadCell[] = [
+  {
+    id: 'name',
+    numeric: false,
+    disablePadding: true,
+    label: 'Dessert (100g serving)',
+  },
+  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
+  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
+  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
+  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+];
 
 const Ofertas: React.FC = () => {
   return (
@@ -7,14 +21,10 @@ const Ofertas: React.FC = () => {
       <Helmet>
         <title>Ofertas | Sagu</title>
       </Helmet>
-      <Typography variant="h1">Ofertas</Typography>
-      <Typography variant="h2">
-        Mussum Ipsum, cacilds vidis litro abertis. Admodum accumsan disputationi
-        eu sit. Vide electram sadipscing et per. Si u mundo tá muito paradis?
-        Toma um mé que o mundo vai girarzis! Praesent malesuada urna nisi, quis
-        volutpat erat hendrerit non. Nam vulputate dapibus. Quem num gosta di
-        mim que vai caçá sua turmis!
+      <Typography variant="h1" gutterBottom>
+        Ofertas
       </Typography>
+      <GenericTable title="Teste" headCells={headCells} />
     </div>
   );
 };
