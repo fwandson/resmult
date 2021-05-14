@@ -14,3 +14,9 @@ export interface HeadCell {
 }
 
 export type Order = 'asc' | 'desc';
+
+export interface GenericTableProps {
+  title: string;
+  headCells: HeadCell[];
+  rows: Data[];
+}

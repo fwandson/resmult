@@ -22,7 +22,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { MouseEvent, ChangeEvent, useState } from 'react';
-import { Data, HeadCell, Order } from './types';
+import { Data, HeadCell, Order, GenericTableProps } from './types';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -220,12 +220,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-interface GenericTableProps {
-  title: string;
-  headCells: HeadCell[];
-  rows: Data[];
-}
 
 export default function GenericTable(props: GenericTableProps) {
   const { title, headCells, rows } = props;
