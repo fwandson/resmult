@@ -1,25 +1,15 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  makeStyles,
-} from '@material-ui/core';
+import { BottomNavigationAction } from '@material-ui/core';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
 import {
   BarChart as BarChartIcon,
   Book as BookIcon,
   Settings as SettingsIcon,
+  ShoppingBag as ShoppingBagIcon,
 } from 'react-feather';
 import { useHistory, useLocation } from 'react-router';
 import NAMES from 'src/routes/names';
-
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-  },
-});
+import { BottomNavigation } from './styles';
 
 const items = [
   {
@@ -33,6 +23,11 @@ const items = [
     title: 'Turmas',
   },
   {
+    href: NAMES.OFERTAS,
+    icon: <ShoppingBagIcon />,
+    title: 'Ofertas',
+  },
+  {
     href: NAMES.SETTINGS,
     icon: <SettingsIcon />,
     title: 'Settings',
@@ -40,8 +35,6 @@ const items = [
 ];
 
 const NavBottomBar: React.FC = () => {
-  const classes = useStyles();
-
   const history = useHistory();
 
   const { pathname } = useLocation();
@@ -51,11 +44,7 @@ const NavBottomBar: React.FC = () => {
   }, [pathname]);
 
   return (
-    <BottomNavigation
-      value={getCurrentValue()}
-      showLabels
-      className={classes.root}
-    >
+    <BottomNavigation value={getCurrentValue()} showLabels>
       {items.map((item) => (
         <BottomNavigationAction
           key={item.title}
