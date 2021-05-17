@@ -20,3 +20,7 @@ export interface GenericTableProps {
   headCells: HeadCell[];
   rows: Data[];
 }
+
+export interface EnhancedTableToolbarProps {
+  title: string;
+}
