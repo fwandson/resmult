@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import GenericTable from 'src/components/GenericTable';
 import { Data, HeadCell } from 'src/components/GenericTable/types';
 import SimpleTable from 'src/components/SimpleTable';
+import { Airplay } from 'react-feather';
+import { uniqueId } from 'lodash';
 
 const headCells: HeadCell[] = [
   {
@@ -54,34 +56,35 @@ const Ofertas: React.FC = () => {
       </Typography>
       <GenericTable title="Teste" headCells={headCells} rows={rows} />
       <SimpleTable
-        headCells={['Nome', 'Idade', 'Sexo']}
+        title="Testando"
+        headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
         rows={[
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
-          ['Ericson', '33', 'M'],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
         ]}
       />
     </div>

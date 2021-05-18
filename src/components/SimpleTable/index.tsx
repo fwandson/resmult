@@ -9,15 +9,19 @@ import {
   TablePagination,
 } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
+import SimpleTableToolbar from './SimpleTableToolbar';
+
+type RowElement = string | number | JSX.Element;
 
 interface SimpleTableProps {
+  title: string;
   headCells: string[];
-  rows: string[][];
+  rows: RowElement[][];
 }
 
 // Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
-  const { headCells, rows } = props;
+  const { headCells, rows, title } = props;
 
   const [page, setPage] = useState(0);
 
@@ -37,6 +41,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
 
   return (
     <TableContainer component={Paper}>
+      <SimpleTableToolbar title={title} />
       <Table>
         <TableHead>
           <TableRow>
