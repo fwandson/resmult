@@ -1,8 +1,41 @@
-import { Typography } from '@material-ui/core';
+import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import { uniqueId } from 'lodash';
-import { Airplay } from 'react-feather';
+import {
+  Airplay as AirplayIcon,
+  Calendar as CalendarIcon,
+  Clock as ClockIcon,
+  Command as CommandIcon,
+} from 'react-feather';
 import { Helmet } from 'react-helmet';
 import SimpleTable from 'src/components/SimpleTable';
+
+const Actions = () => (
+  <>
+    <Tooltip title="title" arrow>
+      <IconButton>
+        <AirplayIcon size={14} />
+      </IconButton>
+    </Tooltip>
+
+    <Tooltip title="title" arrow>
+      <IconButton>
+        <CommandIcon size={14} />
+      </IconButton>
+    </Tooltip>
+
+    <Tooltip title="title" arrow>
+      <IconButton>
+        <ClockIcon size={14} />
+      </IconButton>
+    </Tooltip>
+
+    <Tooltip title="title" arrow>
+      <IconButton>
+        <CalendarIcon size={14} />
+      </IconButton>
+    </Tooltip>
+  </>
+);
 
 const Ofertas: React.FC = () => {
   return (
@@ -14,35 +47,35 @@ const Ofertas: React.FC = () => {
         Ofertas
       </Typography>
       <SimpleTable
-        title="Testando"
+        title="Residentes"
         headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
         rows={[
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Airplay size={14} key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
         ]}
       />
     </div>

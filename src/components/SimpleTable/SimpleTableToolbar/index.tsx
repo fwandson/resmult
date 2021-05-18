@@ -17,8 +17,8 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
 }) => {
   return (
     <Container {...rest}>
-      <Typography variant="h6" component="div">
-        {title}
+      <Typography variant="h4" component="div">
+        <strong>{title}</strong>
       </Typography>
       <Tooltip title="Filter list">
         <IconButton>

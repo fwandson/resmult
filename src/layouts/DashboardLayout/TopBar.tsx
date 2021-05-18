@@ -9,6 +9,7 @@ import {
   Hidden,
   IconButton,
   Toolbar,
+  Typography,
   makeStyles,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -34,7 +35,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }: any) => {
         <RouterLink to="/">
           <Logo />
         </RouterLink>
-        <Box flexGrow={1} />
+        <Box flexGrow={1} textAlign="center">
+          <Typography variant="h2">Sagu</Typography>
+        </Box>
         <Hidden mdDown>
           <IconButton color="inherit">
             <Badge
