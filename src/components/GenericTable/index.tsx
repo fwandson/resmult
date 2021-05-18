@@ -45,7 +45,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-interface EnhancedTableProps {
+interface GenericTableHeadProps {
   classes: ReturnType<typeof useStyles>;
   onRequestSort: (event: MouseEvent<unknown>, property: keyof Data) => void;
   order: Order;
@@ -54,7 +54,7 @@ interface EnhancedTableProps {
   headCells: HeadCell[];
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
+function GenericTableHead(props: GenericTableHeadProps) {
   const { classes, order, orderBy, onRequestSort, headCells } = props;
 
   const createSortHandler =
@@ -160,7 +160,7 @@ export default function GenericTable(props: GenericTableProps) {
             aria-labelledby="tableTitle"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <GenericTableHead
               classes={classes}
               order={order}
               orderBy={orderBy}

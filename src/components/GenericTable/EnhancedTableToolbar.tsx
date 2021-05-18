@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+// TODO: mudar o nome desse component para GenericTableToolbar
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const classes = useStyles();
   const { title } = props;
