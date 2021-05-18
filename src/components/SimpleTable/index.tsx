@@ -41,7 +41,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
 
   return (
     <TableContainer component={Paper}>
-      <SimpleTableToolbar title={title} />
+      <SimpleTableToolbar title={title} disableGutters />
       <Table>
         <TableHead>
           <TableRow>
@@ -56,7 +56,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           {rows
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} hover>
                 {row.map((cell, j) => (
                   <TableCell key={j} align={j === 0 ? 'left' : 'right'}>
                     {cell}
