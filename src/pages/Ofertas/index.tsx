@@ -2,6 +2,7 @@ import { Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
 import GenericTable from 'src/components/GenericTable';
 import { Data, HeadCell } from 'src/components/GenericTable/types';
+import SimpleTable from 'src/components/SimpleTable';
 
 const headCells: HeadCell[] = [
   {
@@ -52,6 +53,37 @@ const Ofertas: React.FC = () => {
         Ofertas
       </Typography>
       <GenericTable title="Teste" headCells={headCells} rows={rows} />
+      <SimpleTable
+        headCells={['Nome', 'Idade', 'Sexo']}
+        rows={[
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+          ['Ericson', '33', 'M'],
+        ]}
+      />
     </div>
   );
 };
