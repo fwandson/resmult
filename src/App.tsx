@@ -1,15 +1,26 @@
-import { Typography } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import 'fontsource-roboto';
+import { BrowserRouter } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.min.css';
+import Routes from 'src/routes';
 import theme from 'src/theme';
 import GlobalStyles from './components/GlobalStyles';
+import CustonToastContainer from './config/CustonToastContainer';
+import { AuthProvider } from './context/AuthContext';
+import { LoadingProvider } from './context/LoadingContext';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <Typography>Ola mundo</Typography>
-      <Typography variant="h1">Teste</Typography>
+      <CustonToastContainer />
+      <BrowserRouter>
+        <LoadingProvider>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </LoadingProvider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
