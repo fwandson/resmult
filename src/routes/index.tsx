@@ -52,7 +52,6 @@ const Routes = () => {
         component={Settings}
         isPrivate
       />
-      {/* Essa rota apenas é informativa */}
       <RouterWithLayout
         layout={DashboardLayout}
         path={NAMES.TYPOGRAPHY}

@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
@@ -8,16 +9,17 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
-import GenericInput from 'src/components/inputs/GenericInput';
-import { ContainerWrapper } from './styles';
-import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
+import { Helmet } from 'react-helmet';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import NAMES from 'src/routes/names';
-import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './schema';
+import { toast } from 'react-toastify';
+import GenericInput from 'src/components/inputs/GenericInput';
 import InputCPF from 'src/components/inputs/InputCPF';
+import { useAuth } from 'src/context/AuthContext';
+import NAMES from 'src/routes/names';
+import schema from './schema';
+import { ContainerWrapper } from './styles';
 
 interface LoginFromData {
   cpf: string;
@@ -27,7 +29,8 @@ interface LoginFromData {
 const Login: React.FC = () => {
   const history = useHistory();
 
-  // TODO: remover esses valores default
+  const { signIn } = useAuth();
+
   const { control, handleSubmit } = useForm<LoginFromData>({
     defaultValues: {
       cpf: '',
@@ -36,10 +39,20 @@ const Login: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar a validação
-  const onSubmit = useCallback((data: LoginFromData) => {
-    console.log(JSON.stringify(data, null, 2));
-    history.push(NAMES.DASHBOARD);
+  const onSubmit = useCallback(async (formaData: LoginFromData) => {
+    try {
+      // removendo o que não é numero de uma string
+      const username = formaData.cpf.replace(/[^0-9]/g, '');
+
+      signIn({
+        username,
+        password: formaData.password,
+      });
+
+      history.push(NAMES.DASHBOARD);
+    } catch (error) {
+      toast.error('Algo de errado aconteceu ');
+    }
   }, []);
 
   return (

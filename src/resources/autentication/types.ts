@@ -4,6 +4,6 @@ export interface LoginParams {
 }
 
 export interface LoginReturn {
-  usuario: string;
-  senha: string;
+  login: string;
+  access_token: string;
 }
