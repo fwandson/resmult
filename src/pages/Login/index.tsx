@@ -46,6 +46,7 @@ const Login: React.FC = () => {
     try {
       showLoading();
 
+      // removendo caracteres não algarismos
       const username = formaData.cpf.replace(/[^0-9]/g, '');
 
       await signIn({
@@ -55,7 +56,12 @@ const Login: React.FC = () => {
 
       history.push(NAMES.DASHBOARD);
     } catch (error) {
-      toast.error('Algo de errado aconteceu ');
+      if (error.response.status === 401) {
+        toast.error('CPF ou Senha inválidos');
+      } else {
+        // TODO: pensar em alguma forma de trabalhar o tratamento dos erros
+        toast.error('Algo de inesperado aconteceu...');
+      }
     } finally {
       hideLoading();
     }
