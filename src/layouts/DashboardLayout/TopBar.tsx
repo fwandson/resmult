@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   AppBar,
@@ -16,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
+import { useAuth } from 'src/context/AuthContext';
+import NAMES from 'src/routes/names';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -27,7 +29,17 @@ const useStyles = makeStyles(() => ({
 
 const TopBar = ({ className, onMobileNavOpen, ...rest }: any) => {
   const classes = useStyles();
+
+  const history = useHistory();
+
   const [notifications] = useState([]);
+
+  const { signOut } = useAuth();
+
+  const handlerLogout = useCallback(() => {
+    signOut();
+    history.push(NAMES.LOGIN);
+  }, []);
 
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
@@ -48,7 +60,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }: any) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={() => handlerLogout()}>
             <InputIcon />
           </IconButton>
         </Hidden>

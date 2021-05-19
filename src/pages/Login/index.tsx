@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import GenericInput from 'src/components/inputs/GenericInput';
 import InputCPF from 'src/components/inputs/InputCPF';
 import { useAuth } from 'src/context/AuthContext';
+import { useLoading } from 'src/context/LoadingContext';
 import NAMES from 'src/routes/names';
 import schema from './schema';
 import { ContainerWrapper } from './styles';
@@ -28,6 +29,8 @@ interface LoginFromData {
 
 const Login: React.FC = () => {
   const history = useHistory();
+
+  const { showLoading, hideLoading } = useLoading();
 
   const { signIn } = useAuth();
 
@@ -41,10 +44,11 @@ const Login: React.FC = () => {
 
   const onSubmit = useCallback(async (formaData: LoginFromData) => {
     try {
-      // removendo o que não é numero de uma string
+      showLoading();
+
       const username = formaData.cpf.replace(/[^0-9]/g, '');
 
-      signIn({
+      await signIn({
         username,
         password: formaData.password,
       });
@@ -52,6 +56,8 @@ const Login: React.FC = () => {
       history.push(NAMES.DASHBOARD);
     } catch (error) {
       toast.error('Algo de errado aconteceu ');
+    } finally {
+      hideLoading();
     }
   }, []);
 

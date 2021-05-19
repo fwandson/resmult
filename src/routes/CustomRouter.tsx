@@ -14,11 +14,11 @@ const CustomRouter: React.FC<CustomRouterProps> = (props) => {
   // Para o caso da rota não ser privada
   if (!isPrivate) return <Route {...rest} />;
 
+  // Caso o usuário não esteja logado
   if (!userLogged()) {
     return <Redirect to={NAMES.LOGIN} />;
   }
 
-  // TODO: fazer implentação para o caso da rota privada
   return <Route {...rest} />;
 };
 
