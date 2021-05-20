@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// TODO: pesquisar mais como usar os .envs para tipos de hambiente (test, dev, production)
 export const getBaseURL = () => {
   const url = {
     development: process.env.REACT_APP_API_BASE_URL_DEV,
