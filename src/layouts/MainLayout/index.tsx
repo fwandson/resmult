@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import TopBar from './TopBar';
-// import { Outlet } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,10 +38,6 @@ const MainLayout: React.FC = ({ children }) => {
         <div className={classes.contentContainer}>
           <div className={classes.content}>
             {children}
-            {/*
-              TODO: o que esse component faz? 
-              <Outlet /> 
-            */}
           </div>
         </div>
       </div>

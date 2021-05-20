@@ -1,22 +1,23 @@
 import { Switch } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
+import LoginLaytout from 'src/layouts/LoginLaytout';
 import MainLayout from 'src/layouts/MainLayout';
 import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
-import RouterWithLayout from './RouterWithLayout';
-import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
-import Turmas from 'src/pages/Turmas';
-import Settings from 'src/pages/Settings';
 import Ofertas from 'src/pages/Ofertas';
+import Settings from 'src/pages/Settings';
 import TurmaDetails from 'src/pages/TurmaDetails';
+import Turmas from 'src/pages/Turmas';
 import TypographyPage from 'src/pages/Typography';
+import NAMES from './names';
+import RouterWithLayout from './RouterWithLayout';
 
 const Routes = () => {
   return (
     <Switch>
       <RouterWithLayout
-        layout={MainLayout}
+        layout={LoginLaytout}
         path={NAMES.LOGIN}
         component={Login}
         exact
