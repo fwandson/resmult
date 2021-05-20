@@ -1,11 +1,15 @@
 import { createMuiTheme, colors } from '@material-ui/core';
 import shadows from './shadows';
 import typography from './typography';
+import spacing from './spacing';
 
 const theme = createMuiTheme({
   palette: {
+    common: {
+      black: '#333333',
+    },
     background: {
-      default: '#F4F6F8',
+      default: '#FAFAFA',
       paper: colors.common.white,
     },
     primary: {
@@ -33,6 +37,7 @@ const theme = createMuiTheme({
   },
   shadows,
   typography,
+  spacing,
 });
 
 export default theme;
