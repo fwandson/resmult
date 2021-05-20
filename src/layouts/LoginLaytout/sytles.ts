@@ -22,4 +22,8 @@ export const Content = styled.div`
   justify-content: center;
   flex: 3;
   background-color: ${theme.palette.primary.main};
+  border-radius: 24px 0 0 24px;
+  @media (max-width: 960px) {
+    border-radius: 0;
+  }
 `;

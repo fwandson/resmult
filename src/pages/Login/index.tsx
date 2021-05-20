@@ -5,9 +5,9 @@ import {
   Card,
   CardActions,
   CardContent,
-  Container,
   Grid,
   Typography,
+  Link,
 } from '@material-ui/core';
 import { useCallback } from 'react';
 import { Helmet } from 'react-helmet';
@@ -16,11 +16,12 @@ import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import GenericInput from 'src/components/inputs/GenericInput';
 import InputCPF from 'src/components/inputs/InputCPF';
+import Logo from 'src/components/Logo';
 import { useAuth } from 'src/context/AuthContext';
 import { useLoading } from 'src/context/LoadingContext';
 import NAMES from 'src/routes/names';
 import schema from './schema';
-import { ContainerWrapper } from './styles';
+import { ContainerWrapper, Container } from './styles';
 
 interface LoginFromData {
   cpf: string;
@@ -74,6 +75,7 @@ const Login: React.FC = () => {
       </Helmet>
       <ContainerWrapper>
         <Container maxWidth="sm">
+          <Logo />
           <Card component="form" onSubmit={handleSubmit(onSubmit)}>
             <CardContent>
               <Box marginBottom={4}>
@@ -107,16 +109,12 @@ const Login: React.FC = () => {
               </Grid>
             </CardContent>
             <CardActions>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
+              <Button type="submit" variant="contained" fullWidth>
                 Entrar
               </Button>
             </CardActions>
           </Card>
+          <Link variant="subtitle1">Esqueci minha senha</Link>
         </Container>
       </ContainerWrapper>
     </>
