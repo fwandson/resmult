@@ -2,12 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
   Grid,
-  Typography,
+  InputAdornment,
   Link,
+  Typography,
 } from '@material-ui/core';
 import { useCallback } from 'react';
 import { Helmet } from 'react-helmet';
@@ -21,8 +19,9 @@ import { useAuth } from 'src/context/AuthContext';
 import { useLoading } from 'src/context/LoadingContext';
 import NAMES from 'src/routes/names';
 import schema from './schema';
-import { ContainerWrapper, Container } from './styles';
-
+import { Container, ContainerWrapper } from './styles';
+import PersonIcon from '@material-ui/icons/Person';
+import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
 interface LoginFromData {
   cpf: string;
   password: string;
@@ -76,44 +75,63 @@ const Login: React.FC = () => {
       <ContainerWrapper>
         <Container maxWidth="sm">
           <Logo />
-          <Card component="form" onSubmit={handleSubmit(onSubmit)}>
-            <CardContent>
-              <Box marginBottom={4}>
-                <Typography color="textPrimary" variant="h2">
-                  Entrar
-                </Typography>
-                <Typography color="textSecondary" gutterBottom variant="body2">
-                  Faça login na plataforma interna
-                </Typography>
-              </Box>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <InputCPF
-                    control={control}
-                    fullWidth
-                    label="CPF"
-                    name="cpf"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <GenericInput
-                    control={control}
-                    fullWidth
-                    label="Senha"
-                    name="password"
-                    type="password"
-                    variant="outlined"
-                  />
-                </Grid>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box marginBottom={4}>
+              <Typography color="textSecondary" variant="h2">
+                Meu acesso
+              </Typography>
+              <Typography gutterBottom variant="body2" color="textSecondary">
+                Utilize suas credenciais do SAGU
+              </Typography>
+            </Box>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <InputCPF
+                  control={control}
+                  fullWidth
+                  label="CPF"
+                  name="cpf"
+                  variant="outlined"
+                  color="secondary"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PersonIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </Grid>
-            </CardContent>
-            <CardActions>
-              <Button type="submit" variant="contained" fullWidth>
-                Entrar
-              </Button>
-            </CardActions>
-          </Card>
+              <Grid item xs={12}>
+                <GenericInput
+                  control={control}
+                  fullWidth
+                  label="Senha"
+                  name="password"
+                  type="password"
+                  variant="outlined"
+                  color="secondary"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EnhancedEncryptionIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  disableElevation
+                >
+                  Entrar agora
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
           <Link variant="subtitle1">Esqueci minha senha</Link>
         </Container>
       </ContainerWrapper>
