@@ -2,6 +2,7 @@
  * Colocar aqui as rotas
  */
 export default {
+  HOME: '/',
   LOGIN: '/login',
   DASHBOARD: '/dashboard',
   TURMAS: '/turmas',

@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -8,22 +6,19 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography,
   makeStyles,
+  Typography,
 } from '@material-ui/core';
+import { useEffect } from 'react';
 import {
-  AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  UserPlus as UserPlusIcon,
   Book as BookIcon,
   PenTool as PenToolIcon,
+  Settings as SettingsIcon,
+  ShoppingBag as ShoppingBagIcon,
 } from 'react-feather';
-import NavItem from './NavItem';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import NAMES from 'src/routes/names';
+import NavItem from './NavItem';
 
 // TODO: criar um useUserInfo hook para prover os dados do usuário.
 // Tomando cuidado para não prover dados importantes.
@@ -36,11 +31,6 @@ const user = {
 
 const items = [
   {
-    href: NAMES.DASHBOARD,
-    icon: BarChartIcon,
-    title: 'Dashboard',
-  },
-  {
     href: NAMES.TURMAS,
     icon: BookIcon,
     title: 'Minhas Turmas',
@@ -51,11 +41,6 @@ const items = [
     title: 'Ofertas',
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account',
-  },
-  {
     href: NAMES.SETTINGS,
     icon: SettingsIcon,
     title: 'Settings',
@@ -64,21 +49,6 @@ const items = [
     href: NAMES.TYPOGRAPHY,
     icon: PenToolIcon,
     title: 'Typography',
-  },
-  {
-    href: NAMES.LOGIN,
-    icon: LockIcon,
-    title: 'Login',
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register',
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error',
   },
 ];
 

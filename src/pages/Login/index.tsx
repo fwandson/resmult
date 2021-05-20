@@ -16,7 +16,6 @@ import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-// import GenericInput from 'src/components/inputs/GenericInput';
 import InputCPF from 'src/components/inputs/InputCPF';
 import PasswordInput from 'src/components/inputs/PasswordInput';
 import Logo from 'src/components/Logo';
@@ -57,7 +56,7 @@ const Login: React.FC = () => {
         password: formaData.password,
       });
 
-      history.push(NAMES.DASHBOARD);
+      history.push(NAMES.TURMAS);
     } catch (error) {
       if (error.response.status === 401) {
         toast.error('CPF ou Senha inválidos');
@@ -140,7 +139,12 @@ const Login: React.FC = () => {
               </Grid>
             </CardContent>
           </Card>
-          <Link variant="subtitle1">Esqueci minha senha</Link>
+          <Link
+            variant="subtitle1"
+            onClick={() => console.log('Go to recuperar senha')}
+          >
+            Esqueci minha senha
+          </Link>
         </Container>
       </ContainerWrapper>
     </>

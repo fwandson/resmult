@@ -2,7 +2,6 @@ import { BottomNavigationAction } from '@material-ui/core';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
 import {
-  BarChart as BarChartIcon,
   Book as BookIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
@@ -13,19 +12,14 @@ import { BottomNavigation } from './styles';
 
 const items = [
   {
-    href: NAMES.DASHBOARD,
-    icon: <BarChartIcon />,
-    title: 'Dashboard',
+    href: NAMES.OFERTAS,
+    icon: <ShoppingBagIcon />,
+    title: 'Ofertas',
   },
   {
     href: NAMES.TURMAS,
     icon: <BookIcon />,
     title: 'Turmas',
-  },
-  {
-    href: NAMES.OFERTAS,
-    icon: <ShoppingBagIcon />,
-    title: 'Ofertas',
   },
   {
     href: NAMES.SETTINGS,

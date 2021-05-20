@@ -1,32 +1,28 @@
-import { Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
-import LoginLaytout from 'src/layouts/LoginLaytout';
 import MainLayout from 'src/layouts/MainLayout';
-import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
-import NotFound from 'src/pages/NotFound';
-import Ofertas from 'src/pages/Ofertas';
-import Settings from 'src/pages/Settings';
-import TurmaDetails from 'src/pages/TurmaDetails';
-import Turmas from 'src/pages/Turmas';
-import TypographyPage from 'src/pages/Typography';
-import NAMES from './names';
 import RouterWithLayout from './RouterWithLayout';
+import NAMES from './names';
+import NotFound from 'src/pages/NotFound';
+import Turmas from 'src/pages/Turmas';
+import Settings from 'src/pages/Settings';
+import Ofertas from 'src/pages/Ofertas';
+import TurmaDetails from 'src/pages/TurmaDetails';
+import TypographyPage from 'src/pages/Typography';
+import LoginLaytout from 'src/layouts/LoginLaytout';
 
 const Routes = () => {
   return (
     <Switch>
+      <Route exact path={NAMES.HOME}>
+        <Redirect to={NAMES.TURMAS} />
+      </Route>
       <RouterWithLayout
         layout={LoginLaytout}
         path={NAMES.LOGIN}
         component={Login}
         exact
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.DASHBOARD}
-        component={Dashboard}
-        isPrivate
       />
       <RouterWithLayout
         layout={DashboardLayout}
