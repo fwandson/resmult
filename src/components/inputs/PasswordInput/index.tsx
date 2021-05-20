@@ -19,7 +19,7 @@ const PasswordInput: React.FC<GenericInputProps & TextFieldProps> = (props) => {
         endAdornment: (
           <InputAdornment position="end">
             <IconButton onClick={() => setVisible((old) => !old)}>
-              {visible ? <Visibility /> : <VisibilityOff />}
+              {visible ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         ),
