@@ -4,10 +4,11 @@ import TurmaCardInfo from 'src/components/TurmaCardInfo';
 import { Container } from './styles';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
 import { GetTurmasReturn } from 'src/resources/turmas/types';
+import resources from 'src/resources';
 
 const Turmas: React.FC = () => {
   const { data: turmasData } = useApiWithSwr<GetTurmasReturn>({
-    url: '/residencia-multiprofissional/supervisores/turmas',
+    url: resources.turmas.base,
   });
 
   return (
@@ -34,7 +35,6 @@ const Turmas: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-        <pre>{JSON.stringify(turmasData, null, 2)}</pre>
       </Container>
     </>
   );

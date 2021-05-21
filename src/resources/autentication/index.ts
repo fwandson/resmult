@@ -5,6 +5,7 @@ import { LoginParams, LoginReturn } from './types';
 const base = '/auth';
 
 const autentication = {
+  base,
   login: (params: LoginParams): Promise<AxiosResponse<LoginReturn>> =>
     api.post(base, params),
 };
