@@ -1,5 +1,21 @@
-import { Typography } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
+import { Variant } from '@material-ui/core/styles/createTypography';
 import { Helmet } from 'react-helmet';
+
+const textBase =
+  'Mussum Ipsum, cacilds vidis litro abertis. Interagi no mé, cursus quis, vehicula ac nisi. Atirei o pau no gatis, per gatis num morreus. ';
+
+const variants: Variant[] = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'overline',
+  'subtitle1',
+  'subtitle2',
+];
 
 const TypographyPage: React.FC = () => {
   return (
@@ -10,30 +26,14 @@ const TypographyPage: React.FC = () => {
       <Typography variant="h1" gutterBottom>
         TypographyPage
       </Typography>
-      <Typography variant="h1" gutterBottom>
-        h1
-      </Typography>
-      <Typography variant="h2" gutterBottom>
-        h2
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        h3
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        h5
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        h6
-      </Typography>
-      <Typography variant="overline" gutterBottom>
-        overline
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        subtitle1
-      </Typography>
-      <Typography variant="subtitle2" gutterBottom>
-        subtitle2
-      </Typography>
+      {variants.map((varitant, index) => (
+        <>
+          <Typography key={varitant} variant={varitant} >
+            {varitant}: {textBase}
+          </Typography>
+          {index !== variants.length && <Divider />}
+        </>
+      ))}
     </div>
   );
 };

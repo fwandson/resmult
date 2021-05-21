@@ -20,7 +20,7 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
   const history = useHistory();
 
   return (
-    <Card elevation={2}>
+    <Card elevation={1}>
       <CardContent>
         <Typography variant="h3" color="initial" gutterBottom>
           {nome}
@@ -42,8 +42,8 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
       </CardContent>
       <CardActions>
         <Button
-          variant="contained"
-          color="primary"
+          variant="text"
+          color="secondary"
           endIcon={<ArrowRightIcon size={16} />}
           onClick={() =>
             history.push(NAMES.TURMA_DETAILS.replace(':id', String(id)))

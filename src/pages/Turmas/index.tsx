@@ -14,7 +14,7 @@ const Turmas: React.FC = () => {
         <Typography variant="h1" gutterBottom>
           Minhas turmas
         </Typography>
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           {data.map((turma) => (
             <Grid key={turma.id} item xs={12} sm={6} md={3}>
               <TurmaCardInfo
