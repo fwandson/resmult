@@ -44,12 +44,8 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
           </Typography>
         </InfoWrapper>
         <DatesWrapper>
-          <ChipInicio
-            variant="outlined"
-            color="primary"
-            label={`Início: ${inicio}`}
-          />
-          <ChipFim variant="outlined" color="secondary" label={`Fim: ${fim}`} />
+          <ChipInicio variant="outlined" label={`Início: ${inicio}`} />
+          <ChipFim variant="outlined" label={`Fim: ${fim}`} />
         </DatesWrapper>
       </CardContent>
       <CardActions>

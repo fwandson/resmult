@@ -18,8 +18,8 @@ const Turmas: React.FC = () => {
           {data.map((turma) => (
             <Grid key={turma.id} item xs={12} sm={6} md={3}>
               <TurmaCardInfo
-                numPeríodos={12}
-                numVagasOcupadas={12}
+                numPeríodos={turma.numPeríodos}
+                numVagasOcupadas={turma.numVagasOcupadas}
                 id={turma.id}
                 codigo={turma.codigo}
                 nome={turma.nome}
