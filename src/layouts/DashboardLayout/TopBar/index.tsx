@@ -1,23 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   AppBar,
-  Badge,
-  Box,
+  // Badge,
   Hidden,
   IconButton,
   Toolbar,
-  Typography,
   makeStyles,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+// import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
 import { useAuth } from 'src/context/AuthContext';
 import NAMES from 'src/routes/names';
+import { LeftArea, RightArea } from './sytles';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -32,7 +31,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }: any) => {
 
   const history = useHistory();
 
-  const [notifications] = useState([]);
+  // const [notifications] = useState([]);
 
   const { signOut } = useAuth();
 
@@ -44,31 +43,33 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }: any) => {
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
       <Toolbar>
-        <RouterLink to="/">
+        <LeftArea>
+          <Hidden lgUp>
+            <IconButton color="inherit" onClick={onMobileNavOpen}>
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+        </LeftArea>
+        <RouterLink to={NAMES.HOME}>
           <Logo />
         </RouterLink>
-        <Box flexGrow={1} textAlign="center">
-          <Typography variant="h2">Sagu</Typography>
-        </Box>
-        <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" onClick={() => handlerLogout()}>
-            <InputIcon />
-          </IconButton>
-        </Hidden>
-        <Hidden lgUp>
-          <IconButton color="inherit" onClick={onMobileNavOpen}>
-            <MenuIcon />
-          </IconButton>
-        </Hidden>
+        <RightArea>
+          <Hidden mdDown>
+            {/* TODO: ver com o Matheurs se isso vai ficar aqui mesmo */}
+            {/* <IconButton color="inherit">
+              <Badge
+                badgeContent={notifications.length}
+                color="primary"
+                variant="dot"
+              >
+                <NotificationsIcon />
+              </Badge>
+            </IconButton> */}
+            <IconButton color="inherit" onClick={() => handlerLogout()}>
+              <InputIcon />
+            </IconButton>
+          </Hidden>
+        </RightArea>
       </Toolbar>
     </AppBar>
   );
