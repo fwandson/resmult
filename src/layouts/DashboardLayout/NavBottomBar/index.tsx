@@ -2,9 +2,9 @@ import { BottomNavigationAction } from '@material-ui/core';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
 import {
-  Book as BookIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
+  Users as UsersIcon,
 } from 'react-feather';
 import { useHistory, useLocation } from 'react-router';
 import NAMES from 'src/routes/names';
@@ -18,7 +18,7 @@ const items = [
   },
   {
     href: NAMES.TURMAS,
-    icon: <BookIcon />,
+    icon: <UsersIcon />,
     title: 'Turmas',
   },
   {

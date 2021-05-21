@@ -27,12 +27,12 @@ const TypographyPage: React.FC = () => {
         TypographyPage
       </Typography>
       {variants.map((varitant, index) => (
-        <>
-          <Typography key={varitant} variant={varitant} >
+        <div key={index}>
+          <Typography variant={varitant}>
             {varitant}: {textBase}
           </Typography>
           {index !== variants.length && <Divider />}
-        </>
+        </div>
       ))}
     </div>
   );

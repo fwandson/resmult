@@ -2,6 +2,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
   Hidden,
@@ -9,14 +10,16 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
-  Book as BookIcon,
+  Users as UsersIcon,
   PenTool as PenToolIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
+  LogOut as LogOutIcon,
 } from 'react-feather';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
+import { useAuth } from 'src/context/AuthContext';
 import NAMES from 'src/routes/names';
 import NavItem from './NavItem';
 
@@ -32,7 +35,7 @@ const user = {
 const items = [
   {
     href: NAMES.TURMAS,
-    icon: BookIcon,
+    icon: UsersIcon,
     title: 'Minhas Turmas',
   },
   {
@@ -43,7 +46,7 @@ const items = [
   {
     href: NAMES.SETTINGS,
     icon: SettingsIcon,
-    title: 'Settings',
+    title: 'Configurações',
   },
   {
     href: NAMES.TYPOGRAPHY,
@@ -52,7 +55,7 @@ const items = [
   },
 ];
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
     width: 256,
   },
@@ -63,14 +66,25 @@ const useStyles = makeStyles(() => ({
   },
   avatar: {
     cursor: 'pointer',
-    width: 64,
-    height: 64,
+    width: 40,
+    height: 40,
+    marginBottom: theme.spacing(2),
   },
 }));
 
 const NavBar = ({ onMobileClose, openMobile }: any) => {
   const classes = useStyles();
+
   const location = useLocation();
+
+  const { signOut } = useAuth();
+
+  const history = useHistory();
+
+  const handleLogout = useCallback(() => {
+    signOut();
+    history.push(NAMES.LOGIN);
+  }, []);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -80,14 +94,14 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
-      <Box alignItems="center" display="flex" flexDirection="column" p={2}>
+      <Box display="flex" flexDirection="column" p={2}>
         <Avatar
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
           to="/app/account"
         />
-        <Typography color="textPrimary" variant="h5">
+        <Typography color="textPrimary" variant="h6">
           {user.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
@@ -108,6 +122,17 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         </List>
       </Box>
       <Box flexGrow={1} />
+      <Box p={2}>
+        <Button
+          fullWidth
+          color="secondary"
+          variant="outlined"
+          endIcon={<LogOutIcon />}
+          onClick={() => handleLogout()}
+        >
+          Sair
+        </Button>
+      </Box>
     </Box>
   );
 
