@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { CardActions as CardActionsMUI } from '@material-ui/core';
+import styled, { css } from 'styled-components';
+import { CardActions as CardActionsMUI, Chip } from '@material-ui/core';
+import theme from 'src/theme';
 
 export const CardActions = styled(CardActionsMUI)`
   display: flex;
@@ -7,8 +8,30 @@ export const CardActions = styled(CardActionsMUI)`
   justify-content: flex-end;
 `;
 
-export const DatesWrapper = styled.div`
+const wrapper = css`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+  // todos os filhos, menos o primeiro
+  > :not(:first-child) {
+    margin-left: 8px;
+  }
+`;
+
+export const DatesWrapper = styled.div`
+  ${wrapper}
+`;
+
+export const InfoWrapper = styled.span`
+  ${wrapper}
+  margin-bottom: 16px;
+`;
+
+export const ChipInicio = styled(Chip)`
+  color: ${theme.palette.primary.dark};
+  border-color: ${theme.palette.primary.dark};
+`;
+
+export const ChipFim = styled(Chip)`
+  color: ${theme.palette.error.main};
+  border-color: ${theme.palette.error.main};
 `;
