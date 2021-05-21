@@ -2,9 +2,14 @@ import { Grid, Typography } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
 import TurmaCardInfo from 'src/components/TurmaCardInfo';
 import { Container } from './styles';
-import data from './data';
+import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
+import { GetTurmasReturn } from 'src/resources/turmas/types';
 
 const Turmas: React.FC = () => {
+  const { data: turmasData } = useApiWithSwr<GetTurmasReturn>({
+    url: '/residencia-multiprofissional/supervisores/turmas',
+  });
+
   return (
     <>
       <Helmet>
@@ -15,20 +20,21 @@ const Turmas: React.FC = () => {
           Minhas turmas
         </Typography>
         <Grid container spacing={2}>
-          {data.map((turma) => (
-            <Grid key={turma.id} item xs={12} sm={6} md={3}>
+          {turmasData?.turmas.map((turma) => (
+            <Grid key={turma.id} item xs={12} sm={4}>
               <TurmaCardInfo
-                numPeríodos={turma.numPeríodos}
-                numVagasOcupadas={turma.numVagasOcupadas}
+                numPeríodos={turma.quantidadeperiodo}
+                numVagasOcupadas={10} // não tem essa informação na api
                 id={turma.id}
-                codigo={turma.codigo}
-                nome={turma.nome}
-                inicio={turma.inicio}
-                fim={turma.fim}
+                codigo={turma.codigoTurma}
+                nome={turma.descricao}
+                inicio={turma.dataInicio}
+                fim={turma.dataFim}
               />
             </Grid>
           ))}
         </Grid>
+        <pre>{JSON.stringify(turmasData, null, 2)}</pre>
       </Container>
     </>
   );
