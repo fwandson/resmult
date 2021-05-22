@@ -1,10 +1,10 @@
-import { Box, Grid, Typography } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
+import { Box, Grid } from '@material-ui/core';
+import EmptyContentAlert from 'src/components/EmptyContentAlert';
+import GenericContent from 'src/components/GenericContent';
 import TurmaCardInfo from 'src/components/TurmaCardInfo';
-import { Container } from './styles';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
-import { GetTurmasReturn } from 'src/resources/turmas/types';
 import resources from 'src/resources';
+import { GetTurmasReturn } from 'src/resources/turmas/types';
 
 const Turmas: React.FC = () => {
   const { data: turmasData } = useApiWithSwr<GetTurmasReturn>({
@@ -12,14 +12,22 @@ const Turmas: React.FC = () => {
   });
 
   return (
-    <>
-      <Helmet>
-        <title>Turmas | Sagu</title>
-      </Helmet>
-      <Container>
-        <Box marginBottom={4}>
-          <Typography variant="h1">Minhas turmas</Typography>
-        </Box>
+    <GenericContent helmetText="Turmas | Sagu" title="Minhas turmas">
+      <Box display="flex" flexDirection="column" height="100%">
+        {turmasData?.turmas.length === 0 && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            height="100%"
+          >
+            <EmptyContentAlert
+              title="TurmasVazias"
+              subTitle="Parece que não há turmas cadastradas em sue nome, verifique seu acesso com seu administrador."
+            />
+          </Box>
+        )}
         <Grid container spacing={2}>
           {turmasData?.turmas.map((turma) => (
             <Grid key={turma.id} item xs={12} sm={6} md={4}>
@@ -35,8 +43,8 @@ const Turmas: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-      </Container>
-    </>
+      </Box>
+    </GenericContent>
   );
 };
 
