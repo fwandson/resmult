@@ -20,6 +20,7 @@ import {
 } from 'react-feather';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/context/AuthContext';
+import useUserInfo from 'src/hooks/useUserInfo';
 import NAMES from 'src/routes/names';
 import NavItem from './NavItem';
 
@@ -28,8 +29,6 @@ import NavItem from './NavItem';
 const user = {
   avatar:
     'https://avatars.githubusercontent.com/u/1212015?s=400&u=886cb9225f7bce0e75a240523834326ebdfeb49a&v=4',
-  jobTitle: 'Desenvolvedor Pleno',
-  name: 'Ericson Moreira',
 };
 
 const items = [
@@ -81,6 +80,8 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
 
   const history = useHistory();
 
+  const userInfo = useUserInfo();
+
   const handleLogout = useCallback(() => {
     signOut();
     history.push(NAMES.LOGIN);
@@ -102,10 +103,10 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
           to={NAMES.HOME}
         />
         <Typography color="textPrimary" variant="h6">
-          {user.name}
+          {userInfo.nome}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          Perfil: {userInfo.perfil}
         </Typography>
       </Box>
       <Divider />

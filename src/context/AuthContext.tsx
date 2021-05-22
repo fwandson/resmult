@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import api from 'src/api';
+import CONSTANTS from 'src/config';
 import resources from 'src/resources';
 
 // Local history
-export const LH_TOKEN_NAME = '@Sagu:token';
+const { LH_TOKEN_NAME } = CONSTANTS;
 
 interface AuthContextState {
   token: TokenState;
