@@ -1,11 +1,9 @@
 import { IconButton, Tooltip, Typography } from '@material-ui/core';
+import AirplayIcon from '@material-ui/icons/Airplay';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
-import {
-  Airplay as AirplayIcon,
-  Calendar as CalendarIcon,
-  Clock as ClockIcon,
-  Command as CommandIcon,
-} from 'react-feather';
 import { Helmet } from 'react-helmet';
 import SimpleTable from 'src/components/SimpleTable';
 
@@ -13,25 +11,25 @@ const Actions = () => (
   <>
     <Tooltip title="title" arrow>
       <IconButton>
-        <AirplayIcon size={14} />
+        <AirplayIcon />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <CommandIcon size={14} />
+        <ChatBubbleIcon />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <ClockIcon size={14} />
+        <ScheduleIcon />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <CalendarIcon size={14} />
+        <CalendarTodayIcon />
       </IconButton>
     </Tooltip>
   </>

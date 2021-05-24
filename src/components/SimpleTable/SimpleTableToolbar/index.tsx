@@ -4,7 +4,7 @@ import {
   Typography,
   ToolbarProps,
 } from '@material-ui/core';
-import { Filter as FilterIcon } from 'react-feather';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import { Container } from './styles';
 
 interface SimpleTableToolbarProps extends ToolbarProps {
@@ -22,7 +22,7 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
       </Typography>
       <Tooltip title="Filter list">
         <IconButton>
-          <FilterIcon />
+          <FilterListIcon />
         </IconButton>
       </Tooltip>
     </Container>

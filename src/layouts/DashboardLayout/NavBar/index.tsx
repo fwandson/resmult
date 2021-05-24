@@ -11,18 +11,17 @@ import {
   Typography,
 } from '@material-ui/core';
 import { useCallback, useEffect } from 'react';
-import {
-  Users as UsersIcon,
-  PenTool as PenToolIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  LogOut as LogOutIcon,
-} from 'react-feather';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/context/AuthContext';
 import useUserInfo from 'src/hooks/useUserInfo';
 import NAMES from 'src/routes/names';
 import NavItem from './NavItem';
+
+import GroupIcon from '@material-ui/icons/Group';
+import ClassIcon from '@material-ui/icons/Class';
+import SettingsIcon from '@material-ui/icons/Settings';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // TODO: criar um useUserInfo hook para prover os dados do usuário.
 // Tomando cuidado para não prover dados importantes.
@@ -34,12 +33,12 @@ const user = {
 const items = [
   {
     href: NAMES.TURMAS,
-    icon: UsersIcon,
+    icon: GroupIcon,
     title: 'Minhas Turmas',
   },
   {
     href: NAMES.OFERTAS,
-    icon: ShoppingBagIcon,
+    icon: ClassIcon,
     title: 'Ofertas',
   },
   {
@@ -49,7 +48,7 @@ const items = [
   },
   {
     href: NAMES.TYPOGRAPHY,
-    icon: PenToolIcon,
+    icon: BorderColorIcon,
     title: 'Typography',
   },
 ];
@@ -128,7 +127,7 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
           fullWidth
           color="secondary"
           variant="outlined"
-          endIcon={<LogOutIcon />}
+          endIcon={<ExitToAppIcon />}
           onClick={() => handleLogout()}
         >
           Sair

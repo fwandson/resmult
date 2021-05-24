@@ -1,5 +1,5 @@
 import { Box, Typography } from '@material-ui/core';
-import { AlertCircle as AlertCircleIcon } from 'react-feather';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 interface EmptyContentAlertProps {
   title: string;
@@ -18,7 +18,7 @@ const EmptyContentAlert: React.FC<EmptyContentAlertProps> = ({
       maxWidth={406}
       textAlign="center"
     >
-      <AlertCircleIcon size={66.67} />
+      <ErrorOutlineIcon fontSize="large" />
       <Typography variant="h6">{title}</Typography>
       <Typography variant="body1" color="textSecondary">
         {subTitle}

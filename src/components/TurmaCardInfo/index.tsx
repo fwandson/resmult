@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Typography } from '@material-ui/core';
-import { ArrowRight as ArrowRightIcon } from 'react-feather';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useHistory } from 'react-router';
 import NAMES from 'src/routes/names';
 import {
@@ -52,7 +52,7 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
         <Button
           variant="text"
           color="secondary"
-          endIcon={<ArrowRightIcon size={16} />}
+          endIcon={<ArrowForwardIcon />}
           onClick={() =>
             history.push(NAMES.TURMA_DETAILS.replace(':id', String(id)))
           }

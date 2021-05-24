@@ -1,11 +1,9 @@
 import { BottomNavigationAction } from '@material-ui/core';
+import ClassIcon from '@material-ui/icons/Class';
+import GroupIcon from '@material-ui/icons/Group';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
-import {
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  Users as UsersIcon,
-} from 'react-feather';
 import { useHistory, useLocation } from 'react-router';
 import NAMES from 'src/routes/names';
 import { BottomNavigation } from './styles';
@@ -13,12 +11,12 @@ import { BottomNavigation } from './styles';
 const items = [
   {
     href: NAMES.OFERTAS,
-    icon: <ShoppingBagIcon />,
+    icon: <ClassIcon />,
     title: 'Ofertas',
   },
   {
     href: NAMES.TURMAS,
-    icon: <UsersIcon />,
+    icon: <GroupIcon />,
     title: 'Turmas',
   },
   {
