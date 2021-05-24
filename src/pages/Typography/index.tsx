@@ -34,7 +34,14 @@ const TypographyPage: React.FC = () => {
       ))}
       <FiltrosModal
         open={open}
-        filtros={{ turma: 0, periodo: 0, nucleo: 0, enfase: 0 }}
+        filtros={{
+          turma: 0,
+          periodo: 0,
+          nucleo: 0,
+          enfase: 0,
+          inicio: new Date(),
+          fim: new Date(),
+        }}
       />
     </GenericContent>
   );

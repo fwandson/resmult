@@ -7,16 +7,22 @@ import {
   Typography,
   DialogProps,
   Grid,
+  Box,
   Select,
   MenuItem,
+  IconButton,
 } from '@material-ui/core';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
-interface FiltrosModalData {
+export interface FiltrosModalData {
   turma: number;
   periodo: number;
   nucleo: number;
   enfase: number;
+  inicio: Date;
+  fim: Date;
 }
 
 interface FiltrosModalProps extends DialogProps {
@@ -28,31 +34,38 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
 
   return (
     <Dialog open={open} {...rest} fullWidth>
-      <DialogTitle>Filtros</DialogTitle>
+      <DialogTitle>
+        <Grid container justify="space-between" alignItems="center">
+          <Typography variant="h5">Filtros</Typography>
+          <IconButton>
+            <CloseIcon />
+          </IconButton>
+        </Grid>
+      </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Select fullWidth variant="outlined" label="teste">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Select fullWidth variant="outlined">
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Select fullWidth variant="outlined">
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
+            <Select fullWidth variant="outlined">
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <Select fullWidth variant="outlined">
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>
@@ -60,26 +73,45 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
             </Select>
           </Grid>
         </Grid>
-        <Typography gutterBottom>Período de ocorrência</Typography>
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-          value="10/10/2021"
-          onChange={() => {
-            console.log('teste');
-          }}
-        />
+        <Box m={4} />
+        <Typography variant="body1" gutterBottom>
+          Período de ocorrência
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <KeyboardDatePicker
+              disableToolbar
+              format="dd/MM/yyyy"
+              fullWidth
+              label="Início"
+              value={filtros.inicio}
+              onChange={() => {
+                console.log('teste');
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <KeyboardDatePicker
+              disableToolbar
+              format="dd/MM/yyyy"
+              fullWidth
+              label="Fim"
+              value={filtros.fim}
+              onChange={() => {
+                console.log('teste');
+              }}
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
+      <Box m={2} />
       <DialogActions>
-        <Button color="secondary">Limpar</Button>
-        <Button>Aplicar filtros</Button>
+        <Grid container justify="space-between">
+          <Button>Limpar</Button>
+          <Button color="secondary" startIcon={<CheckIcon />}>
+            Aplicar filtros
+          </Button>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

@@ -10,6 +10,7 @@ import { AuthProvider } from './context/AuthContext';
 import { LoadingProvider } from './context/LoadingContext';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import ptBRLocale from 'date-fns/locale/pt-BR';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <BrowserRouter>
         <LoadingProvider>
           <AuthProvider>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBRLocale}>
               <Routes />
             </MuiPickersUtilsProvider>
           </AuthProvider>
