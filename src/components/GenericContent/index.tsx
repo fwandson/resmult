@@ -24,7 +24,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
         <title>{helmetText}</title>
       </Helmet>
       <Box marginBottom={4}>
-        <Typography variant="h1">Minhas turmas</Typography>
+        <Typography variant="h1">{title}</Typography>
       </Box>
       {children}
     </Container>

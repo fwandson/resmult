@@ -1,10 +1,10 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import AirplayIcon from '@material-ui/icons/Airplay';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
-import { Helmet } from 'react-helmet';
+import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
 
 const Actions = () => (
@@ -37,13 +37,7 @@ const Actions = () => (
 
 const Ofertas: React.FC = () => {
   return (
-    <div>
-      <Helmet>
-        <title>Ofertas | Sagu</title>
-      </Helmet>
-      <Typography variant="h1" gutterBottom>
-        Ofertas
-      </Typography>
+    <GenericContent helmetText="Ofertas | Sagu" title="Ofertas">
       <SimpleTable
         title="Residentes"
         headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
@@ -76,7 +70,7 @@ const Ofertas: React.FC = () => {
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
         ]}
       />
-    </div>
+    </GenericContent>
   );
 };
 

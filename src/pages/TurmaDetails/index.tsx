@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router';
+import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
 
 interface TurmaDetailsParams {
@@ -12,13 +12,7 @@ const TurmaDetails: React.FC = () => {
   const { id } = useParams<TurmaDetailsParams>();
 
   return (
-    <div>
-      <Helmet>
-        <title>Turma | Sagu</title>
-      </Helmet>
-      <Typography variant="h1" gutterBottom>
-        Turma
-      </Typography>
+    <GenericContent helmetText="Turma | Sagu" title="Turma">
       <Typography variant="h5" color="primary" gutterBottom>
         Informações da Turma
       </Typography>
@@ -48,7 +42,7 @@ const TurmaDetails: React.FC = () => {
           ['Ericson', 33, 'M'],
         ]}
       />
-    </div>
+    </GenericContent>
   );
 };
 

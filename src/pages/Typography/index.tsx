@@ -1,6 +1,6 @@
-import { Typography, Divider } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 import { Variant } from '@material-ui/core/styles/createTypography';
-import { Helmet } from 'react-helmet';
+import GenericContent from 'src/components/GenericContent';
 
 const textBase =
   'Mussum Ipsum, cacilds vidis litro abertis. Interagi no mé, cursus quis, vehicula ac nisi. Atirei o pau no gatis, per gatis num morreus. ';
@@ -19,13 +19,7 @@ const variants: Variant[] = [
 
 const TypographyPage: React.FC = () => {
   return (
-    <div>
-      <Helmet>
-        <title>TypographyPage | Sagu</title>
-      </Helmet>
-      <Typography variant="h1" gutterBottom>
-        TypographyPage
-      </Typography>
+    <GenericContent helmetText="Typography | Sagu" title="Typography">
       {variants.map((varitant, index) => (
         <div key={index}>
           <Typography variant={varitant}>
@@ -34,7 +28,7 @@ const TypographyPage: React.FC = () => {
           {index !== variants.length && <Divider />}
         </div>
       ))}
-    </div>
+    </GenericContent>
   );
 };
 
