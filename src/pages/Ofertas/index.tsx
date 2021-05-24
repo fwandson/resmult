@@ -11,25 +11,25 @@ const Actions = () => (
   <>
     <Tooltip title="title" arrow>
       <IconButton>
-        <AirplayIcon />
+        <AirplayIcon fontSize="small" />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <ChatBubbleIcon />
+        <ChatBubbleIcon fontSize="small" />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <ScheduleIcon />
+        <ScheduleIcon fontSize="small" />
       </IconButton>
     </Tooltip>
 
     <Tooltip title="title" arrow>
       <IconButton>
-        <CalendarTodayIcon />
+        <CalendarTodayIcon fontSize="small" />
       </IconButton>
     </Tooltip>
   </>
