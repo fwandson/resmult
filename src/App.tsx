@@ -8,6 +8,8 @@ import GlobalStyles from './components/GlobalStyles';
 import CustonToastContainer from './config/CustonToastContainer';
 import { AuthProvider } from './context/AuthContext';
 import { LoadingProvider } from './context/LoadingContext';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       <BrowserRouter>
         <LoadingProvider>
           <AuthProvider>
-            <Routes />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Routes />
+            </MuiPickersUtilsProvider>
           </AuthProvider>
         </LoadingProvider>
       </BrowserRouter>
