@@ -1,20 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Typography,
   DialogProps,
+  DialogTitle,
   Grid,
-  Box,
-  Select,
-  MenuItem,
   IconButton,
+  MenuItem,
+  TextField,
+  Typography,
 } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
+import { KeyboardDatePicker } from '@material-ui/pickers';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface FiltrosModalData {
   turma: number;
@@ -27,17 +29,20 @@ export interface FiltrosModalData {
 
 interface FiltrosModalProps extends DialogProps {
   filtros: FiltrosModalData;
+  handleOnChange(name: string, value: any): void;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+// TODO: adicionar aqui os valores para os campos select { value: any, label: string }
 const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
-  const { open, filtros, ...rest } = props;
+  const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
         <Grid container justify="space-between" alignItems="center">
           <Typography variant="h5">Filtros</Typography>
-          <IconButton>
+          <IconButton onClick={() => setOpen(false)}>
             <CloseIcon />
           </IconButton>
         </Grid>
@@ -45,32 +50,72 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth variant="outlined">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            <TextField
+              select
+              label="Turma"
+              fullWidth
+              variant="outlined"
+              name="turma"
+              onChange={(e) => {
+                handleOnChange('turma', e.target.value);
+              }}
+              value={filtros.turma}
+            >
+              <MenuItem value={1}>Ten</MenuItem>
+              <MenuItem value={2}>Twenty</MenuItem>
+              <MenuItem value={3}>Thirty</MenuItem>
+            </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth variant="outlined">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            <TextField
+              select
+              label="Período"
+              fullWidth
+              variant="outlined"
+              name="periodo"
+              onChange={(e) => {
+                handleOnChange('periodo', e.target.value);
+              }}
+              value={filtros.periodo}
+            >
+              <MenuItem value={1}>Ten</MenuItem>
+              <MenuItem value={2}>Twenty</MenuItem>
+              <MenuItem value={3}>Thirty</MenuItem>
+            </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth variant="outlined">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            <TextField
+              select
+              label="Núcleos profissionais"
+              fullWidth
+              variant="outlined"
+              name="nucleo"
+              onChange={(e) => {
+                handleOnChange('nucleo', e.target.value);
+              }}
+              value={filtros.nucleo}
+            >
+              <MenuItem value={1}>Ten</MenuItem>
+              <MenuItem value={2}>Twenty</MenuItem>
+              <MenuItem value={3}>Thirty</MenuItem>
+            </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth variant="outlined">
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            <TextField
+              select
+              label="Ênfases"
+              fullWidth
+              variant="outlined"
+              name="enfase"
+              onChange={(e) => {
+                handleOnChange('enfase', e.target.value);
+              }}
+              value={filtros.enfase}
+            >
+              <MenuItem value={1}>Ten</MenuItem>
+              <MenuItem value={2}>Twenty</MenuItem>
+              <MenuItem value={3}>Thirty</MenuItem>
+            </TextField>
           </Grid>
         </Grid>
         <Box m={4} />
@@ -80,25 +125,27 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <KeyboardDatePicker
+              name="inicio"
               disableToolbar
               format="dd/MM/yyyy"
               fullWidth
               label="Início"
               value={filtros.inicio}
-              onChange={() => {
-                console.log('teste');
+              onChange={(date) => {
+                handleOnChange('inicio', date);
               }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <KeyboardDatePicker
+              name="fim"
               disableToolbar
               format="dd/MM/yyyy"
               fullWidth
               label="Fim"
               value={filtros.fim}
-              onChange={() => {
-                console.log('teste');
+              onChange={(date) => {
+                handleOnChange('fim', date);
               }}
             />
           </Grid>
