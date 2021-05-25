@@ -43,6 +43,7 @@ const TypographyPage: React.FC = () => {
         </div>
       ))}
       <FiltrosModal filtros={filtros} {...rest} />
+      <pre>{JSON.stringify(filtros, null, 2)}</pre>
     </GenericContent>
   );
 };

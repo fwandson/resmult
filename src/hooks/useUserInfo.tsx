@@ -19,9 +19,6 @@ function useUserInfo(): UserInforData {
     if (token) {
       const { data } = jwt.decode(token) as { data: UserInforData };
 
-      // TODO: remover
-      console.table(data);
-
       return data;
     }
 
