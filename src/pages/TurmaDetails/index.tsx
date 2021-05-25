@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
+import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
 import { GetOfertasNames } from 'src/resources/turmas/types';
@@ -29,7 +30,11 @@ const TurmaDetails: React.FC = () => {
   };
 
   return (
-    <GenericContent helmetText="Ofertas | Sagu" title={`Turma ${id}`}>
+    <GenericContent
+      helmetText="Ofertas | Sagu"
+      title={`Turma ${id}`}
+      letfTitleContent={<SearchField />}
+    >
       <SimpleTable
         title={'Ofertas'}
         headCells={['Nome', 'Semestre', 'Módulo', 'Carga horaria']}
