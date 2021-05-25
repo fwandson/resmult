@@ -1,9 +1,12 @@
-export interface LoginParams {
-  usuario: string;
-  senha: string;
-}
+export declare namespace LoginNames {
+  export const url = '/auth';
+  export interface Params {
+    usuario: string;
+    senha: string;
+  }
 
-export interface LoginReturn {
-  login: string;
-  access_token: string;
+  export interface Return {
+    login: string;
+    access_token: string;
+  }
 }

@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
-import { GetOfertasTurmasReturn } from 'src/resources/turmas/types';
+import { GetOfertasNames } from 'src/resources/turmas/types';
 
 interface TurmaDetailsParams {
   id: string;
@@ -12,7 +12,7 @@ interface TurmaDetailsParams {
 const TurmaDetails: React.FC = () => {
   const { id } = useParams<TurmaDetailsParams>();
 
-  const { data: ofertasReturnData } = useApiWithSwr<GetOfertasTurmasReturn>({
+  const { data: ofertasReturnData } = useApiWithSwr<GetOfertasNames.Return>({
     url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
   });
 

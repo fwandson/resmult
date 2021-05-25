@@ -1,13 +1,13 @@
 import { AxiosResponse } from 'axios';
 import api from 'src/api';
-import { LoginParams, LoginReturn } from './types';
-
-const base = '/auth';
+import RESOURCE_URLS from '../names';
+import { LoginNames } from './types';
 
 const autentication = {
-  base,
-  login: (params: LoginParams): Promise<AxiosResponse<LoginReturn>> =>
-    api.post(base, params),
+  login: (
+    params: LoginNames.Params
+  ): Promise<AxiosResponse<LoginNames.Return>> =>
+    api.post(RESOURCE_URLS.LOGIN, params),
 };
 
 export default autentication;

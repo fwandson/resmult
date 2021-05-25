@@ -3,12 +3,12 @@ import EmptyContentAlert from 'src/components/EmptyContentAlert';
 import GenericContent from 'src/components/GenericContent';
 import TurmaCardInfo from 'src/components/TurmaCardInfo';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
-import resources from 'src/resources';
-import { GetTurmasReturn } from 'src/resources/turmas/types';
+import RESOURCE_URLS from 'src/resources/names';
+import { GetNames } from 'src/resources/turmas/types';
 
 const Turmas: React.FC = () => {
-  const { data: turmasData } = useApiWithSwr<GetTurmasReturn>({
-    url: resources.turmas.base,
+  const { data: turmasData } = useApiWithSwr<GetNames.Return>({
+    url: RESOURCE_URLS.GET_TURMAS,
   });
 
   return (

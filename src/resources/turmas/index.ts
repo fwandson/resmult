@@ -1,14 +1,15 @@
 import { AxiosResponse } from 'axios';
 import api from 'src/api';
-import { GetOfertasTurmasReturn, GetTurmasReturn } from './types';
-
-const base = '/residencia-multiprofissional/supervisores/turmas';
+import RESOURCE_URLS from '../names';
+import { GetOfertasNames, GetNames } from './types';
 
 const turmas = {
-  base,
-  get: (): Promise<AxiosResponse<GetTurmasReturn>> => api.get(base),
-  getOfertas: (id: number): Promise<AxiosResponse<GetOfertasTurmasReturn>> =>
-    api.get(`/residencia-multiprofissional/supervisores/turma/${id}/ofertas`),
+  get: (): Promise<AxiosResponse<GetNames.Return>> =>
+    api.get(RESOURCE_URLS.GET_TURMAS),
+  getOfertas: (
+    params: GetOfertasNames.Params
+  ): Promise<AxiosResponse<GetOfertasNames.Return>> =>
+    api.get(RESOURCE_URLS.GET_TURMAS_OFERTAS.replace(':id', String(params.id))),
 };
 
 export default turmas;
