@@ -1,8 +1,27 @@
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import { useState } from 'react';
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Typography,
+} from '@material-ui/core';
+import { ReactNode, useState } from 'react';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { uniqueId } from 'lodash';
 
-const ActionsMenu: React.FC = () => {
+interface ActionsMenuData {
+  label: string;
+  icon?: ReactNode;
+  action?(): void;
+}
+
+interface ActionsMenuProps {
+  data: ActionsMenuData[];
+}
+
+const ActionsMenu: React.FC<ActionsMenuProps> = (props) => {
+  const { data } = props;
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,9 +48,18 @@ const ActionsMenu: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        {data.map(({ icon, label, action }) => (
+          <MenuItem
+            key={uniqueId()}
+            onClick={() => {
+              if (action) action();
+            }}
+          >
+            {icon && <ListItemIcon>{icon}</ListItemIcon>}
+
+            <Typography>{label}</Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );
