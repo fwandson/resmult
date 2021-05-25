@@ -1,7 +1,8 @@
-import { Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
+import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
+import { GetOfertasTurmasReturn } from 'src/resources/turmas/types';
 
 interface TurmaDetailsParams {
   id: string;
@@ -11,37 +12,30 @@ interface TurmaDetailsParams {
 const TurmaDetails: React.FC = () => {
   const { id } = useParams<TurmaDetailsParams>();
 
+  const { data: ofertasReturnData } = useApiWithSwr<GetOfertasTurmasReturn>({
+    url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
+  });
+
+  const handleRows = () => {
+    if (ofertasReturnData) {
+      return ofertasReturnData.ofertasModulos.map((oferta) => [
+        oferta.nome,
+        oferta.semestre,
+        oferta.modulo.nome,
+        `${oferta.cargahoraria} horas`,
+      ]);
+    }
+    return [];
+  };
+
   return (
-    <GenericContent helmetText="Turma | Sagu" title="Turma">
-      <Typography variant="h5" color="primary" gutterBottom>
-        Informações da Turma
-      </Typography>
-      <Typography variant="h5" color="primary" gutterBottom>
-        Informações da Turma
-      </Typography>
-      <Typography variant="h5" color="primary" gutterBottom>
-        Informações da Turma
-      </Typography>
+    <GenericContent helmetText="Turma | Sagu" title={`Turma ${id}`}>
       <SimpleTable
-        title={`Ofertas da Turma ${id}`}
-        headCells={['Nome aluno', 'Idade', 'Sexo']}
-        rows={[
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-          ['Ericson', 33, 'M'],
-        ]}
+        title={'Ofertas'}
+        headCells={['Nome', 'Semestre', 'Módulo', 'Carga horaria']}
+        rows={handleRows()}
       />
+      {/* <pre>{JSON.stringify(ofertasReturnData, null, 2)}</pre> */}
     </GenericContent>
   );
 };
