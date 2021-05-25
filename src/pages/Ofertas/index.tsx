@@ -4,6 +4,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
+import ActionsMenu from 'src/components/ActionsMenu';
 import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
 
@@ -42,32 +43,32 @@ const Ofertas: React.FC = () => {
         title="Residentes"
         headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
         rows={[
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
+          ['Ericson', 33, 'M', <ActionsMenu key={uniqueId()} />],
         ]}
       />
     </GenericContent>
