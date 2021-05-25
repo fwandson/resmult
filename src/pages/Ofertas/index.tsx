@@ -1,8 +1,10 @@
+import { TextField, InputAdornment } from '@material-ui/core';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
 import ActionsMenu from 'src/components/ActionsMenu';
 import GenericContent from 'src/components/GenericContent';
 import SimpleTable from 'src/components/SimpleTable';
+import SearchIcon from '@material-ui/icons/Search';
 
 const Actions = () => (
   <ActionsMenu
@@ -14,9 +16,27 @@ const Actions = () => (
   />
 );
 
+const SearchField = () => (
+  <TextField
+    variant="outlined"
+    label="Buscar"
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchIcon color="action" />
+        </InputAdornment>
+      ),
+    }}
+  />
+);
+
 const Ofertas: React.FC = () => {
   return (
-    <GenericContent helmetText="Ofertas | Sagu" title="Ofertas">
+    <GenericContent
+      helmetText="Ofertas | Sagu"
+      title="Ofertas"
+      letfTitleContent={<SearchField />}
+    >
       <SimpleTable
         title="Residentes"
         headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
