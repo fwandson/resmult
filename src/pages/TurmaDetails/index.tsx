@@ -29,7 +29,7 @@ const TurmaDetails: React.FC = () => {
   };
 
   return (
-    <GenericContent helmetText="Turma | Sagu" title={`Turma ${id}`}>
+    <GenericContent helmetText="Ofertas | Sagu" title={`Turma ${id}`}>
       <SimpleTable
         title={'Ofertas'}
         headCells={['Nome', 'Semestre', 'Módulo', 'Carga horaria']}
