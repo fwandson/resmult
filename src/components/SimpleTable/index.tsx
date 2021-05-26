@@ -8,10 +8,10 @@ import {
   TableBody,
   TablePagination,
 } from '@material-ui/core';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import SimpleTableToolbar from './SimpleTableToolbar';
 
-type RowElement = string | number | JSX.Element;
+type RowElement = string | number | ReactNode;
 
 interface SimpleTableProps {
   title: string;

@@ -1,9 +1,13 @@
 import { Box, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
+import FiltrosModal, {
+  FiltrosModalData,
+} from 'src/components/modals/FiltrosModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import { GetOfertasNames } from 'src/resources/turmas/types';
 
 interface TurmaDetailsParams {
@@ -43,13 +47,42 @@ const TurmaDetails: React.FC = () => {
     url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
   });
 
+  const { filtros, setOpen, ...rest } = useFiltrosModal<FiltrosModalData>({
+    turma: 0,
+    periodo: 0,
+    nucleo: 0,
+    enfase: 0,
+    inicio: new Date(),
+    fim: new Date(),
+  });
+
   const handleRows = () => {
     if (ofertasReturnData) {
       return ofertasReturnData.ofertasModulos.map((oferta) => [
-        oferta.nome,
-        oferta.semestre,
-        oferta.modulo.nome,
-        `${oferta.cargahoraria} horas`,
+        <Box key="nome" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            000
+          </Typography>
+          <Typography variant="caption">{oferta.nome}</Typography>
+        </Box>,
+        <Box key="semestre" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            000
+          </Typography>
+          <Typography variant="caption">{oferta.semestre}</Typography>
+        </Box>,
+        <Box key="modulo" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            000
+          </Typography>
+          <Typography variant="caption">{oferta.modulo.nome}</Typography>
+        </Box>,
+        <Box key="cargahoraria" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            000
+          </Typography>
+          <Typography variant="caption">{`${oferta.cargahoraria} horas`}</Typography>
+        </Box>,
       ]);
     }
     return [];
@@ -64,10 +97,11 @@ const TurmaDetails: React.FC = () => {
       <TurmaInfo />
       <SimpleTable
         title={'Ofertas'}
+        onClickFilterButton={() => setOpen(true)}
         headCells={['Nome', 'Semestre', 'Módulo', 'CH']}
         rows={handleRows()}
       />
-      {/* <pre>{JSON.stringify(ofertasReturnData, null, 2)}</pre> */}
+      <FiltrosModal setOpen={setOpen} filtros={filtros} {...rest} />
     </GenericContent>
   );
 };
