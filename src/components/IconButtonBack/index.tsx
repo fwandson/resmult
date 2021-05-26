@@ -7,7 +7,7 @@ const IconButtonBack: React.FC<IconButtonProps> = (props) => {
 
   return (
     <IconButton {...props} onClick={() => history.go(-1)}>
-      <ArrowBackIcon />
+      <ArrowBackIcon fontSize="small" />
     </IconButton>
   );
 };

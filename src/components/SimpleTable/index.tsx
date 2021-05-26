@@ -17,11 +17,12 @@ interface SimpleTableProps {
   title: string;
   headCells: string[];
   rows: RowElement[][];
+  onClickFilterButton?(): void;
 }
 
 // Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
-  const { headCells, rows, title } = props;
+  const { headCells, rows, title, onClickFilterButton } = props;
 
   const [page, setPage] = useState(0);
 
@@ -41,7 +42,11 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
 
   return (
     <TableContainer component={Paper}>
-      <SimpleTableToolbar title={title} disableGutters />
+      <SimpleTableToolbar
+        title={title}
+        onClickFilterButton={onClickFilterButton}
+        disableGutters
+      />
       <Table>
         <TableHead>
           <TableRow>

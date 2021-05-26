@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { FiltrosModalData } from 'src/components/modals/FiltrosModal';
 
+// TODO: deixar isso aqui customizável usando <T>
 function useFiltrosModal(initialData: FiltrosModalData, initalOpen = false) {
   const [open, setOpen] = useState(initalOpen);
 
