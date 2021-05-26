@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
-import { FiltrosModalData } from 'src/components/modals/FiltrosModal';
 
-// TODO: deixar isso aqui customizável usando <T>
-function useFiltrosModal(initialData: FiltrosModalData, initalOpen = false) {
+function useFiltrosModal<T extends { [key: string]: any }>(
+  initialData: T,
+  initalOpen = false
+) {
   const [open, setOpen] = useState(initalOpen);
 
-  const [filtros, setFiltros] = useState<FiltrosModalData>(initialData);
+  const [filtros, setFiltros] = useState<T>(initialData);
 
   const handleOnChange = (name: string, value: any) => {
     setFiltros((old) => ({
