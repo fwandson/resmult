@@ -2,7 +2,9 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
 import ActionsMenu from 'src/components/ActionsMenu';
 import GenericContent from 'src/components/GenericContent';
-import FiltrosModal from 'src/components/modals/FiltrosModal';
+import FiltrosModal, {
+  FiltrosModalData,
+} from 'src/components/modals/FiltrosModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
@@ -18,7 +20,7 @@ const Actions = () => (
 );
 
 const Ofertas: React.FC = () => {
-  const { filtros, setOpen, ...rest } = useFiltrosModal({
+  const { filtros, setOpen, ...rest } = useFiltrosModal<FiltrosModalData>({
     turma: 0,
     periodo: 0,
     nucleo: 0,
@@ -38,23 +40,6 @@ const Ofertas: React.FC = () => {
         onClickFilterButton={() => setOpen(true)}
         headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
         rows={[
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],

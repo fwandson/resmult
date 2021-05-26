@@ -33,7 +33,7 @@ interface FiltrosModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-// TODO: adicionar aqui os valores para os campos select { value: any, label: string }
+// TODO: mudar o nome desse component para FiltrosOfertasModal
 const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
