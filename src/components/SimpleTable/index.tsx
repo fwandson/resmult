@@ -13,7 +13,7 @@ import SimpleTableToolbar from './SimpleTableToolbar';
 
 type RowElement = string | number | ReactNode;
 
-interface SimpleTableProps {
+export interface SimpleTableProps {
   title: string;
   headCells: string[];
   rows: RowElement[][];

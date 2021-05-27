@@ -7,6 +7,38 @@ import CustonToastContainer from "src/config/CustonToastContainer";
 import { LoadingProvider } from "src/context/LoadingContext";
 import theme from "src/theme";
 import sbTheme from "./sbTheme";
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
+
+const customViewports = {
+  xsMUI: {
+    name: "XS Material UI",
+    styles: {
+      width: "600px",
+      height: "100%",
+    },
+  },
+  smMUI: {
+    name: "SM Material UI",
+    styles: {
+      width: "960px",
+      height: "100%",
+    },
+  },
+  mdMUI: {
+    name: "MD Material UI",
+    styles: {
+      width: "1280px",
+      height: "100%",
+    },
+  },
+  lgMUI: {
+    name: "LG Material UI",
+    styles: {
+      width: "1920px",
+      height: "100%",
+    },
+  },
+};
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -18,6 +50,9 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  viewport: {
+    viewports: { ...MINIMAL_VIEWPORTS, ...customViewports },
   },
 };
 
