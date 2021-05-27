@@ -22,8 +22,9 @@ A **solução de gestão acadêmica (SAGU)** tem o objetivo de automatizar os pr
 - [react-router-dom](https://reactrouter.com/web/guides/quick-start): Gerenciador de rotas no React.
 - [react-text-mask](https://github.com/text-mask/text-mask): Biblioteca de máscaras de `inputs` para React.
 - [react-toastify](https://fkhadra.github.io/react-toastify/introduction): Notificações estilizadas para o React.
-- [styled-components](link): Use os melhores bits de ES6 e CSS para estilizar seus aplicativos sem estresse 💅🏾.
-- [yup](link): Validações com JS. (Nesse projeto, usamos ele em conjunto com o `react-hook-form`).
+- [styled-components](https://styled-components.com/): Use os melhores bits de ES6 e CSS para estilizar seus aplicativos sem estresse 💅🏾.
+- [yup](https://github.com/jquense/yup): Validações com JS. (Nesse projeto, usamos ele em conjunto com o `react-hook-form`).
+- [storybook](https://storybook.js.org/): Storybook é uma ferramenta de código aberto para construir componentes de interface do usuário e páginas de forma isolada. Ele agiliza o desenvolvimento, teste e documentação da IU.
 
 ## Como Testar
 
@@ -48,3 +49,8 @@ Abra [http://localhost:3000](http://localhost:3000) para vê-lo no navegador.
 
 Compila o aplicativo para produção na pasta `build`.\
 Ele agrupa corretamente o React no modo de produção e otimiza a construção para o melhor desempenho.
+
+### `yarn storybook`
+
+Executa o aplicativo no modo storybook.\
+Abra [http://localhost:6006/](http://localhost:6006/) para vê-lo no navegador.

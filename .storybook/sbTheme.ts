@@ -2,9 +2,10 @@ import { create } from "@storybook/theming";
 
 const sbTheme = create({
   base: "dark",
-  brandTitle: "My custom storybook",
+  brandTitle: "Sagu Storybook",
+  // TODO: colocar a url do projeto
   // brandUrl: "https://example.com",
-  // brandImage: "https://place-hold.it/350x150",
+  brandImage: "./static/logo.svg",
 });
 
 export default sbTheme;
