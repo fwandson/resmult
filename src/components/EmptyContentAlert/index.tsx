@@ -1,7 +1,7 @@
 import { Box, Typography } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
-interface EmptyContentAlertProps {
+export interface EmptyContentAlertProps {
   title: string;
   subTitle: string;
 }
