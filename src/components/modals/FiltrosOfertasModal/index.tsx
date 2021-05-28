@@ -33,7 +33,6 @@ export interface FiltrosOfertasModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-// TODO: mudar o nome desse component para FiltrosOfertasModal
 const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 

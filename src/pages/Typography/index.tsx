@@ -25,7 +25,7 @@ const TypographyPage: React.FC = () => {
           <Typography variant={varitant}>
             {varitant}: {textBase}
           </Typography>
-          {index !== variants.length && <Divider />}
+          {index !== variants.length - 1 && <Divider />}
         </div>
       ))}
     </GenericContent>
