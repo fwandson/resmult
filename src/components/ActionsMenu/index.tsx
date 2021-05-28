@@ -4,6 +4,7 @@ import {
   MenuItem,
   ListItemIcon,
   Typography,
+  IconButtonProps,
 } from '@material-ui/core';
 import { ReactNode, useState } from 'react';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -15,12 +16,12 @@ interface ActionsMenuData {
   action?(): void;
 }
 
-interface ActionsMenuProps {
+export interface ActionsMenuProps extends IconButtonProps {
   data: ActionsMenuData[];
 }
 
 const ActionsMenu: React.FC<ActionsMenuProps> = (props) => {
-  const { data } = props;
+  const { data, ...rest } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -35,6 +36,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = (props) => {
   return (
     <div>
       <IconButton
+        {...rest}
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}

@@ -14,7 +14,7 @@ const Template: Story<GenericContentProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  title: 'title',
+  title: 'Coloque aqui seu Título',
   helmetText: 'helmetText',
   letfTitleContent: '',
 };
