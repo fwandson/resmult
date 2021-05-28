@@ -3,8 +3,7 @@ import { create } from "@storybook/theming";
 const sbTheme = create({
   base: "dark",
   brandTitle: "Sagu Storybook",
-  // TODO: colocar a url do projeto
-  // brandUrl: "https://example.com",
+  brandUrl: "https://www.esp.ce.gov.br/",
   brandImage: "./static/logo.svg",
 });
 
