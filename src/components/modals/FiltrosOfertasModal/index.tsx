@@ -18,7 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { Dispatch, SetStateAction } from 'react';
 
-export interface FiltrosModalData {
+export interface FiltrosOfertasModalData {
   turma: number;
   periodo: number;
   nucleo: number;
@@ -27,14 +27,14 @@ export interface FiltrosModalData {
   fim: Date;
 }
 
-interface FiltrosModalProps extends DialogProps {
-  filtros: FiltrosModalData;
+export interface FiltrosOfertasModalProps extends DialogProps {
+  filtros: FiltrosOfertasModalData;
   handleOnChange(name: string, value: any): void;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 // TODO: mudar o nome desse component para FiltrosOfertasModal
-const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
+const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
   return (
@@ -164,4 +164,4 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
   );
 };
 
-export default FiltrosModal;
+export default FiltrosOfertasModal;

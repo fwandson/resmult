@@ -2,9 +2,9 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
 import ActionsMenu from 'src/components/ActionsMenu';
 import GenericContent from 'src/components/GenericContent';
-import FiltrosModal, {
-  FiltrosModalData,
-} from 'src/components/modals/FiltrosModal';
+import FiltrosOfertasModal, {
+  FiltrosOfertasModalData,
+} from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
@@ -20,7 +20,11 @@ const Actions = () => (
 );
 
 const Ofertas: React.FC = () => {
-  const { filtros, setOpen, ...rest } = useFiltrosModal<FiltrosModalData>({
+  const {
+    filtros,
+    setOpen,
+    ...rest
+  } = useFiltrosModal<FiltrosOfertasModalData>({
     turma: 0,
     periodo: 0,
     nucleo: 0,
@@ -51,7 +55,7 @@ const Ofertas: React.FC = () => {
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
         ]}
       />
-      <FiltrosModal setOpen={setOpen} filtros={filtros} {...rest} />
+      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
     </GenericContent>
   );
 };

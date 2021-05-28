@@ -1,9 +1,9 @@
 import { Box, Typography } from '@material-ui/core';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
-import FiltrosModal, {
-  FiltrosModalData,
-} from 'src/components/modals/FiltrosModal';
+import FiltrosOfertasModal, {
+  FiltrosOfertasModalData,
+} from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
@@ -47,7 +47,11 @@ const TurmaDetails: React.FC = () => {
     url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
   });
 
-  const { filtros, setOpen, ...rest } = useFiltrosModal<FiltrosModalData>({
+  const {
+    filtros,
+    setOpen,
+    ...rest
+  } = useFiltrosModal<FiltrosOfertasModalData>({
     turma: 0,
     periodo: 0,
     nucleo: 0,
@@ -101,7 +105,7 @@ const TurmaDetails: React.FC = () => {
         headCells={['Nome', 'Semestre', 'Módulo', 'CH']}
         rows={handleRows()}
       />
-      <FiltrosModal setOpen={setOpen} filtros={filtros} {...rest} />
+      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
     </GenericContent>
   );
 };
