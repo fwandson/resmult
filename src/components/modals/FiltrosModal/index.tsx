@@ -42,7 +42,7 @@ const FiltrosModal: React.FC<FiltrosModalProps> = (props) => {
       <DialogTitle>
         <Grid container justify="space-between" alignItems="center">
           <Typography variant="h5">Filtros</Typography>
-          <IconButton onClick={() => setOpen(false)}>
+          <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
         </Grid>

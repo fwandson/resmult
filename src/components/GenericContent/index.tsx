@@ -10,7 +10,7 @@ export const Container = styled.div`
   height: 100%;
 `;
 
-interface GenericContentProps {
+export interface GenericContentProps {
   helmetText: string;
   title: string;
   letfTitleContent?: ReactNode;
@@ -23,7 +23,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
   letfTitleContent,
 }) => {
   return (
-    <Container>
+    <Box display="flex" flexDirection="column" height="100%">
       <Helmet>
         <title>{helmetText}</title>
       </Helmet>
@@ -40,7 +40,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
         {letfTitleContent}
       </Box>
       {children}
-    </Container>
+    </Box>
   );
 };
 
