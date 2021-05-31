@@ -11,6 +11,7 @@ import Ofertas from 'src/pages/Ofertas';
 import TurmaDetails from 'src/pages/TurmaDetails';
 import TypographyPage from 'src/pages/Typography';
 import LoginLaytout from 'src/layouts/LoginLaytout';
+import FaltasRegistro from 'src/pages/FaltasRegistro';
 
 const Routes = () => {
   return (
@@ -41,6 +42,12 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.OFERTAS}
         component={Ofertas}
+        isPrivate
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.FALTAS_REGISTRO}
+        component={FaltasRegistro}
         isPrivate
       />
       <RouterWithLayout

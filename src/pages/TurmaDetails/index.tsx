@@ -6,6 +6,7 @@ import FiltrosOfertasModal, {
 } from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
+import TurmaInfo from 'src/components/TurmaInfo';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import { GetOfertasNames } from 'src/resources/turmas/types';
@@ -13,32 +14,6 @@ import { GetOfertasNames } from 'src/resources/turmas/types';
 interface TurmaDetailsParams {
   id: string;
 }
-
-const TurmaInfo = () => (
-  <Box display="flex" alignItems="center" justifyContent="space-between" mb={4}>
-    <Box display="flex" flexDirection="column">
-      <Typography variant="body2" color="textSecondary">
-        T2HOSPITALAR
-      </Typography>
-      <Typography variant="h6">Turma || - Hospitalar</Typography>
-    </Box>
-    <Box display="flex">
-      <Box display="flex" flexDirection="column">
-        <Typography variant="body2" color="textSecondary">
-          INÍCIO
-        </Typography>
-        <Typography>20/20/2020</Typography>
-      </Box>
-      <Box m={1} />
-      <Box display="flex" flexDirection="column">
-        <Typography variant="body2" color="textSecondary">
-          FIM
-        </Typography>
-        <Typography>21/21/2021</Typography>
-      </Box>
-    </Box>
-  </Box>
-);
 
 const TurmaDetails: React.FC = () => {
   const { id } = useParams<TurmaDetailsParams>();
@@ -98,7 +73,12 @@ const TurmaDetails: React.FC = () => {
       title={'Ofertas da Turma'}
       letfTitleContent={<SearchField />}
     >
-      <TurmaInfo />
+      <TurmaInfo
+        cod="T2HOSPITALAR"
+        nome="Turma || - Hospitalar"
+        inicio="20/20/2020"
+        fim="20/20/2020"
+      />
       <SimpleTable
         title={'Ofertas'}
         onClickFilterButton={() => setOpen(true)}
