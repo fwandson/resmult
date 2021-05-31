@@ -20,6 +20,11 @@ export declare namespace GetOfertasNames {
     id: number;
   }
 
+  export interface TipoCargaHoraria {
+    tipo: string;
+    cargahoraria: string;
+  }
+
   export interface OfertasModulo {
     id: number;
     dataInicio: string;
@@ -38,6 +43,7 @@ export declare namespace GetOfertasNames {
     modulo: Modulo;
     cargahoraria: string;
     unidadetematicaid: number;
+    tipoCargaHoraria: TipoCargaHoraria[];
   }
 
   export interface Params {
@@ -48,5 +54,3 @@ export declare namespace GetOfertasNames {
     ofertasModulos: OfertasModulo[];
   }
 }
-
-// Get Ofertas Turma
