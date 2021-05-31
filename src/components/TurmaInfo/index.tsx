@@ -5,10 +5,12 @@ export interface TurmaInfoProps {
   cod: string;
   inicio: string;
   fim: string;
+  cargaHoraria?: number;
+  periodo?: string;
 }
 
 const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
-  const { nome, cod, inicio, fim } = props;
+  const { nome, cod, inicio, fim, cargaHoraria, periodo } = props;
 
   return (
     <Box
@@ -24,13 +26,29 @@ const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
         <Typography variant="h6">{nome}</Typography>
       </Box>
       <Box display="flex">
-        <Box display="flex" flexDirection="column">
+        {cargaHoraria && (
+          <Box display="flex" flexDirection="column" mr={1}>
+            <Typography variant="body2" color="textSecondary">
+              CH PREVISTA
+            </Typography>
+            <Typography>{cargaHoraria}</Typography>
+          </Box>
+        )}
+        {periodo && (
+          <Box display="flex" flexDirection="column" mr={1}>
+            <Typography variant="body2" color="textSecondary">
+              PERÍODO
+            </Typography>
+            <Typography>{periodo}</Typography>
+          </Box>
+        )}
+
+        <Box display="flex" flexDirection="column" mr={1}>
           <Typography variant="body2" color="textSecondary">
             INÍCIO
           </Typography>
           <Typography>{inicio}</Typography>
         </Box>
-        <Box m={1} />
         <Box display="flex" flexDirection="column">
           <Typography variant="body2" color="textSecondary">
             FIM

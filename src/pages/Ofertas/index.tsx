@@ -1,3 +1,4 @@
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
 import ActionsMenu from 'src/components/ActionsMenu';
@@ -9,17 +10,18 @@ import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 
-const Actions = () => (
-  <ActionsMenu
-    data={[
-      { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },
-      { label: 'Editar', icon: <ScheduleIcon fontSize="small" /> },
-      { label: 'Deletar', icon: <ScheduleIcon fontSize="small" /> },
-    ]}
-  />
-);
-
 const Ofertas: React.FC = () => {
+  const Actions = () => (
+    <ActionsMenu
+      data={[
+        { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Editar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Deletar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Faltas', icon: <EventAvailableIcon fontSize="small" /> },
+      ]}
+    />
+  );
+
   const {
     filtros,
     setOpen,

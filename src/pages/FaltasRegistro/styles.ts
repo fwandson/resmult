@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 export const SaveButton = styled(Fab)`
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 12px;
+  bottom: 48px;
 
   svg {
     margin-right: 12px;

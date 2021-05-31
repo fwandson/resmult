@@ -54,3 +54,53 @@ export declare namespace GetOfertasNames {
     ofertasModulos: OfertasModulo[];
   }
 }
+
+export declare namespace GetResidentesNames {
+  export interface Person {
+    id: number;
+    name: string;
+  }
+
+  export interface Enfase {
+    id: number;
+    descricao: string;
+  }
+
+  export interface NucleoProfissional {
+    id: number;
+    descricao: string;
+  }
+
+  export interface Turma {
+    descricao: string;
+  }
+
+  export interface InstituicaoFormadoraPerson {
+    name: string;
+  }
+
+  export interface InstituicaoExecutoraPerson {
+    name: string;
+  }
+
+  export interface Residente {
+    id: number;
+    inicio: string;
+    fimPrevisto: string;
+    person: Person;
+    enfase: Enfase;
+    nucleoProfissional: NucleoProfissional;
+    turma: Turma;
+    instituicaoFormadoraPerson: InstituicaoFormadoraPerson;
+    instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
+  }
+
+  export interface Return {
+    residentes: Residente[];
+  }
+
+  export interface Params {
+    idTurma: number;
+    idOferta: number;
+  }
+}

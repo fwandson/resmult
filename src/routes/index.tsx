@@ -37,18 +37,21 @@ const Routes = () => {
         path={NAMES.TURMA_DETAILS}
         component={TurmaDetails}
         isPrivate
+        exact
       />
       <RouterWithLayout
         layout={DashboardLayout}
         path={NAMES.OFERTAS}
         component={Ofertas}
         isPrivate
+        exact
       />
       <RouterWithLayout
         layout={DashboardLayout}
         path={NAMES.FALTAS_REGISTRO}
         component={FaltasRegistro}
         isPrivate
+        exact
       />
       <RouterWithLayout
         layout={DashboardLayout}

@@ -4,7 +4,7 @@ export default {
   LOGIN: '/login',
   TURMAS: '/turmas',
   TURMA_DETAILS: '/turmas/:id',
-  FALTAS_REGISTRO: '/faltas/registro',
+  FALTAS_REGISTRO: '/turmas/:idTurma/faltas/:idOferta/registro',
   OFERTAS: '/ofertas',
   DASHBOARD: '/dashboard',
   SETTINGS: '/settings',
