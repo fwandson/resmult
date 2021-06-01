@@ -14,6 +14,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
 import NAMES from 'src/routes/names';
+import RESOURCE_URLS from 'src/resources/names';
 interface TurmaDetailsParams {
   id: string;
 }
@@ -24,7 +25,7 @@ const TurmaDetails: React.FC = () => {
   const history = useHistory();
 
   const { data: ofertasReturnData } = useApiWithSwr<GetOfertasNames.Return>({
-    url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
+    url: RESOURCE_URLS.GET_TURMAS_OFERTAS.replace(':id', id),
   });
 
   const {

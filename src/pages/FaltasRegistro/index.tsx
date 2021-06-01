@@ -4,15 +4,21 @@ import GenericContent from 'src/components/GenericContent';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
+import useResidentes from 'src/hooks/useResidentes';
 import { SaveButton } from './styles';
 
-interface FaltasRegistro {
+interface FaltasRegistroParams {
   idTurma: string;
   idOferta: string;
 }
 
 const FaltasRegistro: React.FC = () => {
-  const { idTurma, idOferta } = useParams<FaltasRegistro>();
+  const { idTurma, idOferta } = useParams<FaltasRegistroParams>();
+
+  const { data: residentesData } = useResidentes({
+    idTurma: Number(idTurma),
+    idOferta: Number(idOferta),
+  });
 
   return (
     <GenericContent
@@ -51,6 +57,7 @@ const FaltasRegistro: React.FC = () => {
         ]}
       />
 
+      <pre>{JSON.stringify(residentesData, null, 2)}</pre>
       <SaveButton variant="extended" color="secondary">
         <CheckIcon />
         Salvar
