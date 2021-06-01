@@ -112,7 +112,7 @@ const TurmaDetails: React.FC = () => {
               <EventAvailableIcon />
             </CustonIconButton>
             <CustonIconButton
-              tooltipTitle="Registro de faltas"
+              tooltipTitle="Registro de notas"
               onClick={() => console.log('teste')}
             >
               <LibraryAddSharpIcon />

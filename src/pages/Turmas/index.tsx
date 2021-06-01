@@ -2,14 +2,10 @@ import { Box, Grid } from '@material-ui/core';
 import EmptyContentAlert from 'src/components/EmptyContentAlert';
 import GenericContent from 'src/components/GenericContent';
 import TurmaCardInfo from 'src/components/TurmaCardInfo';
-import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
-import RESOURCE_URLS from 'src/resources/names';
-import { GetNames } from 'src/resources/turmas/types';
+import useTurmas from 'src/hooks/useTurmas';
 
 const Turmas: React.FC = () => {
-  const { data: turmasData } = useApiWithSwr<GetNames.Return>({
-    url: RESOURCE_URLS.GET_TURMAS,
-  });
+  const { data: turmasData } = useTurmas();
 
   return (
     <GenericContent helmetText="Turmas | Sagu" title="Minhas turmas">
