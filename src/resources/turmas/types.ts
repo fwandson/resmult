@@ -29,7 +29,7 @@ export declare namespace GetOfertasNames {
     id: number;
     dataInicio: string;
     dataFim: string;
-    encerramento?: unknown;
+    encerramento?: string;
     nome: string;
     semestre: number;
     semestre_descricao: string;

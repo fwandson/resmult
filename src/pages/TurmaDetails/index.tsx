@@ -1,4 +1,9 @@
-import { Box, IconButton, Typography } from '@material-ui/core';
+import { Box, IconButton, Tooltip, Typography } from '@material-ui/core';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
+import UpdateIcon from '@material-ui/icons/Update';
+import { format } from 'date-fns';
+import { useCallback } from 'react';
 import { useHistory, useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import FiltrosOfertasModal, {
@@ -7,14 +12,10 @@ import FiltrosOfertasModal, {
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
-import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
-import { GetOfertasNames } from 'src/resources/turmas/types';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
-import UpdateIcon from '@material-ui/icons/Update';
+import useOfertas from 'src/hooks/useOfertas';
 import NAMES from 'src/routes/names';
-import RESOURCE_URLS from 'src/resources/names';
+
 interface TurmaDetailsParams {
   id: string;
 }
@@ -24,8 +25,8 @@ const TurmaDetails: React.FC = () => {
 
   const history = useHistory();
 
-  const { data: ofertasReturnData } = useApiWithSwr<GetOfertasNames.Return>({
-    url: RESOURCE_URLS.GET_TURMAS_OFERTAS.replace(':id', id),
+  const { data: ofertasReturnData } = useOfertas({
+    id: Number(id),
   });
 
   const {
@@ -41,46 +42,64 @@ const TurmaDetails: React.FC = () => {
     fim: new Date(),
   });
 
+  const handlerGoToRegistrofaltas = useCallback(
+    (idOferta: number) => {
+      history.push(
+        NAMES.FALTAS_REGISTRO.replace(':idTurma', id).replace(
+          ':idOferta',
+          String(idOferta)
+        )
+      );
+    },
+    [id]
+  );
+
   const handleRows = () => {
     if (ofertasReturnData) {
       return ofertasReturnData.ofertasModulos.map((oferta) => [
-        <Box key="nomes" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            000
-          </Typography>
-          <Typography variant="caption">{oferta.nome}</Typography>
+        <Box key="ativid" display="flex" flexDirection="column">
+          <Typography variant="caption">{oferta.id}</Typography>
         </Box>,
-        <Box key="semestres" display="flex" flexDirection="column">
+        <Box key="oferta" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
-            000
+            {oferta.turma.codigoTurma}
           </Typography>
-          <Typography variant="caption">{oferta.semestre}</Typography>
+          <Typography variant="caption">{oferta.turma.descricao}</Typography>
         </Box>,
-        <Box key="modulos" display="flex" flexDirection="column">
+        <Box key="turma-modulo" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
-            000
+            {oferta.turma.descricao}
           </Typography>
           <Typography variant="caption">{oferta.modulo.nome}</Typography>
         </Box>,
-        <Box key="cargahorarias" display="flex" flexDirection="column">
+        <Box key="periodo" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
-            000
+            ANO
           </Typography>
-          <Typography variant="caption">{`${oferta.cargahoraria} horas`}</Typography>
+          <Typography variant="caption">{oferta.semestre_descricao}</Typography>
         </Box>,
-        <Box key="actions" display="flex" justifyContent="flex-end">
-          <IconButton
-            onClick={() =>
-              history.push(
-                NAMES.FALTAS_REGISTRO.replace(':idTurma', id).replace(
-                  ':idOferta',
-                  String(oferta.id)
-                )
-              )
-            }
-          >
-            <EventAvailableIcon />
-          </IconButton>
+        <Box key="inicio-fim" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
+          </Typography>
+          <Typography variant="caption">
+            {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
+          </Typography>
+        </Box>,
+        <Box key="ch" display="flex" flexDirection="column">
+          <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
+        </Box>,
+        <Box key="encerramento" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {oferta.encerramento || '-'}
+          </Typography>
+        </Box>,
+        <Box key="lancamentos" display="flex" justifyContent="flex-end">
+          <Tooltip title="Registro de faltas" placement="top">
+            <IconButton onClick={() => handlerGoToRegistrofaltas(oferta.id)}>
+              <EventAvailableIcon />
+            </IconButton>
+          </Tooltip>
           <IconButton onClick={() => console.log('teste')}>
             <LibraryAddSharpIcon />
           </IconButton>
@@ -106,9 +125,18 @@ const TurmaDetails: React.FC = () => {
         fim="20/20/2020"
       />
       <SimpleTable
-        title={'Ofertas'}
+        title="Ofertas"
         onClickFilterButton={() => setOpen(true)}
-        headCells={['Nome', 'Semestre', 'Módulo', 'CH', 'Lançamentos']}
+        headCells={[
+          'Ativid.',
+          'Oferta',
+          'Turma / Modulo',
+          'Período',
+          'Início/Fim',
+          'CH',
+          'Encerramentos',
+          'Lançamentos',
+        ]}
         rows={handleRows()}
       />
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
