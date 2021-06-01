@@ -10,12 +10,16 @@ interface UseResidentesParams {
 function useResidentes(params: UseResidentesParams) {
   const { idTurma, idOferta } = params;
 
-  return useApiWithSwr<GetResidentesNames.Return>({
+  const { data, ...rest } = useApiWithSwr<GetResidentesNames.Return>({
     url: RESOURCE_URLS.GET_OFERTA_RESIDENTES.replace(
       ':idTurma',
       String(idTurma)
     ).replace(':idOferta', String(idOferta)),
   });
+
+  const turma = data?.residentes[0].turma;
+
+  return { data, turma, ...rest };
 }
 
 export default useResidentes;

@@ -39,7 +39,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
         <Typography variant="h1">{title}</Typography>
         {letfTitleContent}
       </Box>
-      {children}
+      <Box>{children}</Box>
     </Box>
   );
 };
