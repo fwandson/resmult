@@ -1,10 +1,10 @@
 import { Box, Typography } from '@material-ui/core';
 
 export interface TurmaInfoProps {
-  nome: string;
-  cod: string;
-  inicio: string;
-  fim: string;
+  nome?: string;
+  cod?: string;
+  inicio?: string;
+  fim?: string;
   cargaHoraria?: number;
   periodo?: string;
 }

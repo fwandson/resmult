@@ -15,6 +15,7 @@ import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
+import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
 
@@ -30,6 +31,10 @@ const TurmaDetails: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const [searchValueDebaunced] = useDebounce(searchValue, 1000);
+
+  const { data: turmasData } = useTurmas();
+
+  const turma = turmasData?.turmas.find((elem) => elem.id === Number(id));
 
   const { data: ofertasReturnData } = useOfertas({
     id: Number(id),
@@ -141,10 +146,10 @@ const TurmaDetails: React.FC = () => {
       }
     >
       <TurmaInfo
-        cod="T2HOSPITALAR"
-        nome="Turma || - Hospitalar"
-        inicio="20/20/2020"
-        fim="20/20/2020"
+        cod={turma?.codigoTurma}
+        nome={turma?.descricao}
+        inicio={turma?.dataInicio}
+        fim={turma?.dataFim}
       />
       <SimpleTable
         title="Ofertas"
