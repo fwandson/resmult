@@ -1,5 +1,5 @@
-import { Box, Typography } from '@material-ui/core';
-import { useParams } from 'react-router';
+import { Box, IconButton, Typography } from '@material-ui/core';
+import { useHistory, useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import FiltrosOfertasModal, {
   FiltrosOfertasModalData,
@@ -10,13 +10,18 @@ import TurmaInfo from 'src/components/TurmaInfo';
 import { useApiWithSwr } from 'src/hooks/useApiWithSwr';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import { GetOfertasNames } from 'src/resources/turmas/types';
-
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
+import UpdateIcon from '@material-ui/icons/Update';
+import NAMES from 'src/routes/names';
 interface TurmaDetailsParams {
   id: string;
 }
 
 const TurmaDetails: React.FC = () => {
   const { id } = useParams<TurmaDetailsParams>();
+
+  const history = useHistory();
 
   const { data: ofertasReturnData } = useApiWithSwr<GetOfertasNames.Return>({
     url: `/residencia-multiprofissional/supervisores/turma/${id}/ofertas`,
@@ -38,29 +43,49 @@ const TurmaDetails: React.FC = () => {
   const handleRows = () => {
     if (ofertasReturnData) {
       return ofertasReturnData.ofertasModulos.map((oferta) => [
-        <Box key="nome" display="flex" flexDirection="column">
+        <Box key="nomes" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
             000
           </Typography>
           <Typography variant="caption">{oferta.nome}</Typography>
         </Box>,
-        <Box key="semestre" display="flex" flexDirection="column">
+        <Box key="semestres" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
             000
           </Typography>
           <Typography variant="caption">{oferta.semestre}</Typography>
         </Box>,
-        <Box key="modulo" display="flex" flexDirection="column">
+        <Box key="modulos" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
             000
           </Typography>
           <Typography variant="caption">{oferta.modulo.nome}</Typography>
         </Box>,
-        <Box key="cargahoraria" display="flex" flexDirection="column">
+        <Box key="cargahorarias" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
             000
           </Typography>
           <Typography variant="caption">{`${oferta.cargahoraria} horas`}</Typography>
+        </Box>,
+        <Box key="actions" display="flex" justifyContent="flex-end">
+          <IconButton
+            onClick={() =>
+              history.push(
+                NAMES.FALTAS_REGISTRO.replace(':idTurma', id).replace(
+                  'idOferta',
+                  String(oferta.id)
+                )
+              )
+            }
+          >
+            <EventAvailableIcon />
+          </IconButton>
+          <IconButton onClick={() => console.log('teste')}>
+            <LibraryAddSharpIcon />
+          </IconButton>
+          <IconButton onClick={() => console.log('teste')}>
+            <UpdateIcon />
+          </IconButton>
         </Box>,
       ]);
     }
@@ -82,7 +107,7 @@ const TurmaDetails: React.FC = () => {
       <SimpleTable
         title={'Ofertas'}
         onClickFilterButton={() => setOpen(true)}
-        headCells={['Nome', 'Semestre', 'Módulo', 'CH']}
+        headCells={['Nome', 'Semestre', 'Módulo', 'CH', 'Lançamentos']}
         rows={handleRows()}
       />
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
