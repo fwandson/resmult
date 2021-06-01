@@ -71,7 +71,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
             ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+              <TableCell colSpan={headCells.length} />
             </TableRow>
           )}
         </TableBody>

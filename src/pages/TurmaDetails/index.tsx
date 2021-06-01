@@ -1,10 +1,11 @@
-import { Box, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
 import { format } from 'date-fns';
 import { useCallback } from 'react';
 import { useHistory, useParams } from 'react-router';
+import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
 import FiltrosOfertasModal, {
   FiltrosOfertasModalData,
@@ -95,17 +96,24 @@ const TurmaDetails: React.FC = () => {
           </Typography>
         </Box>,
         <Box key="lancamentos" display="flex" justifyContent="flex-end">
-          <Tooltip title="Registro de faltas" placement="top">
-            <IconButton onClick={() => handlerGoToRegistrofaltas(oferta.id)}>
-              <EventAvailableIcon />
-            </IconButton>
-          </Tooltip>
-          <IconButton onClick={() => console.log('teste')}>
+          <CustonIconButton
+            tooltipTitle="Registro de faltas"
+            onClick={() => handlerGoToRegistrofaltas(oferta.id)}
+          >
+            <EventAvailableIcon />
+          </CustonIconButton>
+          <CustonIconButton
+            tooltipTitle="Registro de faltas"
+            onClick={() => console.log('teste')}
+          >
             <LibraryAddSharpIcon />
-          </IconButton>
-          <IconButton onClick={() => console.log('teste')}>
+          </CustonIconButton>
+          <CustonIconButton
+            tooltipTitle="Registro de faltas"
+            onClick={() => console.log('teste')}
+          >
             <UpdateIcon />
-          </IconButton>
+          </CustonIconButton>
         </Box>,
       ]);
     }
