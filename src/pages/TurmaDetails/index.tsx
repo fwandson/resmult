@@ -73,7 +73,7 @@ const TurmaDetails: React.FC = () => {
             onClick={() =>
               history.push(
                 NAMES.FALTAS_REGISTRO.replace(':idTurma', id).replace(
-                  'idOferta',
+                  ':idOferta',
                   String(oferta.id)
                 )
               )
