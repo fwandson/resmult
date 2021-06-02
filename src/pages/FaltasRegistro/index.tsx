@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import OfertaInfo from 'src/components/OfertaInfo';
@@ -44,6 +44,12 @@ const FaltasRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
+  const handleCargaHoraria = useCallback(
+    (tipo: string) =>
+      oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
+    [oferta]
+  );
+
   return (
     <GenericContent
       helmetText="Registro de faltas | Sagu"
@@ -63,7 +69,6 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
       <Card>
         <Grid container component={CardContent} spacing={2}>
           <Grid item xs={1}>
@@ -73,16 +78,21 @@ const FaltasRegistro: React.FC = () => {
             <Typography variant="body1">Residente</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography variant="body1">Prática (375 Horas)</Typography>
-          </Grid>
-          <Grid item xs={3}>
             <Typography variant="body1">
-              Teórico-conceitual (ead+presencial) (340 Horas)
+              Prática ({handleCargaHoraria('P')}
+              Horas)
             </Typography>
           </Grid>
           <Grid item xs={3}>
             <Typography variant="body1">
-              Teórico-prática (campo+núcleo) (334 Horas)
+              Teórico-conceitual (ead+presencial) ({handleCargaHoraria('C')}
+              Horas)
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography variant="body1">
+              Teórico-prática (campo+núcleo) ({handleCargaHoraria('T')}
+              Horas)
             </Typography>
           </Grid>
 
