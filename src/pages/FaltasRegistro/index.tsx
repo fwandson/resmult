@@ -16,6 +16,7 @@ import GenericContent from 'src/components/GenericContent';
 import SearchField from 'src/components/SearchField';
 import TurmaInfo from 'src/components/TurmaInfo';
 import useResidentes from 'src/hooks/useResidentes';
+import useTurmas from 'src/hooks/useTurmas';
 import { SaveButton } from './styles';
 
 interface FaltasRegistroParams {
@@ -31,6 +32,12 @@ const FaltasRegistro: React.FC = () => {
     idOferta: Number(idOferta),
   });
 
+  const { data: turmasDataReturn } = useTurmas();
+
+  const turma = turmasDataReturn?.turmas.find(
+    (elem) => elem.id === Number(idTurma)
+  );
+
   return (
     <GenericContent
       helmetText="Registro de faltas | Sagu"
@@ -38,14 +45,13 @@ const FaltasRegistro: React.FC = () => {
       letfTitleContent={<SearchField />}
     >
       <TurmaInfo
-        cod="T2HOSPITALAR"
-        nome="Turma || - Hospitalar"
-        inicio="20/20/2020"
-        fim="20/20/2020"
+        cod={turma?.codigoTurma}
+        nome={turma?.descricao}
+        inicio={turma?.dataInicio}
+        fim={turma?.dataFim}
         cargaHoraria={1000}
-        periodo="Segundo Pedíodo"
+        periodo={String(turma?.quantidadeperiodo)}
       />
-
       <Card>
         <Grid container component={CardContent} spacing={2}>
           <Grid item xs={1}>
