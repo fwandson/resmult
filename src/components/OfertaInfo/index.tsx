@@ -1,14 +1,16 @@
 import { Box, Typography, Grid } from '@material-ui/core';
 
-export interface TurmaInfoProps {
+export interface OfertaInfoProps {
   nome: string | undefined;
   cod: string | undefined;
   inicio: string | Date | undefined;
   fim: string | Date | undefined;
+  cargaHoraria: string | number | undefined;
+  periodo: string | number | undefined;
 }
 
-const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
-  const { nome, cod, inicio, fim } = props;
+const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
+  const { nome, cod, inicio, fim, cargaHoraria, periodo } = props;
 
   return (
     <Box
@@ -26,6 +28,18 @@ const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
       <Grid container spacing={2} justify="flex-end">
         <Grid item>
           <Typography variant="body2" color="textSecondary" gutterBottom>
+            CH PREVISTA
+          </Typography>
+          <Typography>{cargaHoraria}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
+            PERÍODO
+          </Typography>
+          <Typography>{periodo}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
             INÍCIO
           </Typography>
           <Typography>{inicio}</Typography>
@@ -41,4 +55,4 @@ const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
   );
 };
 
-export default TurmaInfo;
+export default OfertaInfo;

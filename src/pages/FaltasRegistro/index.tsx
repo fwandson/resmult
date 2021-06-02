@@ -14,8 +14,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
+import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
-import TurmaInfo from 'src/components/TurmaInfo';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import useTurmas from 'src/hooks/useTurmas';
@@ -60,7 +60,7 @@ const FaltasRegistro: React.FC = () => {
         />
       }
     >
-      <TurmaInfo
+      <OfertaInfo
         cod={turma?.codigoTurma}
         nome={turma?.descricao}
         inicio={turma?.dataInicio}
