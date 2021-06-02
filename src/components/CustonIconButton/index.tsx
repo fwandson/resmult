@@ -1,7 +1,7 @@
 import { IconButton, IconButtonProps, Tooltip } from '@material-ui/core';
 import { Container } from './styles';
 
-interface CustonIconButtonProps extends IconButtonProps {
+export interface CustonIconButtonProps extends IconButtonProps {
   tooltipTitle: string;
 }
 
