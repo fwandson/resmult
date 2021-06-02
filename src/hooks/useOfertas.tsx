@@ -18,7 +18,7 @@ function useOfertas(params: UseOfertasParams) {
   const findOferta = useCallback(
     (predicate: ListIterateeCustom<GetOfertasNames.OfertasModulo, boolean>) =>
       find(data?.ofertasModulos, predicate),
-    []
+    [data]
   );
 
   return { data, findOferta, ...rest };

@@ -18,7 +18,6 @@ import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
-import useTurmas from 'src/hooks/useTurmas';
 import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from './styles';
 
@@ -39,10 +38,6 @@ const FaltasRegistro: React.FC = () => {
     idOferta: Number(idOferta),
   });
 
-  const { findTurma } = useTurmas();
-
-  const turma = findTurma({ id: Number(idTurma) });
-
   const { findOferta } = useOfertas({
     id: Number(idTurma),
   });
@@ -61,13 +56,14 @@ const FaltasRegistro: React.FC = () => {
       }
     >
       <OfertaInfo
-        cod={turma?.codigoTurma}
-        nome={turma?.descricao}
-        inicio={turma?.dataInicio}
-        fim={turma?.dataFim}
+        cod={oferta?.turma.codigoTurma}
+        nome={oferta?.nome}
+        inicio={oferta?.dataInicio}
+        fim={oferta?.dataFim}
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
+
       <Card>
         <Grid container component={CardContent} spacing={2}>
           <Grid item xs={1}>
