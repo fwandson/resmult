@@ -19,11 +19,9 @@ const NotasRegistro: React.FC = () => {
 
   const [searchValueDebaunced] = useDebounce(searchValue, 1000);
 
-  const { data: turmasDataReturn } = useTurmas();
+  const { findTurma } = useTurmas();
 
-  const turma = turmasDataReturn?.turmas.find(
-    (elem) => elem.id === Number(idTurma)
-  );
+  const turma = findTurma({ id: Number(idTurma) });
 
   return (
     <GenericContent

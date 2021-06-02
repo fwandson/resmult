@@ -32,9 +32,9 @@ const TurmaDetails: React.FC = () => {
 
   const [searchValueDebaunced] = useDebounce(searchValue, 1000);
 
-  const { data: turmasData } = useTurmas();
+  const { findTurma } = useTurmas();
 
-  const turma = turmasData?.turmas.find((elem) => elem.id === Number(id));
+  const turma = findTurma({ id: Number(id) });
 
   const { data: ofertasReturnData } = useOfertas({
     id: Number(id),
