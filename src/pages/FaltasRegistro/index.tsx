@@ -65,8 +65,8 @@ const FaltasRegistro: React.FC = () => {
         nome={turma?.descricao}
         inicio={turma?.dataInicio}
         fim={turma?.dataFim}
-        cargaHoraria={Number(oferta?.cargahoraria)}
-        periodo={String(turma?.quantidadeperiodo)}
+        cargaHoraria={oferta?.cargahoraria}
+        periodo={oferta?.semestre_descricao}
       />
       <Card>
         <Grid container component={CardContent} spacing={2}>

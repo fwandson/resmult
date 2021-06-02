@@ -1,12 +1,12 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Grid } from '@material-ui/core';
 
 export interface TurmaInfoProps {
   nome?: string;
   cod?: string;
   inicio?: string;
   fim?: string;
-  cargaHoraria?: number;
-  periodo?: string;
+  cargaHoraria?: string | number;
+  periodo?: string | number;
 }
 
 const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
@@ -25,37 +25,37 @@ const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
         </Typography>
         <Typography variant="h6">{nome}</Typography>
       </Box>
-      <Box display="flex">
+
+      <Grid container spacing={2} justify="flex-end">
         {cargaHoraria && (
-          <Box display="flex" flexDirection="column" mr={1}>
-            <Typography variant="body2" color="textSecondary">
+          <Grid item>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
               CH PREVISTA
             </Typography>
             <Typography>{cargaHoraria}</Typography>
-          </Box>
+          </Grid>
         )}
         {periodo && (
-          <Box display="flex" flexDirection="column" mr={1}>
-            <Typography variant="body2" color="textSecondary">
+          <Grid item>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
               PERÍODO
             </Typography>
             <Typography>{periodo}</Typography>
-          </Box>
+          </Grid>
         )}
-
-        <Box display="flex" flexDirection="column" mr={1}>
-          <Typography variant="body2" color="textSecondary">
+        <Grid item>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
             INÍCIO
           </Typography>
           <Typography>{inicio}</Typography>
-        </Box>
-        <Box display="flex" flexDirection="column">
-          <Typography variant="body2" color="textSecondary">
+        </Grid>
+        <Grid item>
+          <Typography variant="body2" color="textSecondary" gutterBottom>
             FIM
           </Typography>
           <Typography>{fim}</Typography>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
