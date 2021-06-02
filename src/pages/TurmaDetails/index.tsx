@@ -53,10 +53,22 @@ const TurmaDetails: React.FC = () => {
     fim: new Date(),
   });
 
-  const handlerGoToRegistrofaltas = useCallback(
+  const handlerGoToRegistroFaltas = useCallback(
     (idOferta: number) => {
       history.push(
         NAMES.FALTAS_REGISTRO.replace(':idTurma', id).replace(
+          ':idOferta',
+          String(idOferta)
+        )
+      );
+    },
+    [id]
+  );
+
+  const handlerGoToRegistroNotas = useCallback(
+    (idOferta: number) => {
+      history.push(
+        NAMES.NOTAS_REGISTRO.replace(':idTurma', id).replace(
           ':idOferta',
           String(idOferta)
         )
@@ -112,18 +124,19 @@ const TurmaDetails: React.FC = () => {
           <Box key="lancamentos" display="flex" justifyContent="flex-end">
             <CustonIconButton
               tooltipTitle="Registro de faltas"
-              onClick={() => handlerGoToRegistrofaltas(oferta.id)}
+              onClick={() => handlerGoToRegistroFaltas(oferta.id)}
             >
               <EventAvailableIcon />
             </CustonIconButton>
             <CustonIconButton
               tooltipTitle="Registro de notas"
-              onClick={() => console.log('teste')}
+              onClick={() => handlerGoToRegistroNotas(oferta.id)}
             >
               <LibraryAddSharpIcon />
             </CustonIconButton>
+            {/* TODO: descobrir qual tipo de registro é esse */}
             <CustonIconButton
-              tooltipTitle="Registro de faltas"
+              tooltipTitle="Registro de Alguma coisa que não sei"
               onClick={() => console.log('teste')}
             >
               <UpdateIcon />

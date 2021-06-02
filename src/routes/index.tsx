@@ -12,6 +12,7 @@ import TurmaDetails from 'src/pages/TurmaDetails';
 import TypographyPage from 'src/pages/Typography';
 import LoginLaytout from 'src/layouts/LoginLaytout';
 import FaltasRegistro from 'src/pages/FaltasRegistro';
+import NotasRegistro from 'src/pages/NotasRegistro';
 
 const Routes = () => {
   return (
@@ -50,6 +51,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.FALTAS_REGISTRO}
         component={FaltasRegistro}
+        isPrivate
+        exact
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.NOTAS_REGISTRO}
+        component={NotasRegistro}
         isPrivate
         exact
       />

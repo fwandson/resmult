@@ -5,6 +5,7 @@ export default {
   TURMAS: '/turmas',
   TURMA_DETAILS: '/turmas/:id',
   FALTAS_REGISTRO: '/turmas/:idTurma/faltas/:idOferta/registro',
+  NOTAS_REGISTRO: '/turmas/:idTurma/notas/:idOferta/registro',
   OFERTAS: '/ofertas',
   DASHBOARD: '/dashboard',
   SETTINGS: '/settings',
