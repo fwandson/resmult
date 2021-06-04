@@ -2,7 +2,7 @@ import { GetOfertasNames } from 'src/resources/turmas/types';
 import RESOURCE_URLS from 'src/resources/names';
 import { useApiWithSwr } from './useApiWithSwr';
 import { useCallback } from 'react';
-import { find, ListIterateeCustom } from 'lodash';
+import { filter, find, ListIterateeCustom } from 'lodash';
 
 interface UseOfertasParams {
   id: number; // id da turma
@@ -21,7 +21,18 @@ function useOfertas(params: UseOfertasParams) {
     [data]
   );
 
-  return { data, findOferta, ...rest };
+  /**
+   * Buscar ofertas pelo nome
+   */
+  const searchOfertas = useCallback(
+    (value: string) =>
+      filter(data?.ofertasModulos, (oberta) =>
+        oberta.nome.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      ),
+    [data]
+  );
+
+  return { data, findOferta, searchOfertas, ...rest };
 }
 
 export default useOfertas;

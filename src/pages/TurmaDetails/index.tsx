@@ -13,6 +13,7 @@ import FiltrosOfertasModal, {
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
+import CONSTANTS from 'src/config';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useTurmas from 'src/hooks/useTurmas';
@@ -30,13 +31,16 @@ const TurmaDetails: React.FC = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const [searchValueDebaunced] = useDebounce(searchValue, 1000);
+  const [searchValueDebaunced] = useDebounce(
+    searchValue,
+    CONSTANTS.DEBOUNCE_TIME
+  );
 
   const { findTurma } = useTurmas();
 
   const turma = findTurma({ id: Number(id) });
 
-  const { data: ofertasReturnData } = useOfertas({
+  const { data: ofertasReturnData, searchOfertas } = useOfertas({
     id: Number(id),
   });
 
@@ -79,70 +83,65 @@ const TurmaDetails: React.FC = () => {
 
   const handleRows = () => {
     if (ofertasReturnData) {
-      return ofertasReturnData.ofertasModulos
-        .filter((oferta) => oferta.nome.includes(searchValueDebaunced))
-        .map((oferta) => [
-          <Box key="ativid" display="flex" flexDirection="column">
-            <Typography variant="caption">{oferta.id}</Typography>
-          </Box>,
-          <Box key="oferta" display="flex" flexDirection="column">
-            <Typography variant="caption" color="textSecondary">
-              {oferta.turma.codigoTurma}
-            </Typography>
-            <Typography variant="caption">{oferta.turma.descricao}</Typography>
-          </Box>,
-          <Box key="turma-modulo" display="flex" flexDirection="column">
-            <Typography variant="caption" color="textSecondary">
-              {oferta.turma.descricao}
-            </Typography>
-            <Typography variant="caption">{oferta.modulo.nome}</Typography>
-          </Box>,
-          <Box key="periodo" display="flex" flexDirection="column">
-            <Typography variant="caption" color="textSecondary">
-              ANO
-            </Typography>
-            <Typography variant="caption">
-              {oferta.semestre_descricao}
-            </Typography>
-          </Box>,
-          <Box key="inicio-fim" display="flex" flexDirection="column">
-            <Typography variant="caption" color="textSecondary">
-              {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
-            </Typography>
-            <Typography variant="caption">
-              {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
-            </Typography>
-          </Box>,
-          <Box key="ch" display="flex" flexDirection="column">
-            <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
-          </Box>,
-          <Box key="encerramento" display="flex" flexDirection="column">
-            <Typography variant="caption" color="textSecondary">
-              {oferta.encerramento || '-'}
-            </Typography>
-          </Box>,
-          <Box key="lancamentos" display="flex" justifyContent="flex-end">
-            <CustonIconButton
-              tooltipTitle="Registro de faltas"
-              onClick={() => handlerGoToRegistroFaltas(oferta.id)}
-            >
-              <EventAvailableIcon />
-            </CustonIconButton>
-            <CustonIconButton
-              tooltipTitle="Registro de notas"
-              onClick={() => handlerGoToRegistroNotas(oferta.id)}
-            >
-              <LibraryAddSharpIcon />
-            </CustonIconButton>
-            {/* TODO: descobrir qual tipo de registro é esse */}
-            <CustonIconButton
-              tooltipTitle="Registro de Alguma coisa que não sei"
-              onClick={() => console.log('teste')}
-            >
-              <UpdateIcon />
-            </CustonIconButton>
-          </Box>,
-        ]);
+      return searchOfertas(searchValueDebaunced).map((oferta) => [
+        <Box key="ativid" display="flex" flexDirection="column">
+          <Typography variant="caption">{oferta.id}</Typography>
+        </Box>,
+        <Box key="oferta" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {oferta.turma.codigoTurma}
+          </Typography>
+          <Typography variant="caption">{oferta.nome}</Typography>
+        </Box>,
+        <Box key="turma-modulo" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {oferta.turma.descricao}
+          </Typography>
+          <Typography variant="caption">{oferta.modulo.nome}</Typography>
+        </Box>,
+        <Box key="periodo" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            ANO
+          </Typography>
+          <Typography variant="caption">{oferta.semestre_descricao}</Typography>
+        </Box>,
+        <Box key="inicio-fim" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
+          </Typography>
+          <Typography variant="caption">
+            {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
+          </Typography>
+        </Box>,
+        <Box key="ch" display="flex" flexDirection="column">
+          <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
+        </Box>,
+        <Box key="encerramento" display="flex" flexDirection="column">
+          <Typography variant="caption" color="textSecondary">
+            {oferta.encerramento || '-'}
+          </Typography>
+        </Box>,
+        <Box key="lancamentos" display="flex" justifyContent="flex-end">
+          <CustonIconButton
+            tooltipTitle="Registro de faltas"
+            onClick={() => handlerGoToRegistroFaltas(oferta.id)}
+          >
+            <EventAvailableIcon />
+          </CustonIconButton>
+          <CustonIconButton
+            tooltipTitle="Registro de notas"
+            onClick={() => handlerGoToRegistroNotas(oferta.id)}
+          >
+            <LibraryAddSharpIcon />
+          </CustonIconButton>
+          <CustonIconButton
+            tooltipTitle="Registro de Alguma coisa que não sei"
+            onClick={() => console.log('teste')}
+          >
+            <UpdateIcon />
+          </CustonIconButton>
+        </Box>,
+      ]);
     }
     return [];
   };

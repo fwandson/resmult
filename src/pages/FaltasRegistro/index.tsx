@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -20,6 +21,7 @@ import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from './styles';
+import CONSTANTS from 'src/config';
 
 interface FaltasRegistroParams {
   idTurma: string;
@@ -31,9 +33,12 @@ const FaltasRegistro: React.FC = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const [searchValueDebaunced] = useDebounce(searchValue, 1000);
+  const [searchValueDebaunced] = useDebounce(
+    searchValue,
+    CONSTANTS.DEBOUNCE_TIME
+  );
 
-  const { data: residentesData } = useResidentes({
+  const { searchResidentes } = useResidentes({
     idTurma: Number(idTurma),
     idOferta: Number(idOferta),
   });
@@ -78,73 +83,72 @@ const FaltasRegistro: React.FC = () => {
             <Typography variant="body1">Residente</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Typography variant="body1">
-              Prática ({handleCargaHoraria('P')}
-              Horas)
-            </Typography>
+            <Tooltip title="Prática" placement="top">
+              <Typography variant="body1">
+                {`Prática (${handleCargaHoraria('P')} Horas)`}
+              </Typography>
+            </Tooltip>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="body1">
-              Teórico-conceitual (ead+presencial) ({handleCargaHoraria('C')}
-              Horas)
-            </Typography>
+            <Tooltip title="EAD + presencial" placement="top">
+              <Typography variant="body1">
+                {`Teórico-conceitual (${handleCargaHoraria('C')} Horas)`}
+              </Typography>
+            </Tooltip>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="body1">
-              Teórico-prática (campo+núcleo) ({handleCargaHoraria('T')}
-              Horas)
-            </Typography>
+            <Tooltip title="Campo + núcleo" placement="top">
+              <Typography variant="body1">
+                {`Teórico-prática (${handleCargaHoraria('T')} Horas)`}
+              </Typography>
+            </Tooltip>
           </Grid>
 
-          {residentesData?.residentes
-            .filter((residente) =>
-              residente.person.name.includes(searchValueDebaunced)
-            )
-            .map((residente) => (
-              <React.Fragment key={residente.id}>
-                <Grid item xs={12}>
-                  <Divider />
+          {searchResidentes(searchValueDebaunced).map((residente) => (
+            <React.Fragment key={residente.id}>
+              <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={1}>
+                <Avatar>X</Avatar>
+              </Grid>
+              <Grid
+                container
+                item
+                xs={3}
+                justify="space-between"
+                direction="column"
+              >
+                <Grid item>
+                  <Typography>{residente.person.name}</Typography>
                 </Grid>
-                <Grid item xs={1}>
-                  <Avatar>X</Avatar>
+                <Grid item>
+                  <Button>Gerar Relatório</Button>
                 </Grid>
-                <Grid
-                  container
-                  item
-                  xs={3}
-                  justify="space-between"
-                  direction="column"
-                >
-                  <Grid item>
-                    <Typography>{residente.person.name}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button>Gerar Relatório</Button>
-                  </Grid>
-                </Grid>
-                <Grid item xs={2} justify="space-between">
-                  <TextField fullWidth variant="outlined" />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField fullWidth variant="outlined" />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField fullWidth variant="outlined" />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-              </React.Fragment>
-            ))}
+              </Grid>
+              <Grid item xs={2} justify="space-between">
+                <TextField fullWidth variant="outlined" />
+                <Box m={1} />
+                <Button fullWidth startIcon={<AddIcon />}>
+                  Observação
+                </Button>
+              </Grid>
+              <Grid item xs={3}>
+                <TextField fullWidth variant="outlined" />
+                <Box m={1} />
+                <Button fullWidth startIcon={<AddIcon />}>
+                  Observação
+                </Button>
+              </Grid>
+              <Grid item xs={3}>
+                <TextField fullWidth variant="outlined" />
+                <Box m={1} />
+                <Button fullWidth startIcon={<AddIcon />}>
+                  Observação
+                </Button>
+              </Grid>
+            </React.Fragment>
+          ))}
         </Grid>
       </Card>
       <Box m={2} />
