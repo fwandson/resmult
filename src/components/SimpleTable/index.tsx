@@ -21,12 +21,19 @@ export interface SimpleTableProps {
     align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
   }[];
   rows: RowElement[][];
+  hideTablePagination?: boolean;
   onClickFilterButton?(): void;
 }
 
 // Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
-  const { headCells, rows, title, onClickFilterButton } = props;
+  const {
+    headCells,
+    rows,
+    title,
+    hideTablePagination,
+    onClickFilterButton,
+  } = props;
 
   const [page, setPage] = useState(0);
 
@@ -63,7 +70,12 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         </TableHead>
         <TableBody>
           {rows
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .slice(
+              page * rowsPerPage,
+              hideTablePagination
+                ? rows.length
+                : page * rowsPerPage + rowsPerPage
+            )
             .map((row, i) => (
               <TableRow key={i} hover>
                 {row.map((cell, j) => (
@@ -80,19 +92,21 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           )}
         </TableBody>
       </Table>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        labelRowsPerPage="Linhas por página"
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} de ${count}`
-        }
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {!hideTablePagination && (
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          labelRowsPerPage="Linhas por página"
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} de ${count}`
+          }
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
     </TableContainer>
   );
 };

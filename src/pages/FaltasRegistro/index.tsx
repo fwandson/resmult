@@ -12,7 +12,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import { uniqueId } from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
@@ -50,7 +50,7 @@ const FaltasRegistro: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
-  const { searchResidentes } = useResidentes({
+  const { data: residentesDataReturn, searchResidentes } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -79,72 +79,70 @@ const FaltasRegistro: React.FC = () => {
     toast.success('Faltas salvas com sucesso');
   }, []);
 
-  const handleRows = () =>
-    searchResidentes(searchValueDebaunced).map((residente) => [
-      <Box
-        key={uniqueId()}
-        display="flex"
-        flexDirection="column"
-        justifyContent="flex-start"
-        alignSelf="flex-start"
-      >
-        <Avatar
-          src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+  const handleRows = useMemo(
+    () =>
+      searchResidentes(searchValueDebaunced).map((residente) => [
+        <Box key={uniqueId()} mb={5}>
+          <Avatar
+            src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+          >
+            {residente.person.name[0]}
+          </Avatar>
+        </Box>,
+        <Box
+          key={uniqueId()}
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          justifyContent="space-between"
         >
-          {residente.person.name[0]}
-        </Avatar>
-      </Box>,
-      <Box
-        key={uniqueId()}
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-        justifyContent="space-between"
-      >
-        <Typography>{residente.person.name}</Typography>
-        <Button>Gerar Relatório</Button>
-      </Box>,
+          <Typography>{residente.person.name}</Typography>
+          <Box m={2} />
+          <Button>Gerar Relatório</Button>
+        </Box>,
 
-      <Box key={uniqueId()}>
-        <GenericInput
-          fullWidth
-          variant="outlined"
-          type="number"
-          control={control}
-          name={`ch.${residente.id}.pratica`}
-        />
-        <Box m={1} />
-        <Button fullWidth startIcon={<AddIcon />}>
-          Observação
-        </Button>
-      </Box>,
-      <Box key={uniqueId()}>
-        <GenericInput
-          fullWidth
-          variant="outlined"
-          type="number"
-          control={control}
-          name={`ch.${residente.id}.teoricoConceitual`}
-        />
-        <Box m={1} />
-        <Button fullWidth startIcon={<AddIcon />}>
-          Observação
-        </Button>
-      </Box>,
-      <Box key={uniqueId()}>
-        <GenericInput
-          fullWidth
-          variant="outlined"
-          type="number"
-          control={control}
-          name={`ch.${residente.id}.teoricoPratica`}
-        />
-        <Box m={1} />
-        <Button fullWidth startIcon={<AddIcon />}>
-          Observação
-        </Button>
-      </Box>,
-    ]);
+        <Box key={uniqueId()}>
+          <GenericInput
+            fullWidth
+            variant="outlined"
+            type="number"
+            control={control}
+            name={`ch.${residente.id}.pratica`}
+          />
+          <Box m={1} />
+          <Button fullWidth startIcon={<AddIcon />}>
+            Observação
+          </Button>
+        </Box>,
+        <Box key={uniqueId()}>
+          <GenericInput
+            fullWidth
+            variant="outlined"
+            type="number"
+            control={control}
+            name={`ch.${residente.id}.teoricoConceitual`}
+          />
+          <Box m={1} />
+          <Button fullWidth startIcon={<AddIcon />}>
+            Observação
+          </Button>
+        </Box>,
+        <Box key={uniqueId()}>
+          <GenericInput
+            fullWidth
+            variant="outlined"
+            type="number"
+            control={control}
+            name={`ch.${residente.id}.teoricoPratica`}
+          />
+          <Box m={1} />
+          <Button fullWidth startIcon={<AddIcon />}>
+            Observação
+          </Button>
+        </Box>,
+      ]),
+    [residentesDataReturn]
+  );
 
   return (
     <GenericContent
@@ -168,6 +166,7 @@ const FaltasRegistro: React.FC = () => {
 
       <SimpleTable
         title="Residentes"
+        hideTablePagination
         headCells={[
           {
             value: <Typography variant="body1">Foto</Typography>,
@@ -217,7 +216,7 @@ const FaltasRegistro: React.FC = () => {
             align: 'left',
           },
         ]}
-        rows={handleRows()}
+        rows={handleRows}
       />
 
       <form onSubmit={handleSubmit(onSubmit)}>
