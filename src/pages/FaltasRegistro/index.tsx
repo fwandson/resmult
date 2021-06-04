@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
+import { uniqueId } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -19,6 +20,7 @@ import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
+import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
@@ -77,6 +79,73 @@ const FaltasRegistro: React.FC = () => {
     toast.success('Faltas salvas com sucesso');
   }, []);
 
+  const handleRows = () =>
+    searchResidentes(searchValueDebaunced).map((residente) => [
+      <Box
+        key={uniqueId()}
+        display="flex"
+        flexDirection="column"
+        justifyContent="flex-start"
+        alignSelf="flex-start"
+      >
+        <Avatar
+          src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+        >
+          {residente.person.name[0]}
+        </Avatar>
+      </Box>,
+      <Box
+        key={uniqueId()}
+        display="flex"
+        flexDirection="column"
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
+        <Typography>{residente.person.name}</Typography>
+        <Button>Gerar Relatório</Button>
+      </Box>,
+
+      <Box key={uniqueId()}>
+        <GenericInput
+          fullWidth
+          variant="outlined"
+          type="number"
+          control={control}
+          name={`ch.${residente.id}.pratica`}
+        />
+        <Box m={1} />
+        <Button fullWidth startIcon={<AddIcon />}>
+          Observação
+        </Button>
+      </Box>,
+      <Box key={uniqueId()}>
+        <GenericInput
+          fullWidth
+          variant="outlined"
+          type="number"
+          control={control}
+          name={`ch.${residente.id}.teoricoConceitual`}
+        />
+        <Box m={1} />
+        <Button fullWidth startIcon={<AddIcon />}>
+          Observação
+        </Button>
+      </Box>,
+      <Box key={uniqueId()}>
+        <GenericInput
+          fullWidth
+          variant="outlined"
+          type="number"
+          control={control}
+          name={`ch.${residente.id}.teoricoPratica`}
+        />
+        <Box m={1} />
+        <Button fullWidth startIcon={<AddIcon />}>
+          Observação
+        </Button>
+      </Box>,
+    ]);
+
   return (
     <GenericContent
       helmetText="Registro de faltas | Sagu"
@@ -96,6 +165,61 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
+
+      <SimpleTable
+        title="Residentes"
+        headCells={[
+          {
+            value: <Typography variant="body1">Foto</Typography>,
+            align: 'left',
+          },
+          {
+            value: <Typography variant="body1">Residente</Typography>,
+            align: 'left',
+          },
+          {
+            value: (
+              <Tooltip title="Prática" placement="top-start">
+                <Box>
+                  <Typography variant="body1">Prática</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {`(${handleCargaHoraria('P')} Horas)`}
+                  </Typography>
+                </Box>
+              </Tooltip>
+            ),
+            align: 'left',
+          },
+          {
+            value: (
+              <Tooltip title="EAD + presencial" placement="top-start">
+                <Box>
+                  <Typography variant="body1">Teórico-conceitual</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {`(${handleCargaHoraria('C')} Horas)`}
+                  </Typography>
+                </Box>
+              </Tooltip>
+            ),
+            align: 'left',
+          },
+          {
+            value: (
+              <Tooltip title="Campo + núcleo" placement="top-start">
+                <Box>
+                  <Typography variant="body1">Teórico-prática</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {`(${handleCargaHoraria('T')} Horas)`}
+                  </Typography>
+                </Box>
+              </Tooltip>
+            ),
+            align: 'left',
+          },
+        ]}
+        rows={handleRows()}
+      />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <Grid container component={CardContent} spacing={2}>

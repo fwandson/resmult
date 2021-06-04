@@ -8,6 +8,7 @@ import {
   TableBody,
   TablePagination,
 } from '@material-ui/core';
+import { uniqueId } from 'lodash';
 import { ChangeEvent, ReactNode, useState } from 'react';
 import SimpleTableToolbar from './SimpleTableToolbar';
 
@@ -16,7 +17,7 @@ type RowElement = string | number | ReactNode;
 export interface SimpleTableProps {
   title: string;
   headCells: {
-    value: string;
+    value: RowElement;
     align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
   }[];
   rows: RowElement[][];
@@ -54,7 +55,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         <TableHead>
           <TableRow>
             {headCells.map((cell) => (
-              <TableCell key={cell.value} align={cell.align}>
+              <TableCell key={uniqueId()} align={cell.align}>
                 {cell.value}
               </TableCell>
             ))}
