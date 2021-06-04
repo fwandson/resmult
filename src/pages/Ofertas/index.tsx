@@ -13,6 +13,7 @@ import useFiltrosModal from 'src/hooks/useFiltrosModal';
 const Ofertas: React.FC = () => {
   const Actions = () => (
     <ActionsMenu
+      edge="end"
       data={[
         { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },
         { label: 'Editar', icon: <ScheduleIcon fontSize="small" /> },

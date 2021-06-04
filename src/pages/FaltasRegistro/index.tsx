@@ -83,24 +83,33 @@ const FaltasRegistro: React.FC = () => {
             <Typography variant="body1">Residente</Typography>
           </Grid>
           <Grid item xs={2}>
-            <Tooltip title="Prática" placement="top">
-              <Typography variant="body1">
-                {`Prática (${handleCargaHoraria('P')} Horas)`}
-              </Typography>
+            <Tooltip title="Prática" placement="top-start">
+              <Box>
+                <Typography variant="body1">Prática</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {`(${handleCargaHoraria('P')} Horas)`}
+                </Typography>
+              </Box>
             </Tooltip>
           </Grid>
           <Grid item xs={3}>
-            <Tooltip title="EAD + presencial" placement="top">
-              <Typography variant="body1">
-                {`Teórico-conceitual (${handleCargaHoraria('C')} Horas)`}
-              </Typography>
+            <Tooltip title="EAD + presencial" placement="top-start">
+              <Box>
+                <Typography variant="body1">Teórico-conceitual</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {`(${handleCargaHoraria('C')} Horas)`}
+                </Typography>
+              </Box>
             </Tooltip>
           </Grid>
           <Grid item xs={3}>
-            <Tooltip title="Campo + núcleo" placement="top">
-              <Typography variant="body1">
-                {`Teórico-prática (${handleCargaHoraria('T')} Horas)`}
-              </Typography>
+            <Tooltip title="Campo + núcleo" placement="top-start">
+              <Box>
+                <Typography variant="body1">Teórico-prática</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {`(${handleCargaHoraria('T')} Horas)`}
+                </Typography>
+              </Box>
             </Tooltip>
           </Grid>
 
