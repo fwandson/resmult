@@ -8,8 +8,6 @@ export default {
 
 const title = 'Residentes';
 
-const headCells = ['Nome', 'Idade', 'Sexo'];
-
 const rows = [
   ['Pessoa', 30, 'M'],
   ['Pessoa', 30, 'M'],
@@ -25,6 +23,16 @@ const Template: Story<SimpleTableProps> = (args) => <SimpleTable {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   title,
-  headCells,
+  headCells: [
+    { value: 'Nome', align: 'left' },
+    {
+      value: 'Idade',
+      align: 'left',
+    },
+    {
+      value: 'Sexo',
+      align: 'right',
+    },
+  ],
   rows,
 };

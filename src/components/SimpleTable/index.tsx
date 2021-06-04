@@ -15,7 +15,10 @@ type RowElement = string | number | ReactNode;
 
 export interface SimpleTableProps {
   title: string;
-  headCells: string[];
+  headCells: {
+    value: string;
+    align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
+  }[];
   rows: RowElement[][];
   onClickFilterButton?(): void;
 }
@@ -50,9 +53,9 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
       <Table>
         <TableHead>
           <TableRow>
-            {headCells.map((cell, index) => (
-              <TableCell key={cell} align={index === 0 ? 'left' : 'right'}>
-                {cell}
+            {headCells.map((cell) => (
+              <TableCell key={cell.value} align={cell.align}>
+                {cell.value}
               </TableCell>
             ))}
           </TableRow>
@@ -63,7 +66,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
             .map((row, i) => (
               <TableRow key={i} hover>
                 {row.map((cell, j) => (
-                  <TableCell key={j} align={j === 0 ? 'left' : 'right'}>
+                  <TableCell key={j} align={headCells[j].align}>
                     {cell}
                   </TableCell>
                 ))}

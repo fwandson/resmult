@@ -44,7 +44,24 @@ const Ofertas: React.FC = () => {
       <SimpleTable
         title="Residentes"
         onClickFilterButton={() => setOpen(true)}
-        headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
+        headCells={[
+          {
+            value: 'Nome',
+            align: 'left',
+          },
+          {
+            value: 'Idade',
+            align: 'left',
+          },
+          {
+            value: 'Sexo',
+            align: 'left',
+          },
+          {
+            value: 'Ações',
+            align: 'right',
+          },
+        ]}
         rows={[
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],

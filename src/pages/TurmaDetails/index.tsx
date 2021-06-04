@@ -167,14 +167,39 @@ const TurmaDetails: React.FC = () => {
         title="Ofertas"
         onClickFilterButton={() => setOpen(true)}
         headCells={[
-          'Ativid.',
-          'Oferta',
-          'Turma / Modulo',
-          'Período',
-          'Início/Fim',
-          'CH',
-          'Encerramentos',
-          'Lançamentos',
+          {
+            value: 'Ativid.',
+            align: 'left',
+          },
+          {
+            value: 'Oferta',
+            align: 'left',
+          },
+          {
+            value: 'Turma / Modulo',
+
+            align: 'left',
+          },
+          {
+            value: 'Período',
+            align: 'left',
+          },
+          {
+            value: 'Início/Fim',
+            align: 'left',
+          },
+          {
+            value: 'CH',
+            align: 'left',
+          },
+          {
+            value: 'Encerramentos',
+            align: 'left',
+          },
+          {
+            value: 'Lançamentos',
+            align: 'right',
+          },
         ]}
         rows={handleRows()}
       />
