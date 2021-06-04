@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { filter, find, ListIterateeCustom } from 'lodash';
 
 interface UseOfertasParams {
-  id: number; // id da turma
+  id: number | string; // id da turma
 }
 
 function useOfertas(params: UseOfertasParams) {

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from 'src/api';
 import useSWR, { SWRResponse, SWRConfiguration } from 'swr';
 import { AxiosRequestConfig } from 'axios';
 
 interface useApiWithSwrParms {
-  url: string;
+  url: any;
   axiosRequestConfig?: AxiosRequestConfig;
   swrConfiguration?: SWRConfiguration;
 }

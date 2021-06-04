@@ -1,3 +1,5 @@
+import { find, ListIterateeCustom } from 'lodash';
+import { useCallback } from 'react';
 import RESOURCE_URLS from 'src/resources/names';
 import { GetNames } from 'src/resources/tiposCargaHoraria/types';
 import { useApiWithSwr } from './useApiWithSwr';
@@ -11,7 +13,16 @@ function useTiposCargaHoraria() {
     },
   });
 
-  return { data, error, isValidating };
+  /**
+   * Encontra um residente
+   */
+  const findTipoCargaHoraria = useCallback(
+    (predicate?: ListIterateeCustom<GetNames.Return, boolean>) =>
+      find(data, predicate),
+    [data]
+  );
+
+  return { data, error, isValidating, findTipoCargaHoraria };
 }
 
 export default useTiposCargaHoraria;
