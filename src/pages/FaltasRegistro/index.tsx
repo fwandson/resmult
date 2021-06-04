@@ -96,8 +96,8 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-      <Card>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Card>
           <Grid container component={CardContent} spacing={2}>
             <Grid item xs={1}>
               <Typography variant="body1">Foto</Typography>
@@ -210,8 +210,8 @@ const FaltasRegistro: React.FC = () => {
             <CheckIcon />
             Salvar
           </SaveButton>
-        </form>
-      </Card>
+        </Card>
+      </form>
       <Box m={2} />
     </GenericContent>
   );

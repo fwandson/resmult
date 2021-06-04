@@ -81,6 +81,18 @@ const TurmaDetails: React.FC = () => {
     [id]
   );
 
+  const handlerGoToRegistroCHComp = useCallback(
+    (idOferta: number) => {
+      history.push(
+        NAMES.CH_COMP_REGISTRO.replace(':idTurma', id).replace(
+          ':idOferta',
+          String(idOferta)
+        )
+      );
+    },
+    [id]
+  );
+
   const handleRows = () => {
     if (ofertasReturnData) {
       return searchOfertas(searchValueDebaunced).map((oferta) => [
@@ -135,8 +147,8 @@ const TurmaDetails: React.FC = () => {
             <LibraryAddSharpIcon />
           </CustonIconButton>
           <CustonIconButton
-            tooltipTitle="Registro de Alguma coisa que não sei"
-            onClick={() => console.log('teste')}
+            tooltipTitle="Lançamento de carga horária complementar"
+            onClick={() => handlerGoToRegistroCHComp(oferta.id)}
           >
             <UpdateIcon />
           </CustonIconButton>

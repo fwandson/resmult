@@ -13,6 +13,7 @@ import TypographyPage from 'src/pages/Typography';
 import LoginLaytout from 'src/layouts/LoginLaytout';
 import FaltasRegistro from 'src/pages/FaltasRegistro';
 import NotasRegistro from 'src/pages/NotasRegistro';
+import CHCompRegistro from 'src/pages/CHCompRegistro';
 
 const Routes = () => {
   return (
@@ -58,6 +59,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.NOTAS_REGISTRO}
         component={NotasRegistro}
+        isPrivate
+        exact
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.CH_COMP_REGISTRO}
+        component={CHCompRegistro}
         isPrivate
         exact
       />
