@@ -55,7 +55,7 @@ const FaltasRegistro: React.FC = () => {
     idOferta,
   });
 
-  const { findOferta } = useOfertas({
+  const { findOferta, data: ofertasDataReturn } = useOfertas({
     id: idTurma,
   });
 
@@ -148,7 +148,7 @@ const FaltasRegistro: React.FC = () => {
     <GenericContent
       helmetText="Registro de faltas | Sagu"
       title="Registro de faltas"
-      isLoading={!residentesDataReturn}
+      isLoading={!residentesDataReturn || !ofertasDataReturn}
       letfTitleContent={
         <SearchField
           value={searchValue}
@@ -221,6 +221,7 @@ const FaltasRegistro: React.FC = () => {
           rows={handleRows}
         />
 
+        {/* TODO: remover isso depois do levantamento dos requisitos */}
         {/* <Card>
           <Grid container component={CardContent} spacing={2}>
             <Grid item xs={1}>

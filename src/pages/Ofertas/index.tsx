@@ -10,6 +10,7 @@ import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 
+// TODO: provavelmente, essa page não é necessária
 const Ofertas: React.FC = () => {
   const Actions = () => (
     <ActionsMenu
@@ -32,8 +33,8 @@ const Ofertas: React.FC = () => {
     periodo: 0,
     nucleo: 0,
     enfase: 0,
-    inicio: new Date(),
-    fim: new Date(),
+    inicio: '',
+    fim: '',
   });
 
   return (

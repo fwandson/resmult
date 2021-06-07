@@ -53,8 +53,8 @@ const TurmaDetails: React.FC = () => {
     periodo: 0,
     nucleo: 0,
     enfase: 0,
-    inicio: new Date(),
-    fim: new Date(),
+    inicio: '',
+    fim: '',
   });
 
   const handlerGoToRegistroFaltas = useCallback(
@@ -162,7 +162,7 @@ const TurmaDetails: React.FC = () => {
     <GenericContent
       helmetText="Ofertas | Sagu"
       title={'Ofertas da Turma'}
-      isLoading={!turmasDataReturn}
+      isLoading={!turmasDataReturn || !ofertasReturnData}
       letfTitleContent={
         <SearchField
           value={searchValue}
