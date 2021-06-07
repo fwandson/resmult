@@ -2,10 +2,10 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
+  // Card,
+  // CardContent,
+  // Divider,
+  // Grid,
   Tooltip,
   Typography,
 } from '@material-ui/core';
@@ -51,11 +51,7 @@ const FaltasRegistro: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
-  const {
-    data: residentesDataReturn,
-    searchResidentes,
-    isValidating,
-  } = useResidentes({
+  const { data: residentesDataReturn, searchResidentes } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -169,63 +165,63 @@ const FaltasRegistro: React.FC = () => {
         periodo={oferta?.semestre_descricao}
       />
 
-      <SimpleTable
-        title="Residentes"
-        hideTablePagination
-        headCells={[
-          {
-            value: <Typography variant="body1">Foto</Typography>,
-            align: 'left',
-          },
-          {
-            value: <Typography variant="body1">Residente</Typography>,
-            align: 'left',
-          },
-          {
-            value: (
-              <Tooltip title="Prática" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Prática</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('P')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            ),
-            align: 'left',
-          },
-          {
-            value: (
-              <Tooltip title="EAD + presencial" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Teórico-conceitual</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('C')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            ),
-            align: 'left',
-          },
-          {
-            value: (
-              <Tooltip title="Campo + núcleo" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Teórico-prática</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('T')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            ),
-            align: 'left',
-          },
-        ]}
-        rows={handleRows}
-      />
-
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Card>
+        <SimpleTable
+          title="Residentes"
+          hideTablePagination
+          headCells={[
+            {
+              value: <Typography variant="body1">Foto</Typography>,
+              align: 'left',
+            },
+            {
+              value: <Typography variant="body1">Residente</Typography>,
+              align: 'left',
+            },
+            {
+              value: (
+                <Tooltip title="Prática" placement="top-start">
+                  <Box>
+                    <Typography variant="body1">Prática</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {`(${handleCargaHoraria('P')} Horas)`}
+                    </Typography>
+                  </Box>
+                </Tooltip>
+              ),
+              align: 'left',
+            },
+            {
+              value: (
+                <Tooltip title="EAD + presencial" placement="top-start">
+                  <Box>
+                    <Typography variant="body1">Teórico-conceitual</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {`(${handleCargaHoraria('C')} Horas)`}
+                    </Typography>
+                  </Box>
+                </Tooltip>
+              ),
+              align: 'left',
+            },
+            {
+              value: (
+                <Tooltip title="Campo + núcleo" placement="top-start">
+                  <Box>
+                    <Typography variant="body1">Teórico-prática</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {`(${handleCargaHoraria('T')} Horas)`}
+                    </Typography>
+                  </Box>
+                </Tooltip>
+              ),
+              align: 'left',
+            },
+          ]}
+          rows={handleRows}
+        />
+
+        {/* <Card>
           <Grid container component={CardContent} spacing={2}>
             <Grid item xs={1}>
               <Typography variant="body1">Foto</Typography>
@@ -334,13 +330,13 @@ const FaltasRegistro: React.FC = () => {
               </React.Fragment>
             ))}
           </Grid>
-          <SaveButton variant="extended" color="secondary" type="submit">
-            <CheckIcon />
-            Salvar
-          </SaveButton>
-        </Card>
+        </Card> */}
+        <SaveButton variant="extended" color="secondary" type="submit">
+          <CheckIcon />
+          Salvar
+        </SaveButton>
       </form>
-      <LoadingBackdrop isLoading={isValidating} />
+      <LoadingBackdrop isLoading={!residentesDataReturn} />
       <Box m={2} />
     </GenericContent>
   );
