@@ -40,7 +40,7 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
           <Typography variant="body2" color="textSecondary" gutterBottom>
             CH PREVISTA
           </Typography>
-          <Typography>{cargaHoraria}</Typography>
+          <Typography>{`${cargaHoraria}h`}</Typography>
         </Grid>
         <Grid item>
           <Typography variant="body2" color="textSecondary" gutterBottom>

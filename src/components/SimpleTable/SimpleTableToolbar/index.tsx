@@ -3,7 +3,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { useCallback } from 'react';
 import { Container } from './styles';
 
-interface SimpleTableToolbarProps extends ToolbarProps {
+export interface SimpleTableToolbarProps extends ToolbarProps {
   title: string;
   onClickFilterButton?(): void;
 }
@@ -24,15 +24,17 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
       <Typography variant="h4" component="div">
         {title}
       </Typography>
-      <Tooltip title="Filtros">
-        <Button
-          color="secondary"
-          startIcon={<FilterListIcon />}
-          onClick={handleOnClickFilterButton}
-          disabled={!onClickFilterButton}
-        >
-          Filtros
-        </Button>
+      <Tooltip title="Filtros" placement="top">
+        <span>
+          <Button
+            color="secondary"
+            startIcon={<FilterListIcon />}
+            onClick={handleOnClickFilterButton}
+            disabled={!onClickFilterButton}
+          >
+            Filtros
+          </Button>
+        </span>
       </Tooltip>
     </Container>
   );

@@ -18,6 +18,7 @@ import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
+import LoadingBackdrop from 'src/components/LoadingBackdrop';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
@@ -50,7 +51,11 @@ const FaltasRegistro: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
-  const { data: residentesDataReturn, searchResidentes } = useResidentes({
+  const {
+    data: residentesDataReturn,
+    searchResidentes,
+    isValidating,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -335,6 +340,7 @@ const FaltasRegistro: React.FC = () => {
           </SaveButton>
         </Card>
       </form>
+      <LoadingBackdrop isLoading={isValidating} />
       <Box m={2} />
     </GenericContent>
   );
