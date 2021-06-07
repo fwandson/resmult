@@ -12,7 +12,7 @@ api.interceptors.response.use(async (request) => {
     process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'test'
   ) {
-    await delay(3000);
+    await delay(Number(process.env.REACT_APP_API_DELAY));
   }
   return request;
 });

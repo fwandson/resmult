@@ -8,7 +8,11 @@ const Turmas: React.FC = () => {
   const { data: turmasData } = useTurmas();
 
   return (
-    <GenericContent helmetText="Turmas | Sagu" title="Minhas turmas">
+    <GenericContent
+      helmetText="Turmas | Sagu"
+      title="Minhas turmas"
+      isLoading={!turmasData}
+    >
       <Box display="flex" flexDirection="column" height="100%">
         {turmasData?.turmas.length === 0 && (
           <Box

@@ -28,7 +28,7 @@ const CHCompRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const { searchResidentes } = useResidentes({
+  const { searchResidentes, data: residentesDataReturn } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -37,6 +37,7 @@ const CHCompRegistro: React.FC = () => {
     <GenericContent
       helmetText="Carga Horária Compl. | Sagu"
       title="Registro de carga horária complementar"
+      isLoading={!residentesDataReturn}
       letfTitleContent={
         <SearchField
           value={searchValue}

@@ -36,7 +36,7 @@ const TurmaDetails: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
-  const { findTurma } = useTurmas();
+  const { findTurma, data: turmasDataReturn } = useTurmas();
 
   const turma = findTurma({ id: Number(id) });
 
@@ -162,6 +162,7 @@ const TurmaDetails: React.FC = () => {
     <GenericContent
       helmetText="Ofertas | Sagu"
       title={'Ofertas da Turma'}
+      isLoading={!turmasDataReturn}
       letfTitleContent={
         <SearchField
           value={searchValue}

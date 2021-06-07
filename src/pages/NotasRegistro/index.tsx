@@ -29,7 +29,7 @@ const NotasRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const { searchResidentes } = useResidentes({
+  const { searchResidentes, data: residentesDataReturn } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -38,6 +38,7 @@ const NotasRegistro: React.FC = () => {
     <GenericContent
       helmetText="Notas | Sagu"
       title="Registro de notas"
+      isLoading={!residentesDataReturn}
       letfTitleContent={
         <SearchField
           value={searchValue}
