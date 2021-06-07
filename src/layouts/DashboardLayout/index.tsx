@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flex: '1 1 auto',
+    flexDirection: 'column',
     height: '100%',
     overflow: 'auto',
     padding: theme.spacing(2),

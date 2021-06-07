@@ -18,7 +18,6 @@ import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
-import LoadingBackdrop from 'src/components/LoadingBackdrop';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
@@ -149,6 +148,7 @@ const FaltasRegistro: React.FC = () => {
     <GenericContent
       helmetText="Registro de faltas | Sagu"
       title="Registro de faltas"
+      isLoading={!residentesDataReturn}
       letfTitleContent={
         <SearchField
           value={searchValue}
@@ -336,7 +336,6 @@ const FaltasRegistro: React.FC = () => {
           Salvar
         </SaveButton>
       </form>
-      <LoadingBackdrop isLoading={!residentesDataReturn} />
       <Box m={2} />
     </GenericContent>
   );

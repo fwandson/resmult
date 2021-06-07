@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const LoadingBackdrop: React.FC<LoadingBackdrop> = ({ isLoading }) => {
+const LoadingBackdrop: React.FC<LoadingBackdrop> = ({ isLoading = false }) => {
   const classes = useStyles();
 
   return (

@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import IconButtonBack from '../IconButtonBack';
+import LoadingBackdrop from '../LoadingBackdrop';
 
 export const Container = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ export interface GenericContentProps {
   helmetText: string;
   title: string;
   letfTitleContent?: ReactNode;
+  isLoading?: boolean;
 }
 
 const GenericContent: React.FC<GenericContentProps> = ({
@@ -21,6 +23,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
   helmetText,
   title,
   letfTitleContent,
+  isLoading = false,
 }) => {
   return (
     <Box display="flex" flexDirection="column" height="100%">
@@ -40,6 +43,7 @@ const GenericContent: React.FC<GenericContentProps> = ({
         {letfTitleContent}
       </Box>
       <Box>{children}</Box>
+      <LoadingBackdrop isLoading={isLoading} />
     </Box>
   );
 };
