@@ -53,8 +53,8 @@ const TurmaDetails: React.FC = () => {
     periodo: 0,
     nucleo: 0,
     enfase: 0,
-    inicio: '',
-    fim: '',
+    inicio: new Date(),
+    fim: new Date(),
   });
 
   const handlerGoToRegistroFaltas = useCallback(
@@ -217,6 +217,7 @@ const TurmaDetails: React.FC = () => {
         rows={handleRows()}
       />
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
+      <pre>{JSON.stringify(filtros, null, 2)}</pre>
     </GenericContent>
   );
 };

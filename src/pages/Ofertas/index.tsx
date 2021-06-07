@@ -33,8 +33,8 @@ const Ofertas: React.FC = () => {
     periodo: 0,
     nucleo: 0,
     enfase: 0,
-    inicio: '',
-    fim: '',
+    inicio: new Date(),
+    fim: new Date(),
   });
 
   return (

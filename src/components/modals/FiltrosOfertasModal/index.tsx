@@ -16,6 +16,7 @@ import {
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 import { uniqueId } from 'lodash';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import useTurmas from 'src/hooks/useTurmas';
@@ -25,8 +26,8 @@ export interface FiltrosOfertasModalData {
   periodo: number | undefined;
   nucleo: number | undefined;
   enfase: number | undefined;
-  inicio: string | undefined;
-  fim: string | undefined;
+  inicio: MaterialUiPickersDate | undefined;
+  fim: MaterialUiPickersDate | undefined;
 }
 
 export interface FiltrosOfertasModalProps extends DialogProps {
@@ -35,6 +36,8 @@ export interface FiltrosOfertasModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+// TODO: usar o react hook forms aqui para
+// criar o component de fild de data
 const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
@@ -59,7 +62,7 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
     handleOnChange('inicio', values.inicio);
     handleOnChange('fim', values.fim);
     setOpen(false);
-  }, []);
+  }, [values]);
 
   return (
     <Dialog open={open} {...rest} fullWidth>
@@ -188,7 +191,7 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               onChange={(date) =>
                 setValues((old) => ({
                   ...old,
-                  inicio: String(date),
+                  inicio: date,
                 }))
               }
             />
@@ -204,7 +207,7 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               onChange={(date) =>
                 setValues((old) => ({
                   ...old,
-                  fim: String(date),
+                  fim: date,
                 }))
               }
             />
