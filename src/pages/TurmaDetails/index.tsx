@@ -2,13 +2,12 @@ import { Box, Typography } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
-import { format } from 'date-fns';
 import { useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
 import FiltrosOfertasModal, {
-  FiltrosOfertasModalData,
+  FiltrosOfertasModalData
 } from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
@@ -119,11 +118,9 @@ const TurmaDetails: React.FC = () => {
         </Box>,
         <Box key="inicio-fim" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
-            {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
+            {oferta.dataInicio}
           </Typography>
-          <Typography variant="caption">
-            {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
-          </Typography>
+          <Typography variant="caption">{oferta.dataFim}</Typography>
         </Box>,
         <Box key="ch" display="flex" flexDirection="column">
           <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
