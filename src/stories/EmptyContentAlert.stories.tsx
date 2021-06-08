@@ -6,6 +6,14 @@ import EmptyContentAlert, {
 export default {
   title: 'Components/EmptyContentAlert',
   component: EmptyContentAlert,
+  argTypes: {
+    title: {
+      description: 'Título',
+    },
+    subTitle: {
+      description: 'Subtítulo',
+    },
+  },
 } as Meta;
 
 const Template: Story<EmptyContentAlertProps> = (args) => (
