@@ -1,72 +1,70 @@
-import { IconButton, Tooltip, Typography } from '@material-ui/core';
+import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import { uniqueId } from 'lodash';
-import {
-  Airplay as AirplayIcon,
-  Calendar as CalendarIcon,
-  Clock as ClockIcon,
-  Command as CommandIcon,
-} from 'react-feather';
-import { Helmet } from 'react-helmet';
+import ActionsMenu from 'src/components/ActionsMenu';
+import GenericContent from 'src/components/GenericContent';
+import FiltrosOfertasModal, {
+  FiltrosOfertasModalData,
+} from 'src/components/modals/FiltrosOfertasModal';
+import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 
-const Actions = () => (
-  <>
-    <Tooltip title="title" arrow>
-      <IconButton>
-        <AirplayIcon size={14} />
-      </IconButton>
-    </Tooltip>
-
-    <Tooltip title="title" arrow>
-      <IconButton>
-        <CommandIcon size={14} />
-      </IconButton>
-    </Tooltip>
-
-    <Tooltip title="title" arrow>
-      <IconButton>
-        <ClockIcon size={14} />
-      </IconButton>
-    </Tooltip>
-
-    <Tooltip title="title" arrow>
-      <IconButton>
-        <CalendarIcon size={14} />
-      </IconButton>
-    </Tooltip>
-  </>
-);
-
+// TODO: provavelmente, essa page não é necessária
 const Ofertas: React.FC = () => {
+  const Actions = () => (
+    <ActionsMenu
+      edge="end"
+      data={[
+        { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Editar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Deletar', icon: <ScheduleIcon fontSize="small" /> },
+        { label: 'Faltas', icon: <EventAvailableIcon fontSize="small" /> },
+      ]}
+    />
+  );
+
+  const {
+    filtros,
+    setOpen,
+    ...rest
+  } = useFiltrosModal<FiltrosOfertasModalData>({
+    turma: 0,
+    periodo: 0,
+    nucleo: 0,
+    enfase: 0,
+    inicio: new Date(),
+    fim: new Date(),
+  });
+
   return (
-    <div>
-      <Helmet>
-        <title>Ofertas | Sagu</title>
-      </Helmet>
-      <Typography variant="h1" gutterBottom>
-        Ofertas
-      </Typography>
+    <GenericContent
+      helmetText="Ofertas | Sagu"
+      title="Ofertas"
+      letfTitleContent={<SearchField />}
+    >
       <SimpleTable
         title="Residentes"
-        headCells={['Nome', 'Idade', 'Sexo', 'Ações']}
+        onClickFilterButton={() => setOpen(true)}
+        headCells={[
+          {
+            value: 'Nome',
+            align: 'left',
+          },
+          {
+            value: 'Idade',
+            align: 'left',
+          },
+          {
+            value: 'Sexo',
+            align: 'left',
+          },
+          {
+            value: 'Ações',
+            align: 'right',
+          },
+        ]}
         rows={[
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
-          ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
@@ -78,7 +76,8 @@ const Ofertas: React.FC = () => {
           ['Ericson', 33, 'M', <Actions key={uniqueId()} />],
         ]}
       />
-    </div>
+      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
+    </GenericContent>
   );
 };
 

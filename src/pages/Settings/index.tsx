@@ -1,13 +1,9 @@
 import { Typography } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
+import GenericContent from 'src/components/GenericContent';
 
 const Settings: React.FC = () => {
   return (
-    <div>
-      <Helmet>
-        <title>Settings | Sagu</title>
-      </Helmet>
-      <Typography variant="h1">Settings</Typography>
+    <GenericContent helmetText="Configurações | Sagu" title="Configurações">
       <Typography variant="h2">
         Mussum Ipsum, cacilds vidis litro abertis. Admodum accumsan disputationi
         eu sit. Vide electram sadipscing et per. Si u mundo tá muito paradis?
@@ -15,7 +11,7 @@ const Settings: React.FC = () => {
         volutpat erat hendrerit non. Nam vulputate dapibus. Quem num gosta di
         mim que vai caçá sua turmis!
       </Typography>
-    </div>
+    </GenericContent>
   );
 };
 

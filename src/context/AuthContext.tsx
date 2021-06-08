@@ -1,12 +1,16 @@
 import { createContext, useCallback, useContext, useState } from 'react';
+import api from 'src/api';
+import CONSTANTS from 'src/config';
+import resources from 'src/resources';
 
 // Local history
-export const LH_TOKEN_NAME = '@Sagu:token';
+const { LH_TOKEN_NAME } = CONSTANTS;
 
 interface AuthContextState {
   token: TokenState;
   signIn({ username, password }: UserData): Promise<void>;
   userLogged(): boolean;
+  signOut(): void;
 }
 
 // provalvemente isso será cpf
@@ -22,35 +26,42 @@ interface TokenState {
 const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 
 const AuthProvider: React.FC = ({ children }) => {
-  // Nota Mental: Legal isso aqui
   const [token, setToken] = useState<TokenState>(() => {
     const token = localStorage.getItem(LH_TOKEN_NAME);
 
     if (token) {
-      // TODO: implementar a api, quando tiver uma.
-      // api.defaults.headers.authorization = `Bearer ${token}`;
-
+      api.defaults.headers.authorization = `Bearer ${token}`;
       return { token };
     }
 
     return {} as TokenState;
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const signIn = useCallback(async ({ username, password }: UserData) => {
-    // TODO: implementar a api, quando tiver uma.
-    // const response = await api.post('/sessions', {
-    //   username,
-    //   password,
-    // });
+    // TODO: Melhor transformar isso em um Hook
+    const { autentication } = resources;
 
-    // const { token } = response.data;
+    const { data } = await autentication.login({
+      usuario: username,
+      senha: password,
+    });
 
-    setToken(token);
+    const { access_token } = data;
 
-    // TODO: colocar aqui o retrono da api, quando tiver
-    localStorage.setItem(LH_TOKEN_NAME, '');
-    // api.defaults.headers.authorization = `Bearer ${token}`;
+    setToken({ token: access_token });
+
+    // setando a local history da token
+    localStorage.setItem(LH_TOKEN_NAME, access_token);
+
+    // configurando o header do axios com a autorization JWT
+    api.defaults.headers.authorization = `Bearer ${access_token}`;
+  }, []);
+
+  // implementando
+  const signOut = useCallback(async () => {
+    setToken({} as TokenState);
+    localStorage.removeItem(LH_TOKEN_NAME);
+    api.defaults.headers.authorization = undefined;
   }, []);
 
   const userLogged = useCallback(() => {
@@ -62,7 +73,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token, signIn, userLogged }}>
+    <AuthContext.Provider value={{ token, signIn, userLogged, signOut }}>
       {children}
     </AuthContext.Provider>
   );

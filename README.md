@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Sistema Aberto de Gestão Unificada - SAGU - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Resumo
 
-## Available Scripts
+A **solução de gestão acadêmica (SAGU)** tem o objetivo de automatizar os processos de instituições de ensino, acompanhando a vida do aluno desde a sua inscrição no processo de seleção, até a emissão de seu certificado de conclusão. A solução prevê todas as interações que existem entre o aluno e a instituição de ensino.
 
-In the project directory, you can run:
+> `Esse projeto abrange o frontend do módulo de integração interdisciplinar`
+
+## Tecnologias utilizadas
+
+- [React](https://pt-br.reactjs.org/): Uma biblioteca JavaScript para criar interfaces de usuário.
+- [TypeScript](https://www.typescriptlang.org/): TypeScript é um superconjunto de JavaScript desenvolvido pela Microsoft que adiciona tipagem e alguns outros recursos a linguagem.
+- [Material UI](https://material-ui.com/pt/): Biblioteca de componentes React para um desenvolvimento ágil e fácil.
+
+## Dependências do projeto
+
+- [date-fns](https://date-fns.org/): Fornece o conjunto de ferramentas mais abrangentes, porém simples e consistentes para manipular datas JavaScript em um navegador e Node.js.
+- [lodash](https://lodash.com/): Uma biblioteca de utilitários JavaScript moderna que oferece modularidade, desempenho e extras.
+- [react-helmet](https://github.com/nfl/react-helmet): Este componente React reutilizável gerenciará todas as suas alterações no cabeçalho do documento.
+- [react-hook-form](https://react-hook-form.com/): Formulários eficientes, flexíveis e extensíveis com validação fácil de usar.
+- [react-perfect-scrollbar](https://github.com/goldenyz/react-perfect-scrollbar): Este é um invólucro para permitir o uso da [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar) no React.
+- [react-router-dom](https://reactrouter.com/web/guides/quick-start): Gerenciador de rotas no React.
+- [react-text-mask](https://github.com/text-mask/text-mask): Biblioteca de máscaras de `inputs` para React.
+- [react-toastify](https://fkhadra.github.io/react-toastify/introduction): Notificações estilizadas para o React.
+- [styled-components](https://styled-components.com/): Use os melhores bits de ES6 e CSS para estilizar seus aplicativos sem estresse 💅🏾.
+- [yup](https://github.com/jquense/yup): Validações com JS. (Nesse projeto, usamos ele em conjunto com o `react-hook-form`).
+- [storybook](https://storybook.js.org/): Storybook é uma ferramenta de código aberto para construir componentes de interface do usuário e páginas de forma isolada. Ele agiliza o desenvolvimento, teste e documentação da IU.
+
+## Como Testar
+
+### `git clone https://github.com/EscolaDeSaudePublica/sagu-front.git`
+
+Baixar o repositório.
+
+### `cd sagu-front`
+
+Entrar na pasta.
+
+### `yarn install`
+
+Instala as dependências do projeto.
 
 ### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Executa o aplicativo no modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para vê-lo no navegador.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Compila o aplicativo para produção na pasta `build`.\
+Ele agrupa corretamente o React no modo de produção e otimiza a construção para o melhor desempenho.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `yarn storybook`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Executa o aplicativo no modo storybook.\
+Abra [http://localhost:6006/](http://localhost:6006/) para vê-lo no navegador.

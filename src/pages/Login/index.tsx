@@ -1,24 +1,29 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent,
-  Container,
   Grid,
+  InputAdornment,
+  Link,
   Typography,
 } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
-import GenericInput from 'src/components/inputs/GenericInput';
-import { ContainerWrapper } from './styles';
-import { useForm } from 'react-hook-form';
+import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
+import PersonIcon from '@material-ui/icons/Person';
 import { useCallback } from 'react';
+import { Helmet } from 'react-helmet';
+import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
-import NAMES from 'src/routes/names';
-import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './schema';
+import { toast } from 'react-toastify';
 import InputCPF from 'src/components/inputs/InputCPF';
-
+import PasswordInput from 'src/components/inputs/PasswordInput';
+import Logo from 'src/components/Logo';
+import { useAuth } from 'src/context/AuthContext';
+import { useLoading } from 'src/context/LoadingContext';
+import NAMES from 'src/routes/names';
+import schema from './schema';
+import { Container, ContainerWrapper } from './styles';
 interface LoginFromData {
   cpf: string;
   password: string;
@@ -27,7 +32,10 @@ interface LoginFromData {
 const Login: React.FC = () => {
   const history = useHistory();
 
-  // TODO: remover esses valores default
+  const { showLoading, hideLoading } = useLoading();
+
+  const { signIn } = useAuth();
+
   const { control, handleSubmit } = useForm<LoginFromData>({
     defaultValues: {
       cpf: '',
@@ -36,10 +44,29 @@ const Login: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar a validação
-  const onSubmit = useCallback((data: LoginFromData) => {
-    console.log(JSON.stringify(data, null, 2));
-    history.push(NAMES.DASHBOARD);
+  const onSubmit = useCallback(async (formaData: LoginFromData) => {
+    try {
+      showLoading();
+
+      // removendo caracteres não algarismos
+      const username = formaData.cpf.replace(/[^0-9]/g, '');
+
+      await signIn({
+        username,
+        password: formaData.password,
+      });
+
+      history.push(NAMES.TURMAS);
+    } catch (error) {
+      if (error.response.status === 401) {
+        toast.error('CPF ou Senha inválidos');
+      } else {
+        // TODO: pensar em alguma forma de trabalhar o tratamento dos erros
+        toast.error('Algo de inesperado aconteceu...');
+      }
+    } finally {
+      hideLoading();
+    }
   }, []);
 
   return (
@@ -49,17 +76,22 @@ const Login: React.FC = () => {
       </Helmet>
       <ContainerWrapper>
         <Container maxWidth="sm">
-          <Card component="form" onSubmit={handleSubmit(onSubmit)}>
+          <Logo />
+          <Card
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            elevation={0}
+          >
             <CardContent>
               <Box marginBottom={4}>
                 <Typography color="textPrimary" variant="h2">
-                  Entrar
+                  Meu acesso
                 </Typography>
-                <Typography color="textSecondary" gutterBottom variant="body2">
-                  Faça login na plataforma interna
+                <Typography gutterBottom variant="body2" color="textSecondary">
+                  Utilize suas credenciais do SAGU
                 </Typography>
               </Box>
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <InputCPF
                     control={control}
@@ -67,31 +99,52 @@ const Login: React.FC = () => {
                     label="CPF"
                     name="cpf"
                     variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PersonIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <GenericInput
+                  <PasswordInput
                     control={control}
                     fullWidth
                     label="Senha"
                     name="password"
                     type="password"
                     variant="outlined"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EnhancedEncryptionIcon />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    disableElevation
+                    color="primary"
+                  >
+                    Entrar agora
+                  </Button>
                 </Grid>
               </Grid>
             </CardContent>
-            <CardActions>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
-                Entrar
-              </Button>
-            </CardActions>
           </Card>
+          <Link
+            variant="subtitle1"
+            onClick={() => console.log('Go to recuperar senha')}
+          >
+            Esqueci minha senha
+          </Link>
         </Container>
       </ContainerWrapper>
     </>

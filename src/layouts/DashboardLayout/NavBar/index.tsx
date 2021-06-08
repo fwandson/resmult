@@ -1,88 +1,59 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
   Hidden,
   List,
-  Typography,
   makeStyles,
+  Typography,
 } from '@material-ui/core';
-import {
-  AlertCircle as AlertCircleIcon,
-  BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
-  UserPlus as UserPlusIcon,
-  Book as BookIcon,
-  PenTool as PenToolIcon,
-} from 'react-feather';
-import NavItem from './NavItem';
+import { useCallback, useEffect } from 'react';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
+import { useAuth } from 'src/context/AuthContext';
+import useUserInfo from 'src/hooks/useUserInfo';
 import NAMES from 'src/routes/names';
+import NavItem from './NavItem';
+
+import GroupIcon from '@material-ui/icons/Group';
+import ClassIcon from '@material-ui/icons/Class';
+import SettingsIcon from '@material-ui/icons/Settings';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // TODO: criar um useUserInfo hook para prover os dados do usuário.
 // Tomando cuidado para não prover dados importantes.
 const user = {
   avatar:
     'https://avatars.githubusercontent.com/u/1212015?s=400&u=886cb9225f7bce0e75a240523834326ebdfeb49a&v=4',
-  jobTitle: 'Desenvolvedor Pleno',
-  name: 'Ericson Moreira',
 };
 
 const items = [
   {
-    href: NAMES.DASHBOARD,
-    icon: BarChartIcon,
-    title: 'Dashboard',
-  },
-  {
     href: NAMES.TURMAS,
-    icon: BookIcon,
+    icon: GroupIcon,
     title: 'Minhas Turmas',
   },
   {
     href: NAMES.OFERTAS,
-    icon: ShoppingBagIcon,
+    icon: ClassIcon,
     title: 'Ofertas',
-  },
-  {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account',
   },
   {
     href: NAMES.SETTINGS,
     icon: SettingsIcon,
-    title: 'Settings',
+    title: 'Configurações',
   },
   {
     href: NAMES.TYPOGRAPHY,
-    icon: PenToolIcon,
+    icon: BorderColorIcon,
     title: 'Typography',
-  },
-  {
-    href: NAMES.LOGIN,
-    icon: LockIcon,
-    title: 'Login',
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register',
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error',
   },
 ];
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
     width: 256,
   },
@@ -93,14 +64,27 @@ const useStyles = makeStyles(() => ({
   },
   avatar: {
     cursor: 'pointer',
-    width: 64,
-    height: 64,
+    width: 40,
+    height: 40,
+    marginBottom: theme.spacing(2),
   },
 }));
 
 const NavBar = ({ onMobileClose, openMobile }: any) => {
   const classes = useStyles();
+
   const location = useLocation();
+
+  const { signOut } = useAuth();
+
+  const history = useHistory();
+
+  const userInfo = useUserInfo();
+
+  const handleLogout = useCallback(() => {
+    signOut();
+    history.push(NAMES.LOGIN);
+  }, []);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -110,18 +94,18 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
-      <Box alignItems="center" display="flex" flexDirection="column" p={2}>
+      <Box display="flex" flexDirection="column" p={2}>
         <Avatar
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to={NAMES.HOME}
         />
-        <Typography color="textPrimary" variant="h5">
-          {user.name}
+        <Typography color="textPrimary" variant="h6">
+          {userInfo.nome}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          Perfil: {userInfo.perfil}
         </Typography>
       </Box>
       <Divider />
@@ -138,6 +122,17 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         </List>
       </Box>
       <Box flexGrow={1} />
+      <Box p={2}>
+        <Button
+          fullWidth
+          color="secondary"
+          variant="outlined"
+          endIcon={<ExitToAppIcon />}
+          onClick={() => handleLogout()}
+        >
+          Sair
+        </Button>
+      </Box>
     </Box>
   );
 

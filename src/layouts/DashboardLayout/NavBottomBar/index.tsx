@@ -1,31 +1,23 @@
 import { BottomNavigationAction } from '@material-ui/core';
+import ClassIcon from '@material-ui/icons/Class';
+import GroupIcon from '@material-ui/icons/Group';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { findIndex } from 'lodash';
 import { useCallback } from 'react';
-import {
-  BarChart as BarChartIcon,
-  Book as BookIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-} from 'react-feather';
 import { useHistory, useLocation } from 'react-router';
 import NAMES from 'src/routes/names';
 import { BottomNavigation } from './styles';
 
 const items = [
   {
-    href: NAMES.DASHBOARD,
-    icon: <BarChartIcon />,
-    title: 'Dashboard',
+    href: NAMES.OFERTAS,
+    icon: <ClassIcon />,
+    title: 'Ofertas',
   },
   {
     href: NAMES.TURMAS,
-    icon: <BookIcon />,
+    icon: <GroupIcon />,
     title: 'Turmas',
-  },
-  {
-    href: NAMES.OFERTAS,
-    icon: <ShoppingBagIcon />,
-    title: 'Ofertas',
   },
   {
     href: NAMES.SETTINGS,

@@ -2,23 +2,27 @@
   "name": "sagu-front",
   "version": "0.1.0",
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@hookform/resolvers": "^2.4.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/pickers": "^3.3.10",
+    "@testing-library/react": "^11.2.7",
     "add": "^2.0.6",
     "axios": "^0.21.1",
+    "babel-loader": "8.1.0",
     "date-fns": "^2.21.3",
     "fontsource-roboto": "^4.0.0",
     "history": "^5.0.0",
     "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "npm": "^7.7.4",
     "nprogress": "^0.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-feather": "^2.0.9",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.5.2",
     "react-perfect-scrollbar": "^1.5.8",
@@ -30,6 +34,7 @@
     "styled-components": "^5.3.0",
     "swr": "^0.5.6",
     "typescript": "^4.2.4",
+    "use-debounce": "^6.0.1",
     "yarn": "^1.22.10",
     "yup": "^0.32.9"
   },
@@ -37,12 +42,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -58,6 +75,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-typescript": "^7.14.3",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/addons": "^6.2.9",
+    "@storybook/node-logger": "^6.2.9",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.9",
+    "@storybook/theming": "^6.2.9",
+    "@types/jest": "^26.0.23",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/material-ui": "^0.21.8",
     "@types/react-dom": "^17.0.3",
     "@types/react-helmet": "^6.1.1",

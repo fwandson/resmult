@@ -1,29 +1,40 @@
-import {
-  IconButton,
-  Tooltip,
-  Typography,
-  ToolbarProps,
-} from '@material-ui/core';
-import { Filter as FilterIcon } from 'react-feather';
+import { Button, ToolbarProps, Tooltip, Typography } from '@material-ui/core';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { useCallback } from 'react';
 import { Container } from './styles';
 
-interface SimpleTableToolbarProps extends ToolbarProps {
+export interface SimpleTableToolbarProps extends ToolbarProps {
   title: string;
+  onClickFilterButton?(): void;
 }
 
 const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
   title,
+  onClickFilterButton,
   ...rest
 }) => {
+  const handleOnClickFilterButton = useCallback(() => {
+    if (onClickFilterButton) {
+      onClickFilterButton();
+    }
+  }, [onClickFilterButton]);
+
   return (
     <Container {...rest}>
       <Typography variant="h4" component="div">
-        <strong>{title}</strong>
+        {title}
       </Typography>
-      <Tooltip title="Filter list">
-        <IconButton>
-          <FilterIcon />
-        </IconButton>
+      <Tooltip title="Filtros" placement="top">
+        <span>
+          <Button
+            color="secondary"
+            startIcon={<FilterListIcon />}
+            onClick={handleOnClickFilterButton}
+            disabled={!onClickFilterButton}
+          >
+            Filtros
+          </Button>
+        </span>
       </Tooltip>
     </Container>
   );

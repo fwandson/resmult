@@ -8,20 +8,32 @@ import {
   TableBody,
   TablePagination,
 } from '@material-ui/core';
-import { ChangeEvent, useState } from 'react';
+import { uniqueId } from 'lodash';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import SimpleTableToolbar from './SimpleTableToolbar';
 
-type RowElement = string | number | JSX.Element;
+type RowElement = string | number | ReactNode;
 
-interface SimpleTableProps {
+export interface SimpleTableProps {
   title: string;
-  headCells: string[];
+  headCells: {
+    value: RowElement;
+    align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
+  }[];
   rows: RowElement[][];
+  hideTablePagination?: boolean;
+  onClickFilterButton?(): void;
 }
 
 // Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
-  const { headCells, rows, title } = props;
+  const {
+    headCells,
+    rows,
+    title,
+    hideTablePagination,
+    onClickFilterButton,
+  } = props;
 
   const [page, setPage] = useState(0);
 
@@ -41,24 +53,33 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
 
   return (
     <TableContainer component={Paper}>
-      <SimpleTableToolbar title={title} disableGutters />
+      <SimpleTableToolbar
+        title={title}
+        onClickFilterButton={onClickFilterButton}
+        disableGutters
+      />
       <Table>
         <TableHead>
           <TableRow>
-            {headCells.map((cell, index) => (
-              <TableCell key={cell} align={index === 0 ? 'left' : 'right'}>
-                {cell}
+            {headCells.map((cell) => (
+              <TableCell key={uniqueId()} align={cell.align}>
+                {cell.value}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .slice(
+              page * rowsPerPage,
+              hideTablePagination
+                ? rows.length
+                : page * rowsPerPage + rowsPerPage
+            )
             .map((row, i) => (
               <TableRow key={i} hover>
                 {row.map((cell, j) => (
-                  <TableCell key={j} align={j === 0 ? 'left' : 'right'}>
+                  <TableCell key={j} align={headCells[j].align}>
                     {cell}
                   </TableCell>
                 ))}
@@ -66,24 +87,26 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
             ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+              <TableCell colSpan={headCells.length} />
             </TableRow>
           )}
         </TableBody>
       </Table>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        labelRowsPerPage="Linhas por página"
-        labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} de ${count}`
-        }
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+      {!hideTablePagination && (
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          labelRowsPerPage="Linhas por página"
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} de ${count}`
+          }
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      )}
     </TableContainer>
   );
 };

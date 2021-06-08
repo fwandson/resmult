@@ -1,6 +1,5 @@
 import { Hidden, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import IconButtonBack from 'src/components/IconButtonBack';
 import NavBar from './NavBar';
 import NavBottomBar from './NavBottomBar';
 import TopBar from './TopBar';
@@ -29,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flex: '1 1 auto',
+    flexDirection: 'column',
     height: '100%',
     overflow: 'auto',
     padding: theme.spacing(2),
@@ -51,10 +51,7 @@ const DashboardLayout: React.FC = ({ children }) => {
       />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <IconButtonBack />
-            {children}
-          </div>
+          <div className={classes.content}>{children}</div>
         </div>
       </div>
       <Hidden mdUp>
