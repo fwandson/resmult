@@ -16,6 +16,8 @@ import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from './styles';
+import { Link as LinkRouter } from 'react-router-dom';
+import NAMES from 'src/routes/names';
 
 interface FaltasRegistroParams {
   idTurma: string;
@@ -57,6 +59,7 @@ const FaltasRegistro: React.FC = () => {
     [oferta]
   );
 
+  // TODO: falta implementar o schema de validação dos campos
   const { control, handleSubmit } = useForm<FaltasRegistroFromData>({
     defaultValues: {
       ch: [],
@@ -74,6 +77,8 @@ const FaltasRegistro: React.FC = () => {
       searchResidentes(searchValueDebaunced).map((residente) => [
         <Box key={uniqueId()} mb={5}>
           <Avatar
+            component={LinkRouter}
+            to={NAMES.RESIDENTE_DETAILS.replace(':id', String(residente.id))}
             src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
           >
             {residente.person.name[0]}
@@ -87,6 +92,9 @@ const FaltasRegistro: React.FC = () => {
           justifyContent="space-between"
         >
           <Typography>{residente.person.name}</Typography>
+          <Typography variant="caption" color="textSecondary">
+            {residente.enfase.descricao}
+          </Typography>
           <Box m={2} />
           <Button>Gerar Relatório</Button>
         </Box>,
@@ -131,7 +139,7 @@ const FaltasRegistro: React.FC = () => {
           </Button>
         </Box>,
       ]),
-    [residentesDataReturn]
+    [searchValueDebaunced, residentesDataReturn]
   );
 
   return (
@@ -165,7 +173,9 @@ const FaltasRegistro: React.FC = () => {
               align: 'left',
             },
             {
-              value: <Typography variant="body1">Residente</Typography>,
+              value: (
+                <Typography variant="body1">Residente / Ênfase</Typography>
+              ),
               align: 'left',
             },
             {
