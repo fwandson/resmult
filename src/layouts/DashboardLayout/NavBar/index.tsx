@@ -10,25 +10,17 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import ClassIcon from '@material-ui/icons/Class';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import GroupIcon from '@material-ui/icons/Group';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { useCallback, useEffect } from 'react';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/context/AuthContext';
 import useUserInfo from 'src/hooks/useUserInfo';
 import NAMES from 'src/routes/names';
 import NavItem from './NavItem';
-
-import GroupIcon from '@material-ui/icons/Group';
-import ClassIcon from '@material-ui/icons/Class';
-import SettingsIcon from '@material-ui/icons/Settings';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
-// TODO: criar um useUserInfo hook para prover os dados do usuário.
-// Tomando cuidado para não prover dados importantes.
-const user = {
-  avatar:
-    'https://avatars.githubusercontent.com/u/1212015?s=400&u=886cb9225f7bce0e75a240523834326ebdfeb49a&v=4',
-};
 
 const items = [
   {
@@ -73,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = ({ onMobileClose, openMobile }: any) => {
   const classes = useStyles();
 
+  const history = useHistory();
+
   const location = useLocation();
 
   const { signOut } = useAuth();
-
-  const history = useHistory();
 
   const userInfo = useUserInfo();
 
@@ -98,15 +90,16 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src="/static/images/avatars/avatar_10.png"
           to={NAMES.HOME}
         />
         <Typography color="textPrimary" variant="h6">
           {userInfo.nome}
         </Typography>
-        <Typography color="textSecondary" variant="body2">
+        {/* TODO: recolocar quando tiver essa informação vindo do backend  */}
+        {/* <Typography color="textSecondary" variant="body2">
           Perfil: {userInfo.perfil}
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
       <Box p={2}>
