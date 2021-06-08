@@ -1,4 +1,7 @@
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
+import ptBRLocale from 'date-fns/locale/pt-BR';
 import 'fontsource-roboto';
 import { BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -8,9 +11,6 @@ import GlobalStyles from './components/GlobalStyles';
 import CustonToastContainer from './config/CustonToastContainer';
 import { AuthProvider } from './context/AuthContext';
 import { LoadingProvider } from './context/LoadingContext';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import ptBRLocale from 'date-fns/locale/pt-BR';
 
 function App() {
   return (

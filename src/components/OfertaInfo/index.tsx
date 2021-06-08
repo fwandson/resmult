@@ -1,4 +1,5 @@
-import { Box, Typography, Grid, useMediaQuery } from '@material-ui/core';
+import { Box, Grid, Typography, useMediaQuery } from '@material-ui/core';
+import { format } from 'date-fns';
 import theme from 'src/theme';
 
 export interface OfertaInfoProps {
@@ -48,18 +49,22 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
           </Typography>
           <Typography>{periodo}</Typography>
         </Grid>
-        <Grid item>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            INÍCIO
-          </Typography>
-          <Typography>{inicio}</Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            FIM
-          </Typography>
-          <Typography>{fim}</Typography>
-        </Grid>
+        {inicio && (
+          <Grid item>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              INÍCIO
+            </Typography>
+            <Typography>{format(new Date(inicio), 'dd/MM/yyyy')}</Typography>
+          </Grid>
+        )}
+        {fim && (
+          <Grid item>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              INÍCIO
+            </Typography>
+            <Typography>{format(new Date(fim), 'dd/MM/yyyy')}</Typography>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

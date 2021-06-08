@@ -7,7 +7,7 @@ import {
   // Divider,
   // Grid,
   Tooltip,
-  Typography,
+  Typography
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';

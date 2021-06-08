@@ -4,6 +4,26 @@ import TurmaInfo, { TurmaInfoProps } from 'src/components/TurmaInfo';
 export default {
   title: 'Components/TurmaInfo',
   component: TurmaInfo,
+  argTypes: {
+    nome: {
+      description: 'Nome da Turma',
+    },
+    cod: {
+      description: 'Nome da Turma',
+    },
+    inicio: {
+      description: 'Nome da Turma',
+      control: {
+        type: 'date',
+      },
+    },
+    fim: {
+      description: 'Nome da Turma',
+      control: {
+        type: 'date',
+      },
+    },
+  },
 } as Meta;
 
 const Template: Story<TurmaInfoProps> = (args) => <TurmaInfo {...args} />;

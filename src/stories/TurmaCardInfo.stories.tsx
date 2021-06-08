@@ -6,6 +6,44 @@ import TurmaCardInfo, {
 export default {
   title: 'Components/TurmaCardInfo',
   component: TurmaCardInfo,
+  argTypes: {
+    id: {
+      description: 'Id da Turma',
+      control: {
+        type: 'number',
+      },
+    },
+    nome: {
+      description: 'Nome da Turma',
+    },
+    codigo: {
+      description: 'Código da Turma',
+    },
+    inicio: {
+      description: 'Data inicial',
+      control: {
+        type: 'date',
+      },
+    },
+    fim: {
+      description: 'Data final',
+      control: {
+        type: 'date',
+      },
+    },
+    numPeríodos: {
+      description: 'Número de períodos',
+      control: {
+        type: 'number',
+      },
+    },
+    numVagasOcupadas: {
+      description: 'Número de vagas ocupadas',
+      control: {
+        type: 'number',
+      },
+    },
+  },
 } as Meta;
 
 const Template: Story<TurmaCardInfoProps> = (args) => (

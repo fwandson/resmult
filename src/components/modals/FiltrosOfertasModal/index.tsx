@@ -23,7 +23,7 @@ import useTurmas from 'src/hooks/useTurmas';
 
 export interface FiltrosOfertasModalData {
   turma: number | undefined;
-  periodo: number | undefined;
+  periodo: string | undefined;
   nucleo: number | undefined;
   enfase: number | undefined;
   inicio: MaterialUiPickersDate | undefined;
@@ -46,8 +46,16 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const [values, setValues] = useState<FiltrosOfertasModalData>(filtros);
 
   const handleLimparFiltros = useCallback(() => {
+    setValues({
+      turma: 0,
+      periodo: '',
+      nucleo: 0,
+      enfase: 0,
+      inicio: undefined,
+      fim: undefined,
+    });
     handleOnChange('turma', 0);
-    handleOnChange('periodo', 0);
+    handleOnChange('periodo', '');
     handleOnChange('nucleo', 0);
     handleOnChange('enfase', 0);
     handleOnChange('inicio', undefined);
@@ -112,18 +120,16 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               onChange={(e) =>
                 setValues((old) => ({
                   ...old,
-                  periodo: Number(e.target.value),
+                  periodo: e.target.value,
                 }))
               }
               value={values.periodo}
-              defaultValue={0}
+              defaultValue=""
             >
-              <MenuItem value={0} disabled>
-                Escolha
-              </MenuItem>
-              <MenuItem value={1}>Primeiro Ano</MenuItem>
-              <MenuItem value={2}>Segundo Ano</MenuItem>
-              <MenuItem value={3}>Terceiro Ano</MenuItem>
+              <MenuItem value="" disabled></MenuItem>
+              <MenuItem value="P1">Primeiro Ano</MenuItem>
+              <MenuItem value="P2">Segundo Ano</MenuItem>
+              <MenuItem value="P3">Terceiro Ano</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>

@@ -8,6 +8,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 export default {
   title: 'Components/ActionsMenu',
   component: ActionsMenu,
+  argTypes: {
+    data: {
+      description: 'Informações a serem apresentadas',
+      control: {
+        type: 'object',
+      },
+    },
+  },
 } as Meta;
 
 const Template: Story<ActionsMenuProps> = (args) => <ActionsMenu {...args} />;

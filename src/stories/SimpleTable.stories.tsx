@@ -4,6 +4,19 @@ import SimpleTable, { SimpleTableProps } from 'src/components/SimpleTable';
 export default {
   title: 'Components/SimpleTable',
   component: SimpleTable,
+  argTypes: {
+    title: {
+      description: 'Título apresentado na `Table`',
+    },
+    headCells: {
+      description: 'Células do cabeçario',
+      type: 'object',
+    },
+    rows: {
+      description: 'Linhas',
+      type: 'array',
+    },
+  },
 } as Meta;
 
 const title = 'Residentes';
