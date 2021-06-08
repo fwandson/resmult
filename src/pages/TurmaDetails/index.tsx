@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Tooltip } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -7,7 +7,7 @@ import { useHistory, useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
 import FiltrosOfertasModal, {
-  FiltrosOfertasModalData
+  FiltrosOfertasModalData,
 } from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
@@ -15,6 +15,7 @@ import TurmaInfo from 'src/components/TurmaInfo';
 import CONSTANTS from 'src/config';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
+import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
@@ -42,6 +43,8 @@ const TurmaDetails: React.FC = () => {
   const { data: ofertasReturnData, searchOfertas } = useOfertas({
     id: Number(id),
   });
+
+  const { findTipoCargaHoraria } = useTiposCargaHoraria();
 
   const {
     filtros,
@@ -123,7 +126,19 @@ const TurmaDetails: React.FC = () => {
           <Typography variant="caption">{oferta.dataFim}</Typography>
         </Box>,
         <Box key="ch" display="flex" flexDirection="column">
-          <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
+          <Tooltip
+            placement="top"
+            title={`${oferta.tipoCargaHoraria
+              .map(
+                (ch) =>
+                  `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
+                    ch.cargahoraria
+                  } horas`
+              )
+              .join(', ')}`}
+          >
+            <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
+          </Tooltip>
         </Box>,
         <Box key="encerramento" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">

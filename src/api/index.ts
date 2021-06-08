@@ -8,10 +8,7 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(async (request) => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.NODE_ENV === 'test'
-  ) {
+  if (['development', 'test'].some((elem) => elem === process.env.NODE_ENV)) {
     await delay(Number(process.env.REACT_APP_API_DELAY));
   }
   return request;
