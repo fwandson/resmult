@@ -1,10 +1,20 @@
-import { Avatar, Box, Button, Tooltip, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Avatar,
+  Box,
+  Button,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { uniqueId } from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
+import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
@@ -14,21 +24,24 @@ import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from './styles';
-import { Link as LinkRouter } from 'react-router-dom';
-import NAMES from 'src/routes/names';
 
 interface FaltasRegistroParams {
   idTurma: string;
   idOferta: string;
 }
 
+// TODO: mudar aqui para pratica { value: number, obs: string } e repetir para os outros
 interface FaltasRegistroFromData {
   ch: Array<{
     pratica: number;
+    praticaObs: string;
     teoricoConceitual: number;
+    teoricoConceitualObs: string;
     teoricoPratica: number;
+    teoricoPraticaObs: string;
   }>;
 }
 
@@ -98,8 +111,12 @@ const FaltasRegistro: React.FC = () => {
           <Box m={2} />
           <Button>Gerar Relatório</Button>
         </Box>,
-
-        <Box key={uniqueId()}>
+        <Box
+          key={uniqueId()}
+          display="flex"
+          flexDirection="column"
+          justifyItems="flex-start"
+        >
           <GenericInput
             fullWidth
             variant="outlined"
@@ -108,11 +125,27 @@ const FaltasRegistro: React.FC = () => {
             name={`ch.${residente.id}.pratica`}
           />
           <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
+          <Accordion square>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Observação</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <GenericInput
+                fullWidth
+                variant="outlined"
+                multiline
+                control={control}
+                name={`ch.${residente.id}.praticaObs`}
+              />
+            </AccordionDetails>
+          </Accordion>
         </Box>,
-        <Box key={uniqueId()}>
+        <Box
+          key={uniqueId()}
+          display="flex"
+          flexDirection="column"
+          justifyItems="flex-start"
+        >
           <GenericInput
             fullWidth
             variant="outlined"
@@ -121,11 +154,27 @@ const FaltasRegistro: React.FC = () => {
             name={`ch.${residente.id}.teoricoConceitual`}
           />
           <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
+          <Accordion square>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Observação</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <GenericInput
+                fullWidth
+                variant="outlined"
+                multiline
+                control={control}
+                name={`ch.${residente.id}.teoricoConceitualObs`}
+              />
+            </AccordionDetails>
+          </Accordion>
         </Box>,
-        <Box key={uniqueId()}>
+        <Box
+          key={uniqueId()}
+          display="flex"
+          flexDirection="column"
+          justifyItems="flex-start"
+        >
           <GenericInput
             fullWidth
             variant="outlined"
@@ -134,9 +183,20 @@ const FaltasRegistro: React.FC = () => {
             name={`ch.${residente.id}.teoricoPratica`}
           />
           <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
+          <Accordion square>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Observação</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <GenericInput
+                fullWidth
+                variant="outlined"
+                multiline
+                control={control}
+                name={`ch.${residente.id}.teoricoPraticaObs`}
+              />
+            </AccordionDetails>
+          </Accordion>
         </Box>,
       ]),
     [searchValueDebaunced, residentesDataReturn]
