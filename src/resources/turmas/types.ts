@@ -15,6 +15,13 @@ export declare namespace GetNames {
 }
 
 export declare namespace GetOfertasNames {
+  export interface Turma {
+    id?: number;
+    codigoTurma: string;
+    descricao: string;
+    dataInicio?: string;
+    dataFim?: string;
+  }
   export interface Modulo {
     nome: string;
     id: number;
@@ -25,25 +32,42 @@ export declare namespace GetOfertasNames {
     cargahoraria: string;
   }
 
+  export interface Nucleosprofissionai {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }
+
+  export interface Enfas {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }
+  export interface AtividadeModulo {
+    id: number;
+    periodo: string;
+    descricao: string;
+    sumula?: unknown;
+    cargaHoraria: string;
+    modulo?: unknown;
+    enfases: Enfas[];
+    nucleosprofissionais: Nucleosprofissionai[];
+  }
+
   export interface OfertasModulo {
     id: number;
     dataInicio: string;
     dataFim: string;
-    encerramento?: string;
+    encerramento?: unknown;
     nome: string;
     semestre: number;
     semestre_descricao: string;
-    turma: {
-      id?: number;
-      codigoTurma: string;
-      descricao: string;
-      dataInicio?: Date;
-      dataFim?: Date;
-    };
+    turma: Turma;
     modulo: Modulo;
     cargahoraria: string;
     unidadetematicaid: number;
     tipoCargaHoraria: TipoCargaHoraria[];
+    atividadeModulo: AtividadeModulo;
   }
 
   export interface Params {
