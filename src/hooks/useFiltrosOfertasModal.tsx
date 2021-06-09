@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-function useFiltrosModal<T extends { [key: string]: any }>(
+function useFiltrosOfertasModal<T extends { [key: string]: any }>(
   initialData: T,
   initalOpen = false
 ) {
@@ -19,4 +19,4 @@ function useFiltrosModal<T extends { [key: string]: any }>(
   return { filtros, handleOnChange, open, setOpen };
 }
 
-export default useFiltrosModal;
+export default useFiltrosOfertasModal;

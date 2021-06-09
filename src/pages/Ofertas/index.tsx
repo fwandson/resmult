@@ -8,7 +8,7 @@ import FiltrosOfertasModal, {
 } from 'src/components/modals/FiltrosOfertasModal';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
-import useFiltrosModal from 'src/hooks/useFiltrosModal';
+import useFiltrosOfertasModal from 'src/hooks/useFiltrosOfertasModal';
 
 // TODO: provavelmente, essa page não é necessária
 const Ofertas: React.FC = () => {
@@ -28,7 +28,7 @@ const Ofertas: React.FC = () => {
     filtros,
     setOpen,
     ...rest
-  } = useFiltrosModal<FiltrosOfertasModalData>({
+  } = useFiltrosOfertasModal<FiltrosOfertasModalData>({
     turma: 0,
     periodo: '',
     nucleo: 0,

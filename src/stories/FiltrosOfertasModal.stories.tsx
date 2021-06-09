@@ -4,7 +4,7 @@ import FiltrosOfertasModal, {
   FiltrosOfertasModalProps,
   FiltrosOfertasModalData,
 } from 'src/components/modals/FiltrosOfertasModal';
-import useFiltrosModal from 'src/hooks/useFiltrosModal';
+import useFiltrosOfertasModal from 'src/hooks/useFiltrosOfertasModal';
 export default {
   title: 'Components/FiltrosOfertasModal',
   component: FiltrosOfertasModal,
@@ -15,7 +15,7 @@ const Template: Story<FiltrosOfertasModalProps> = () => {
     filtros,
     setOpen,
     ...rest
-  } = useFiltrosModal<FiltrosOfertasModalData>({
+  } = useFiltrosOfertasModal<FiltrosOfertasModalData>({
     turma: 0,
     periodo: '',
     nucleo: 0,
