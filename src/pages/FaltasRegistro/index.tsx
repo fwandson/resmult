@@ -18,10 +18,14 @@ import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
+import FiltrosResidentesModal, {
+  FiltrosResidentesModalData,
+} from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import NAMES from 'src/routes/names';
@@ -54,6 +58,14 @@ const FaltasRegistro: React.FC = () => {
     searchValue,
     CONSTANTS.DEBOUNCE_TIME
   );
+
+  const {
+    filtros,
+    setOpen,
+    ...rest
+  } = useFiltrosModal<FiltrosResidentesModalData>({
+    enfase: '',
+  });
 
   const { data: residentesDataReturn, searchResidentes } = useResidentes({
     idTurma,
@@ -226,6 +238,7 @@ const FaltasRegistro: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <SimpleTable
           title="Residentes"
+          onClickFilterButton={() => setOpen(true)}
           hideTablePagination
           headCells={[
             {
@@ -285,6 +298,7 @@ const FaltasRegistro: React.FC = () => {
           Salvar
         </SaveButton>
       </form>
+      <FiltrosResidentesModal setOpen={setOpen} filtros={filtros} {...rest} />
       <Box m={2} />
     </GenericContent>
   );

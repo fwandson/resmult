@@ -13,7 +13,7 @@ import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
 import CONSTANTS from 'src/config';
-import useFiltrosOfertasModal from 'src/hooks/useFiltrosOfertasModal';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTurmas from 'src/hooks/useTurmas';
@@ -50,7 +50,7 @@ const TurmaDetails: React.FC = () => {
     filtros,
     setOpen,
     ...rest
-  } = useFiltrosOfertasModal<FiltrosOfertasModalData>({
+  } = useFiltrosModal<FiltrosOfertasModalData>({
     turma: 0,
     periodo: '',
     nucleo: 0,

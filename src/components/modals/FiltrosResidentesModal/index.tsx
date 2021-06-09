@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
   DialogProps,
   DialogTitle,
-  Grid,
-  IconButton,
-  MenuItem,
   TextField,
+  IconButton,
   Typography,
+  DialogContent,
+  Grid,
+  MenuItem,
 } from '@material-ui/core';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-
-import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 export interface FiltrosResidentesModalData {
   enfase: string | undefined;
@@ -56,6 +54,31 @@ const FiltrosResidentesModal: React.FC<FiltrosResidentesModalProps> = (
           </IconButton>
         </Grid>
       </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              select
+              label="Ênfase"
+              fullWidth
+              variant="outlined"
+              name="enfase"
+              onChange={(e) =>
+                setValues((old) => ({
+                  ...old,
+                  enfase: String(e.target.value),
+                }))
+              }
+              value={values.enfase}
+              defaultValue={0}
+            >
+              <MenuItem value="" disabled>
+                Escolha
+              </MenuItem>
+            </TextField>
+          </Grid>
+        </Grid>
+      </DialogContent>
       <DialogActions>
         <Grid container justify="space-between">
           <Button onClick={() => handleLimparFiltros()}>Limpar</Button>
