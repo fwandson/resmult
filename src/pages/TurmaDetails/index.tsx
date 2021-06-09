@@ -51,7 +51,6 @@ const TurmaDetails: React.FC = () => {
     setOpen,
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
-    turma: 0,
     periodo: '',
     nucleo: 0,
     enfase: 0,

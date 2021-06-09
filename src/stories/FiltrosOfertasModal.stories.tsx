@@ -16,7 +16,6 @@ const Template: Story<FiltrosOfertasModalProps> = () => {
     setOpen,
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
-    turma: 0,
     periodo: '',
     nucleo: 0,
     enfase: 0,

@@ -17,12 +17,9 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { uniqueId } from 'lodash';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import useTurmas from 'src/hooks/useTurmas';
 
 export interface FiltrosOfertasModalData {
-  turma: number | undefined;
   periodo: string | undefined;
   nucleo: number | undefined;
   enfase: number | undefined;
@@ -41,20 +38,17 @@ export interface FiltrosOfertasModalProps extends DialogProps {
 const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
-  const { data: turmasDataReturn } = useTurmas();
-
   const [values, setValues] = useState<FiltrosOfertasModalData>(filtros);
 
   const handleLimparFiltros = useCallback(() => {
     setValues({
-      turma: 0,
       periodo: '',
       nucleo: 0,
       enfase: 0,
       inicio: undefined,
       fim: undefined,
     });
-    handleOnChange('turma', 0);
+
     handleOnChange('periodo', '');
     handleOnChange('nucleo', 0);
     handleOnChange('enfase', 0);
@@ -63,7 +57,6 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   }, []);
 
   const handleAplicarFiltros = useCallback(() => {
-    handleOnChange('turma', values.turma);
     handleOnChange('periodo', values.periodo);
     handleOnChange('nucleo', values.nucleo);
     handleOnChange('enfase', values.enfase);
@@ -84,33 +77,7 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              select
-              label="Turma"
-              fullWidth
-              variant="outlined"
-              name="turma"
-              onChange={(e) =>
-                setValues((old) => ({
-                  ...old,
-                  turma: Number(e.target.value),
-                }))
-              }
-              value={values.turma}
-              defaultValue={0}
-            >
-              <MenuItem value={0} disabled>
-                Escolha
-              </MenuItem>
-              {turmasDataReturn?.turmas.map((turma) => (
-                <MenuItem key={uniqueId()} value={turma.id}>
-                  {turma.descricao}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               select
               label="Período"
