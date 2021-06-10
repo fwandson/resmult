@@ -90,7 +90,7 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src="/static/images/avatars/avatar_10.png"
+          src="/static/images/avatars/avatar_12.png"
           to={NAMES.HOME}
         />
         <Typography color="textPrimary" variant="h6">
