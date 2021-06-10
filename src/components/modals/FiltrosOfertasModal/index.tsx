@@ -29,16 +29,6 @@ export interface FiltrosOfertasModalProps extends DialogProps {
   filtros: FiltrosOfertasModalData;
   handleOnChange(name: keyof FiltrosOfertasModalData, value: any): void;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  nucleos?: {
-    id: number;
-    descricao: string;
-    abreviatura: string;
-  }[];
-  enfases?: {
-    id: number;
-    descricao: string;
-    abreviatura: string;
-  }[];
 }
 
 // TODO: usar o react hook forms aqui para

@@ -5,6 +5,7 @@ import {
   Typography,
   Box,
   Chip,
+  Grid,
 } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { uniqueId } from 'lodash';
@@ -35,9 +36,13 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
         <Typography variant="h4" component="div">
           {title}
         </Typography>
-        {chips?.map((chip) => (
-          <Chip key={uniqueId()} label={chip} />
-        ))}
+        <Grid container spacing={1} component={Box} ml={1}>
+          {chips?.map((chip) => (
+            <Grid key={uniqueId()} item>
+              <Chip label={chip} variant="outlined" color="primary" />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
       <Tooltip title="Filtros" placement="top">
         <span>

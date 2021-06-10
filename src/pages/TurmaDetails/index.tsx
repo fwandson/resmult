@@ -2,7 +2,8 @@ import { Box, Typography, Tooltip } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
-import { format } from 'date-fns';
+import { compareAsc, compareDesc, format } from 'date-fns';
+import { toPairs } from 'lodash';
 import { useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
@@ -59,8 +60,8 @@ const TurmaDetails: React.FC = () => {
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
     periodo: '',
-    inicio: new Date(),
-    fim: new Date(),
+    inicio: undefined,
+    fim: undefined,
   });
 
   const handlerGoToRegistroFaltas = useCallback(
@@ -103,8 +104,18 @@ const TurmaDetails: React.FC = () => {
     if (ofertasReturnData) {
       return searchOfertas(searchValueDebaunced)
         .filter((oferta) => {
-          if (filtros.periodo)
-            return oferta.semestre_descricao === filtros.periodo;
+          // os ids dos períodos estão como P1, P2 e P3
+          if (filtros.periodo) return `P${oferta.semestre}` === filtros.periodo;
+          return true;
+        })
+        .filter((oferta) => {
+          if (filtros.inicio)
+            return compareAsc(new Date(oferta.dataInicio), filtros.inicio) >= 0;
+          return true;
+        })
+        .filter((oferta) => {
+          if (filtros.fim)
+            return compareDesc(new Date(oferta.dataFim), filtros.fim) >= 0;
           return true;
         })
         .map((oferta) => [
@@ -210,6 +221,9 @@ const TurmaDetails: React.FC = () => {
       <SimpleTable
         title="Ofertas"
         onClickFilterButton={() => setOpen(true)}
+        chips={toPairs(filtros)
+          .filter((pair) => pair[1])
+          .map((pair) => `${pair[0]}: ${pair[1]}`)}
         headCells={[
           {
             value: 'Ativid.',
@@ -247,14 +261,7 @@ const TurmaDetails: React.FC = () => {
         ]}
         rows={handleRows()}
       />
-      <FiltrosOfertasModal
-        setOpen={setOpen}
-        filtros={filtros}
-        enfases={enfasesDataReturn}
-        nucleos={nucleosProfissionaisDataReturn}
-        {...rest}
-      />
-      <pre>{JSON.stringify(filtros, null, 2)}</pre>
+      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
     </GenericContent>
   );
 };
