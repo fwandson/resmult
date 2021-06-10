@@ -9,7 +9,6 @@ function useTiposCargaHoraria() {
     url: RESOURCE_URLS.GET_TIPOS_CARGA_HORARIA,
     swrConfiguration: {
       refreshInterval: 2 * 60 * 60 * 1000, // horas * minutos * segundos * milesegundos
-      initialData: [],
     },
   });
 

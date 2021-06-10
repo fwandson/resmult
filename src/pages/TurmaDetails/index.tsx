@@ -2,6 +2,7 @@ import { Box, Typography, Tooltip } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
+import { format } from 'date-fns';
 import { useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
@@ -15,6 +16,7 @@ import TurmaInfo from 'src/components/TurmaInfo';
 import CONSTANTS from 'src/config';
 import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
+import useNucleosProfissionais from 'src/hooks/useNucleosProfissionais';
 import useOfertas from 'src/hooks/useOfertas';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTurmas from 'src/hooks/useTurmas';
@@ -48,6 +50,8 @@ const TurmaDetails: React.FC = () => {
   const { findTipoCargaHoraria } = useTiposCargaHoraria();
 
   const { data: enfasesDataReturn } = useEnfases();
+
+  const { data: nucleosProfissionaisDataReturn } = useNucleosProfissionais();
 
   const {
     filtros,
@@ -123,9 +127,11 @@ const TurmaDetails: React.FC = () => {
         </Box>,
         <Box key="inicio-fim" display="flex" flexDirection="column">
           <Typography variant="caption" color="textSecondary">
-            {oferta.dataInicio}
+            {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
           </Typography>
-          <Typography variant="caption">{oferta.dataFim}</Typography>
+          <Typography variant="caption">
+            {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
+          </Typography>
         </Box>,
         <Box key="ch" display="flex" flexDirection="column">
           <Tooltip
@@ -176,7 +182,12 @@ const TurmaDetails: React.FC = () => {
     <GenericContent
       helmetText="Ofertas | Sagu"
       title={'Ofertas da Turma'}
-      isLoading={!turmasDataReturn || !ofertasReturnData}
+      isLoading={
+        !turmasDataReturn ||
+        !ofertasReturnData ||
+        !enfasesDataReturn ||
+        !nucleosProfissionaisDataReturn
+      }
       letfTitleContent={
         <SearchField
           value={searchValue}
@@ -234,6 +245,7 @@ const TurmaDetails: React.FC = () => {
         setOpen={setOpen}
         filtros={filtros}
         enfases={enfasesDataReturn}
+        nucleos={nucleosProfissionaisDataReturn}
         {...rest}
       />
       <pre>{JSON.stringify(filtros, null, 2)}</pre>

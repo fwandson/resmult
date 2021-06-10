@@ -9,7 +9,6 @@ function useEnfases() {
     url: RESOURCE_URLS.GET_ENFASES,
     swrConfiguration: {
       refreshInterval: 2 * 60 * 60 * 1000, // horas * minutos * segundos * milesegundos
-      initialData: [],
     },
   });
 

@@ -9,7 +9,6 @@ function useNucleosProfissionais() {
     url: RESOURCE_URLS.GET_NUCLEOS_PROFISSIONAIS,
     swrConfiguration: {
       refreshInterval: 2 * 60 * 60 * 1000, // horas * minutos * segundos * milesegundos
-      initialData: [],
     },
   });
 

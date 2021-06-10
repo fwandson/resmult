@@ -112,7 +112,9 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               value={values.periodo}
               defaultValue=""
             >
-              <MenuItem value="" disabled></MenuItem>
+              <MenuItem value="" disabled>
+                Escolha
+              </MenuItem>
               <MenuItem value="P1">Primeiro Ano</MenuItem>
               <MenuItem value="P2">Segundo Ano</MenuItem>
               <MenuItem value="P3">Terceiro Ano</MenuItem>
