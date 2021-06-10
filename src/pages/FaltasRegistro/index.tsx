@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Accordion,
   AccordionDetails,
@@ -30,6 +31,7 @@ import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
+import schema from './schema';
 import { SaveButton } from './styles';
 
 interface FaltasRegistroParams {
@@ -83,11 +85,15 @@ const FaltasRegistro: React.FC = () => {
     [oferta]
   );
 
-  // TODO: falta implementar o schema de validação dos campos
-  const { control, handleSubmit } = useForm<FaltasRegistroFromData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<FaltasRegistroFromData>({
     defaultValues: {
       ch: [],
     },
+    resolver: yupResolver(schema),
   });
 
   // TODO: implementar aqui
@@ -142,6 +148,7 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.pratica`}
+              defaultValue={0}
             />
             <Box m={1} />
             <Accordion square>
@@ -171,6 +178,7 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.teoricoConceitual`}
+              defaultValue={0}
             />
             <Box m={1} />
             <Accordion square>
@@ -200,6 +208,7 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.teoricoPratica`}
+              defaultValue={0}
             />
             <Box m={1} />
             <Accordion square>
@@ -303,7 +312,12 @@ const FaltasRegistro: React.FC = () => {
           ]}
           rows={handleRows}
         />
-        <SaveButton variant="extended" color="secondary" type="submit">
+        <SaveButton
+          variant="extended"
+          color="secondary"
+          type="submit"
+          disabled={isSubmitting}
+        >
           <CheckIcon />
           Salvar
         </SaveButton>
