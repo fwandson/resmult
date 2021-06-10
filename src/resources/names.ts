@@ -5,6 +5,7 @@ enum RESOURCE_URLS {
   GET_TIPOS_CARGA_HORARIA = '/residencia-multiprofissional/carga-horaria/tipos',
   GET_OFERTA_RESIDENTES = '/residencia-multiprofissional/supervisores/turma/:idTurma/oferta/:idOferta/residentes',
   GET_ENFASES = '/residencia-multiprofissional/enfases',
+  GET_NUCLEOS_PROFISSIONAIS = '/residencia-multiprofissional/nucleos-profissionais',
 }
 
 export default RESOURCE_URLS;

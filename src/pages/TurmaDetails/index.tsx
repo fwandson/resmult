@@ -13,6 +13,7 @@ import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import TurmaInfo from 'src/components/TurmaInfo';
 import CONSTANTS from 'src/config';
+import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
@@ -45,6 +46,8 @@ const TurmaDetails: React.FC = () => {
   });
 
   const { findTipoCargaHoraria } = useTiposCargaHoraria();
+
+  const { data: enfasesDataReturn } = useEnfases();
 
   const {
     filtros,
@@ -227,7 +230,12 @@ const TurmaDetails: React.FC = () => {
         ]}
         rows={handleRows()}
       />
-      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
+      <FiltrosOfertasModal
+        setOpen={setOpen}
+        filtros={filtros}
+        enfases={enfasesDataReturn}
+        {...rest}
+      />
       <pre>{JSON.stringify(filtros, null, 2)}</pre>
     </GenericContent>
   );

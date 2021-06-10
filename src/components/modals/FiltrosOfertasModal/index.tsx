@@ -17,6 +17,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import { uniqueId } from 'lodash';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 export interface FiltrosOfertasModalData {
@@ -31,12 +32,30 @@ export interface FiltrosOfertasModalProps extends DialogProps {
   filtros: FiltrosOfertasModalData;
   handleOnChange(name: keyof FiltrosOfertasModalData, value: any): void;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  nucleos?: {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }[];
+  enfases?: {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }[];
 }
 
 // TODO: usar o react hook forms aqui para
 // criar o component de fild de data
 const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
-  const { open, filtros, handleOnChange, setOpen, ...rest } = props;
+  const {
+    open,
+    filtros,
+    handleOnChange,
+    setOpen,
+    nucleos,
+    enfases,
+    ...rest
+  } = props;
 
   const [values, setValues] = useState<FiltrosOfertasModalData>(filtros);
 
@@ -118,9 +137,11 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               <MenuItem value={0} disabled>
                 Escolha
               </MenuItem>
-              <MenuItem value={1}>Ten</MenuItem>
-              <MenuItem value={2}>Twenty</MenuItem>
-              <MenuItem value={3}>Thirty</MenuItem>
+              {nucleos?.map((nucleo) => (
+                <MenuItem key={uniqueId()} value={nucleo.id}>
+                  {nucleo.descricao}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -142,9 +163,11 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               <MenuItem value={0} disabled>
                 Escolha
               </MenuItem>
-              <MenuItem value={1}>Ten</MenuItem>
-              <MenuItem value={2}>Twenty</MenuItem>
-              <MenuItem value={3}>Thirty</MenuItem>
+              {enfases?.map((enfase) => (
+                <MenuItem key={uniqueId()} value={enfase.id}>
+                  {enfase.descricao}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
         </Grid>
