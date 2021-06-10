@@ -3,7 +3,7 @@ import RESOURCE_URLS from 'src/resources/names';
 import { useApiWithSwr } from './useApiWithSwr';
 
 function useEnfases() {
-  const { data, ...rest } = useApiWithSwr<GetNames.Return>({
+  const { data, ...rest } = useApiWithSwr<GetNames.Return[]>({
     url: RESOURCE_URLS.GET_ENFASES,
   });
 

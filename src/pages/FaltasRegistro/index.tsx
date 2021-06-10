@@ -37,7 +37,6 @@ interface FaltasRegistroParams {
   idOferta: string;
 }
 
-// TODO: mudar aqui para pratica { value: number, obs: string } e repetir para os outros
 interface FaltasRegistroFromData {
   ch: Array<{
     pratica: number;
@@ -99,119 +98,127 @@ const FaltasRegistro: React.FC = () => {
 
   const handleRows = useMemo(
     () =>
-      searchResidentes(searchValueDebaunced).map((residente) => [
-        <Box key={uniqueId()} mb={5}>
-          <Avatar
-            component={LinkRouter}
-            to={NAMES.RESIDENTE_DETAILS.replace(':id', String(residente.id))}
-            src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+      searchResidentes(searchValueDebaunced)
+        .filter((residente) => {
+          if (filtros.enfase)
+            return residente.enfase.id === Number(filtros.enfase);
+          return true;
+        })
+        .map((residente) => [
+          <Box key={uniqueId()} mb={5}>
+            <Avatar
+              component={LinkRouter}
+              to={NAMES.RESIDENTE_DETAILS.replace(':id', String(residente.id))}
+              src={`/static/images/avatars/avatar_${
+                (residente.id % 11) + 1
+              }.png`}
+            >
+              {residente.person.name[0]}
+            </Avatar>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="space-between"
           >
-            {residente.person.name[0]}
-          </Avatar>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <Typography>{residente.person.name}</Typography>
-          <Typography variant="caption" color="textSecondary">
-            {residente.enfase.descricao}
-          </Typography>
-          <Box m={2} />
-          <Button>Gerar Relatório</Button>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          justifyItems="flex-start"
-        >
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.pratica`}
-          />
-          <Box m={1} />
-          <Accordion square>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Observação</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <GenericInput
-                fullWidth
-                variant="outlined"
-                multiline
-                control={control}
-                name={`ch.${residente.id}.praticaObs`}
-              />
-            </AccordionDetails>
-          </Accordion>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          justifyItems="flex-start"
-        >
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.teoricoConceitual`}
-          />
-          <Box m={1} />
-          <Accordion square>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Observação</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <GenericInput
-                fullWidth
-                variant="outlined"
-                multiline
-                control={control}
-                name={`ch.${residente.id}.teoricoConceitualObs`}
-              />
-            </AccordionDetails>
-          </Accordion>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          justifyItems="flex-start"
-        >
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.teoricoPratica`}
-          />
-          <Box m={1} />
-          <Accordion square>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Observação</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <GenericInput
-                fullWidth
-                variant="outlined"
-                multiline
-                control={control}
-                name={`ch.${residente.id}.teoricoPraticaObs`}
-              />
-            </AccordionDetails>
-          </Accordion>
-        </Box>,
-      ]),
-    [searchValueDebaunced, residentesDataReturn]
+            <Typography>{residente.person.name}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              {residente.enfase.descricao}
+            </Typography>
+            <Box m={2} />
+            <Button>Gerar Relatório</Button>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              control={control}
+              name={`ch.${residente.id}.pratica`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`ch.${residente.id}.praticaObs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              control={control}
+              name={`ch.${residente.id}.teoricoConceitual`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`ch.${residente.id}.teoricoConceitualObs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              control={control}
+              name={`ch.${residente.id}.teoricoPratica`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`ch.${residente.id}.teoricoPraticaObs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+        ]),
+    [searchValueDebaunced, residentesDataReturn, filtros.enfase]
   );
 
   return (
@@ -298,7 +305,16 @@ const FaltasRegistro: React.FC = () => {
           Salvar
         </SaveButton>
       </form>
-      <FiltrosResidentesModal setOpen={setOpen} filtros={filtros} {...rest} />
+      <FiltrosResidentesModal
+        setOpen={setOpen}
+        filtros={filtros}
+        enfases={oferta?.atividadeModulo.enfases.map((enfase) => ({
+          id: enfase.id,
+          abreviatura: enfase.abreviatura,
+          descricao: enfase.descricao,
+        }))}
+        {...rest}
+      />
       <Box m={2} />
     </GenericContent>
   );

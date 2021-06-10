@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
+import { uniqueId } from 'lodash';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
 export interface FiltrosResidentesModalData {
@@ -24,11 +25,16 @@ export interface FiltrosResidentesModalProps extends DialogProps {
   filtros: FiltrosResidentesModalData;
   handleOnChange(name: keyof FiltrosResidentesModalData, value: any): void;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  enfases?: {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }[];
 }
 const FiltrosResidentesModal: React.FC<FiltrosResidentesModalProps> = (
   props
 ) => {
-  const { open, setOpen, handleOnChange, filtros, ...rest } = props;
+  const { open, setOpen, handleOnChange, filtros, enfases, ...rest } = props;
 
   const [values, setValues] = useState<FiltrosResidentesModalData>(filtros);
 
@@ -75,6 +81,11 @@ const FiltrosResidentesModal: React.FC<FiltrosResidentesModalProps> = (
               <MenuItem value="" disabled>
                 Escolha
               </MenuItem>
+              {enfases?.map((enfase) => (
+                <MenuItem key={uniqueId()} value={enfase.id}>
+                  {enfase.descricao}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
         </Grid>

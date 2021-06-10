@@ -23,6 +23,7 @@ export interface SimpleTableProps {
   rows: RowElement[][];
   hideTablePagination?: boolean;
   onClickFilterButton?(): void;
+  chips?: string[];
 }
 
 // Ainda em fase de testes
@@ -33,6 +34,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     title,
     hideTablePagination,
     onClickFilterButton,
+    chips,
   } = props;
 
   const [page, setPage] = useState(0);
@@ -57,6 +59,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         title={title}
         onClickFilterButton={onClickFilterButton}
         disableGutters
+        chips={chips}
       />
       <Table>
         <TableHead>

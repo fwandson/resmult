@@ -1,11 +1,7 @@
 export declare namespace GetNames {
-  export interface Enfase {
+  export interface Return {
     id: number;
     descricao: string;
     abreviatura: string;
-}
-
-  export interface Return {
-    turmas: Enfase[];
   }
 }
