@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { uniqueId } from 'lodash';
+import { toPairs, uniqueId } from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -247,6 +247,9 @@ const FaltasRegistro: React.FC = () => {
           title="Residentes"
           onClickFilterButton={() => setOpen(true)}
           hideTablePagination
+          chips={toPairs(filtros)
+            .filter((pair) => pair[1])
+            .map((pair) => `${pair[0]}: ${pair[1]}`)}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
