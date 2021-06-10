@@ -59,8 +59,6 @@ const TurmaDetails: React.FC = () => {
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
     periodo: '',
-    nucleo: 0,
-    enfase: 0,
     inicio: new Date(),
     fim: new Date(),
   });
@@ -103,77 +101,85 @@ const TurmaDetails: React.FC = () => {
 
   const handleRows = () => {
     if (ofertasReturnData) {
-      return searchOfertas(searchValueDebaunced).map((oferta) => [
-        <Box key="ativid" display="flex" flexDirection="column">
-          <Typography variant="caption">{oferta.id}</Typography>
-        </Box>,
-        <Box key="oferta" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            {oferta.turma.codigoTurma}
-          </Typography>
-          <Typography variant="caption">{oferta.nome}</Typography>
-        </Box>,
-        <Box key="turma-modulo" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            {oferta.turma.descricao}
-          </Typography>
-          <Typography variant="caption">{oferta.modulo.nome}</Typography>
-        </Box>,
-        <Box key="periodo" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            ANO
-          </Typography>
-          <Typography variant="caption">{oferta.semestre_descricao}</Typography>
-        </Box>,
-        <Box key="inicio-fim" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
-          </Typography>
-          <Typography variant="caption">
-            {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
-          </Typography>
-        </Box>,
-        <Box key="ch" display="flex" flexDirection="column">
-          <Tooltip
-            placement="top"
-            title={`${oferta.tipoCargaHoraria
-              .map(
-                (ch) =>
-                  `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
-                    ch.cargahoraria
-                  } horas`
-              )
-              .join(', ')}`}
-          >
-            <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
-          </Tooltip>
-        </Box>,
-        <Box key="encerramento" display="flex" flexDirection="column">
-          <Typography variant="caption" color="textSecondary">
-            {oferta.encerramento || '-'}
-          </Typography>
-        </Box>,
-        <Box key="lancamentos" display="flex" justifyContent="flex-end">
-          <CustonIconButton
-            tooltipTitle="Registro de faltas"
-            onClick={() => handlerGoToRegistroFaltas(oferta.id)}
-          >
-            <EventAvailableIcon />
-          </CustonIconButton>
-          <CustonIconButton
-            tooltipTitle="Registro de notas"
-            onClick={() => handlerGoToRegistroNotas(oferta.id)}
-          >
-            <LibraryAddSharpIcon />
-          </CustonIconButton>
-          <CustonIconButton
-            tooltipTitle="Lançamento de carga horária complementar"
-            onClick={() => handlerGoToRegistroCHComp(oferta.id)}
-          >
-            <UpdateIcon />
-          </CustonIconButton>
-        </Box>,
-      ]);
+      return searchOfertas(searchValueDebaunced)
+        .filter((oferta) => {
+          if (filtros.periodo)
+            return oferta.semestre_descricao === filtros.periodo;
+          return true;
+        })
+        .map((oferta) => [
+          <Box key="ativid" display="flex" flexDirection="column">
+            <Typography variant="caption">{oferta.id}</Typography>
+          </Box>,
+          <Box key="oferta" display="flex" flexDirection="column">
+            <Typography variant="caption" color="textSecondary">
+              {oferta.turma.codigoTurma}
+            </Typography>
+            <Typography variant="caption">{oferta.nome}</Typography>
+          </Box>,
+          <Box key="turma-modulo" display="flex" flexDirection="column">
+            <Typography variant="caption" color="textSecondary">
+              {oferta.turma.descricao}
+            </Typography>
+            <Typography variant="caption">{oferta.modulo.nome}</Typography>
+          </Box>,
+          <Box key="periodo" display="flex" flexDirection="column">
+            <Typography variant="caption" color="textSecondary">
+              ANO
+            </Typography>
+            <Typography variant="caption">
+              {oferta.semestre_descricao}
+            </Typography>
+          </Box>,
+          <Box key="inicio-fim" display="flex" flexDirection="column">
+            <Typography variant="caption" color="textSecondary">
+              {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
+            </Typography>
+            <Typography variant="caption">
+              {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
+            </Typography>
+          </Box>,
+          <Box key="ch" display="flex" flexDirection="column">
+            <Tooltip
+              placement="top"
+              title={`${oferta.tipoCargaHoraria
+                .map(
+                  (ch) =>
+                    `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
+                      ch.cargahoraria
+                    } horas`
+                )
+                .join(', ')}`}
+            >
+              <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
+            </Tooltip>
+          </Box>,
+          <Box key="encerramento" display="flex" flexDirection="column">
+            <Typography variant="caption" color="textSecondary">
+              {oferta.encerramento || '-'}
+            </Typography>
+          </Box>,
+          <Box key="lancamentos" display="flex" justifyContent="flex-end">
+            <CustonIconButton
+              tooltipTitle="Registro de faltas"
+              onClick={() => handlerGoToRegistroFaltas(oferta.id)}
+            >
+              <EventAvailableIcon />
+            </CustonIconButton>
+            <CustonIconButton
+              tooltipTitle="Registro de notas"
+              onClick={() => handlerGoToRegistroNotas(oferta.id)}
+            >
+              <LibraryAddSharpIcon />
+            </CustonIconButton>
+            <CustonIconButton
+              tooltipTitle="Lançamento de carga horária complementar"
+              onClick={() => handlerGoToRegistroCHComp(oferta.id)}
+            >
+              <UpdateIcon />
+            </CustonIconButton>
+          </Box>,
+        ]);
     }
     return [];
   };

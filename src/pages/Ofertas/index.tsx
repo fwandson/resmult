@@ -30,8 +30,6 @@ const Ofertas: React.FC = () => {
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
     periodo: '',
-    nucleo: 0,
-    enfase: 0,
     inicio: new Date(),
     fim: new Date(),
   });
