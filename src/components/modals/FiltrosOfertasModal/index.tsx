@@ -67,12 +67,6 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
       inicio: undefined,
       fim: undefined,
     });
-
-    handleOnChange('periodo', '');
-    handleOnChange('nucleo', 0);
-    handleOnChange('enfase', 0);
-    handleOnChange('inicio', undefined);
-    handleOnChange('fim', undefined);
   }, []);
 
   const handleAplicarFiltros = useCallback(() => {

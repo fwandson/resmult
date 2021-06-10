@@ -42,7 +42,6 @@ const FiltrosResidentesModal: React.FC<FiltrosResidentesModalProps> = (
     setValues({
       enfase: '',
     });
-    handleOnChange('enfase', '');
   }, []);
 
   const handleAplicarFiltros = useCallback(() => {
