@@ -96,10 +96,15 @@ const FaltasRegistro: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar aqui
+  // TODO: implementar
   const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
     console.log(formData);
     toast.success('Faltas salvas com sucesso');
+  }, []);
+
+  // TODO: implementar
+  const handleGerarRelatorio = useCallback((residenteId: number) => {
+    toast.success(`Relatório gerado com sucesso ${residenteId}`);
   }, []);
 
   const handleRows = useMemo(
@@ -134,7 +139,9 @@ const FaltasRegistro: React.FC = () => {
               {residente.enfase.descricao}
             </Typography>
             <Box m={2} />
-            <Button>Gerar Relatório</Button>
+            <Button onClick={() => handleGerarRelatorio(residente.id)}>
+              Gerar Relatório
+            </Button>
           </Box>,
           <Box
             key={uniqueId()}
