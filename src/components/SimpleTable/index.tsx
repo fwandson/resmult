@@ -23,7 +23,10 @@ export interface SimpleTableProps {
   rows: RowElement[][];
   hideTablePagination?: boolean;
   onClickFilterButton?(): void;
-  chips?: string[];
+  chips?: Array<{
+    value: string | number | Date;
+    label: string;
+  }>;
 }
 
 // Ainda em fase de testes

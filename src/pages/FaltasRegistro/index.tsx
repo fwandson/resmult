@@ -265,7 +265,7 @@ const FaltasRegistro: React.FC = () => {
           hideTablePagination
           chips={toPairs(filtros)
             .filter((pair) => pair[1])
-            .map((pair) => `${pair[0]}: ${pair[1]}`)}
+            .map((pair) => ({ label: pair[0], value: pair[1] }))}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,

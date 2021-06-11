@@ -8,6 +8,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { format } from 'date-fns';
 import { uniqueId } from 'lodash';
 import { useCallback } from 'react';
 import { Container } from './styles';
@@ -15,7 +16,10 @@ import { Container } from './styles';
 export interface SimpleTableToolbarProps extends ToolbarProps {
   title: string;
   onClickFilterButton?(): void;
-  chips?: string[];
+  chips?: Array<{
+    value: string | number | Date;
+    label: string;
+  }>;
 }
 
 const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
@@ -37,11 +41,21 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
           {title}
         </Typography>
         <Grid container spacing={1} component={Box} ml={1}>
-          {chips?.map((chip) => (
-            <Grid key={uniqueId()} item>
-              <Chip label={chip} variant="outlined" color="primary" />
-            </Grid>
-          ))}
+          {chips?.map((chip) => {
+            const aux =
+              chip.value instanceof Date
+                ? format(chip.value, 'dd/MM/yyyy')
+                : chip.value;
+            return (
+              <Grid key={uniqueId()} item>
+                <Chip
+                  label={`${chip.label.toUpperCase()}: ${aux}`}
+                  variant="outlined"
+                  color="primary"
+                />
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
       <Tooltip title="Filtros" placement="top">

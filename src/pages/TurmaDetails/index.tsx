@@ -223,7 +223,7 @@ const TurmaDetails: React.FC = () => {
         onClickFilterButton={() => setOpen(true)}
         chips={toPairs(filtros)
           .filter((pair) => pair[1])
-          .map((pair) => `${pair[0]}: ${pair[1]}`)}
+          .map((pair) => ({ label: pair[0], value: pair[1] }))}
         headCells={[
           {
             value: 'Ativid.',
