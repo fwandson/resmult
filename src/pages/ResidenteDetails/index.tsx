@@ -79,6 +79,7 @@ const ResidenteDetails: React.FC = () => {
           </Box>
         </CardContent>
       </Card>
+      <pre>{JSON.stringify(residente, null, 2)}</pre>
     </GenericContent>
   );
 };
