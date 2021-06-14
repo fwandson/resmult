@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { toPairs, uniqueId } from 'lodash';
+import { uniqueId } from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -26,6 +26,7 @@ import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
@@ -79,11 +80,7 @@ const FaltasRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const handleCargaHoraria = useCallback(
-    (tipo: string) =>
-      oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
-    [oferta]
-  );
+  const { findEnfase, data: enfaseDataReturn } = useEnfases();
 
   const {
     control,
@@ -96,6 +93,12 @@ const FaltasRegistro: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
+  const handleCargaHoraria = useCallback(
+    (tipo: string) =>
+      oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
+    [oferta]
+  );
+
   // TODO: implementar
   const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
     console.log(formData);
@@ -106,6 +109,17 @@ const FaltasRegistro: React.FC = () => {
   const handleGerarRelatorio = useCallback((residenteId: number) => {
     toast.success(`Relatório gerado com sucesso ${residenteId}`);
   }, []);
+
+  const handleChipsTable = useCallback(() => {
+    if (filtros.enfase)
+      return [
+        {
+          label: 'Ênfase',
+          value: findEnfase({ id: Number(filtros.enfase) })?.descricao || '',
+        },
+      ];
+    return [];
+  }, [filtros, enfaseDataReturn]);
 
   const handleRows = useMemo(
     () =>
@@ -263,9 +277,7 @@ const FaltasRegistro: React.FC = () => {
           title="Residentes"
           onClickFilterButton={() => setOpen(true)}
           hideTablePagination
-          chips={toPairs(filtros)
-            .filter((pair) => pair[1])
-            .map((pair) => ({ label: pair[0], value: pair[1] }))}
+          chips={handleChipsTable()}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,

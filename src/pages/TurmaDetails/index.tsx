@@ -23,6 +23,7 @@ import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
+import InfoIcon from '@material-ui/icons/Info';
 
 interface TurmaDetailsParams {
   id: string;
@@ -119,18 +120,19 @@ const TurmaDetails: React.FC = () => {
           return true;
         })
         .map((oferta) => [
-          <Box key="ativid" display="flex" flexDirection="column">
+          <Box key="id" display="flex" flexDirection="column">
             <Typography variant="caption">{oferta.id}</Typography>
           </Box>,
           <Box key="oferta" display="flex" flexDirection="column">
             <Typography variant="caption" color="textSecondary">
-              {oferta.turma.codigoTurma}
+              {oferta.modulo.nome}
             </Typography>
+
             <Typography variant="caption">{oferta.nome}</Typography>
           </Box>,
           <Box key="turma-modulo" display="flex" flexDirection="column">
             <Typography variant="caption" color="textSecondary">
-              {oferta.turma.descricao}
+              {oferta.turma.codigoTurma}
             </Typography>
             <Typography variant="caption">{oferta.modulo.nome}</Typography>
           </Box>,
@@ -150,21 +152,27 @@ const TurmaDetails: React.FC = () => {
               {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
             </Typography>
           </Box>,
-          <Box key="ch" display="flex" flexDirection="column">
-            <Tooltip
-              placement="top"
-              title={`${oferta.tipoCargaHoraria
-                .map(
-                  (ch) =>
-                    `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
-                      ch.cargahoraria
-                    } horas`
-                )
-                .join(', ')}`}
-            >
-              <Typography variant="caption">{`${oferta.cargahoraria} h`}</Typography>
-            </Tooltip>
-          </Box>,
+          <Tooltip
+            key="ch"
+            placement="top"
+            title={`${oferta.tipoCargaHoraria
+              .map(
+                (ch) =>
+                  `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
+                    ch.cargahoraria
+                  } horas`
+              )
+              .join(', ')}`}
+          >
+            <Box display="flex" alignItems="center">
+              <Typography
+                variant="caption"
+                noWrap
+              >{`${oferta.cargahoraria} h`}</Typography>
+              <Box m={1} />
+              <InfoIcon color="action" fontSize="small" />
+            </Box>
+          </Tooltip>,
           <Box key="encerramento" display="flex" flexDirection="column">
             <Typography variant="caption" color="textSecondary">
               {oferta.encerramento || '-'}
@@ -226,7 +234,7 @@ const TurmaDetails: React.FC = () => {
           .map((pair) => ({ label: pair[0], value: pair[1] }))}
         headCells={[
           {
-            value: 'Ativid.',
+            value: '#Id',
             align: 'left',
           },
           {
@@ -251,7 +259,7 @@ const TurmaDetails: React.FC = () => {
             align: 'left',
           },
           {
-            value: 'Encerramentos',
+            value: 'Encerramento',
             align: 'left',
           },
           {
