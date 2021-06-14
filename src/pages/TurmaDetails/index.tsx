@@ -1,4 +1,4 @@
-import { Box, Typography, Tooltip } from '@material-ui/core';
+import { Box, Typography, Tooltip, Chip } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -175,7 +175,15 @@ const TurmaDetails: React.FC = () => {
           </Tooltip>,
           <Box key="encerramento" display="flex" flexDirection="column">
             <Typography variant="caption" color="textSecondary">
-              {oferta.encerramento || '-'}
+              {oferta.encerramento ? (
+                <Chip
+                  label={oferta.encerramento}
+                  variant="outlined"
+                  color="secondary"
+                />
+              ) : (
+                <Chip label="Aberto" variant="outlined" color="primary" />
+              )}
             </Typography>
           </Box>,
           <Box key="lancamentos" display="flex" justifyContent="flex-end">
@@ -256,11 +264,11 @@ const TurmaDetails: React.FC = () => {
           },
           {
             value: 'CH',
-            align: 'left',
+            align: 'center',
           },
           {
             value: 'Encerramento',
-            align: 'left',
+            align: 'center',
           },
           {
             value: 'Lançamentos',

@@ -8,7 +8,7 @@ export default {
   NOTAS_REGISTRO: '/turmas/:idTurma/notas/:idOferta/registro',
   CH_COMP_REGISTRO: '/turmas/:idTurma/ch-complementar/:idOferta/registro',
   OFERTAS: '/ofertas',
-  RESIDENTE_DETAILS: '/residentes/:id',
+  RESIDENTE_DETAILS: '/residentes/:idTurma/:idOferta/:idResidente',
   DASHBOARD: '/dashboard',
   SETTINGS: '/settings',
   TYPOGRAPHY: '/typography',

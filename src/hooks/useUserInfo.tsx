@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CONSTANTS from 'src/config';
 import jwt from 'jsonwebtoken';
+import { handleUnauthorizedUser } from 'src/api';
 
 const { LH_TOKEN_NAME } = CONSTANTS;
 
@@ -17,9 +18,12 @@ function useUserInfo(): UserInforData {
     const token = localStorage.getItem(LH_TOKEN_NAME);
 
     if (token) {
-      const { data } = jwt.decode(token) as { data: UserInforData };
-
-      return data;
+      try {
+        const { data } = jwt.decode(token) as { data: UserInforData };
+        return data;
+      } catch (error) {
+        handleUnauthorizedUser();
+      }
     }
 
     return {} as UserInforData;

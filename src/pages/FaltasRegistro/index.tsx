@@ -133,7 +133,9 @@ const FaltasRegistro: React.FC = () => {
           <Box key={uniqueId()} mb={5}>
             <Avatar
               component={LinkRouter}
-              to={NAMES.RESIDENTE_DETAILS.replace(':id', String(residente.id))}
+              to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', idTurma)
+                .replace(':idOferta', idOferta)
+                .replace(':idResidente', String(residente.id))}
               src={`/static/images/avatars/avatar_${
                 (residente.id % 11) + 1
               }.png`}
