@@ -163,7 +163,9 @@ const NotasRegistro: React.FC = () => {
               align: 'left',
             },
             {
-              value: <Typography variant="body1">Residente</Typography>,
+              value: (
+                <Typography variant="body1">Residente / Ênfase</Typography>
+              ),
               align: 'left',
             },
             {
