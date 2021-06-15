@@ -18,10 +18,11 @@ export interface ConfirmDialogModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
   contentText: string;
+  handleConfirm(): void;
 }
 
 const ConfirmDialogModal: React.FC<ConfirmDialogModalProps> = (props) => {
-  const { open, setOpen, title, contentText, ...rest } = props;
+  const { open, setOpen, title, contentText, handleConfirm, ...rest } = props;
 
   return (
     <Dialog open={open} {...rest} fullWidth>
@@ -37,10 +38,8 @@ const ConfirmDialogModal: React.FC<ConfirmDialogModalProps> = (props) => {
         <DialogContentText>{contentText}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setOpen(false)} color="primary">
-          Cancelar
-        </Button>
-        <Button onClick={() => setOpen(false)} color="secondary" autoFocus>
+        <Button onClick={() => setOpen(false)}>Cancelar</Button>
+        <Button onClick={handleConfirm} color="secondary" autoFocus>
           Confirmar
         </Button>
       </DialogActions>

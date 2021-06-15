@@ -1,23 +1,24 @@
-import { Typography, Box, Avatar } from '@material-ui/core';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Avatar, Box, Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import { uniqueId } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
+import { Link as LinkRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
+import GenericInput from 'src/components/inputs/GenericInput';
+import ConfirmDialogModal from 'src/components/modals/ConfirmDialogModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
-import { useDebounce } from 'use-debounce/lib';
-import { Link as LinkRouter } from 'react-router-dom';
-import { uniqueId } from 'lodash';
 import NAMES from 'src/routes/names';
-import GenericInput from 'src/components/inputs/GenericInput';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from '../FaltasRegistro/styles';
-import CheckIcon from '@material-ui/icons/Check';
 import schema from './schema';
 
 interface NotasRegistroParams {
@@ -36,6 +37,8 @@ const NotasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<NotasRegistroParams>();
 
   const [searchValue, setSearchValue] = useState('');
+
+  const [open, setOpen] = useState(false);
 
   const [searchValueDebaunced] = useDebounce(
     searchValue,
@@ -67,7 +70,8 @@ const NotasRegistro: React.FC = () => {
   // TODO: implementar
   const onSubmit = useCallback((formData: NotasRegistroFromData) => {
     console.log(formData);
-    toast.success('Faltas salvas com sucesso');
+    toast.success('Notas salvas com sucesso');
+    setOpen(false);
   }, []);
 
   const handleRows = useMemo(
@@ -151,12 +155,10 @@ const NotasRegistro: React.FC = () => {
         periodo={oferta?.semestre_descricao}
       />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <SimpleTable
           title="Residentes"
-          // onClickFilterButton={() => setOpen(true)}
           hideTablePagination
-          // chips={handleChipsTable()}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
@@ -182,13 +184,21 @@ const NotasRegistro: React.FC = () => {
         <SaveButton
           variant="extended"
           color="secondary"
-          type="submit"
           disabled={isSubmitting}
+          onClick={() => setOpen(true)}
         >
           <CheckIcon />
           Salvar
         </SaveButton>
       </form>
+      <Box m={2} />
+      <ConfirmDialogModal
+        open={open}
+        setOpen={setOpen}
+        title="Confirmação de lançamento"
+        contentText={`Você está realizando o lançamento de notas dos residentes da turma ${oferta?.turma.descricao} para a oferta ${oferta?.nome}.`}
+        handleConfirm={handleSubmit(onSubmit)}
+      />
     </GenericContent>
   );
 };
