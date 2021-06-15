@@ -1,11 +1,12 @@
 import {
   Typography,
   Card,
+  Grid,
   CardHeader,
   CardActions,
   CardContent,
   Avatar,
-  Box,
+  Container,
   createStyles,
   Theme,
   makeStyles,
@@ -18,10 +19,11 @@ import useResidentes from 'src/hooks/useResidentes';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    large: {
+    avatar: {
       width: theme.spacing(6),
       height: theme.spacing(6),
     },
@@ -60,71 +62,89 @@ const ResidenteDetails: React.FC = () => {
       title="Residente"
       isLoading={!residentesDataReturn || !pessoa}
     >
-      <Card>
-        <CardHeader
-          avatar={
-            <Avatar
-              className={classes.large}
-              src={`/static/images/avatars/avatar_${
-                (Number(idResidente) % 11) + 1
-              }.png`}
-            >
-              {idResidente}
-            </Avatar>
-          }
-          title={residente?.person.name}
-          subheader={residente?.nucleoProfissional.descricao}
-        />
-        <CardContent>
-          <Box>
-            <Typography variant="body1" gutterBottom>
-              Informações
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Instituição executora:{' '}
-              {residente?.instituicaoExecutoraPerson.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Instituição formadora:{' '}
-              {residente?.instituicaoFormadoraPerson.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Email: {pessoa?.email}
-            </Typography>
-
-            <Typography variant="body1" gutterBottom>
-              Endereço
-            </Typography>
-
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Logradouro: {pessoa?.logradouro}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Número: {pessoa?.numero}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Bairro: {pessoa?.bairro}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Cidade: {pessoa?.cidade.nome}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Estado: {pessoa?.cidade.estado.nome}
-            </Typography>
-          </Box>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton>
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-      </Card>
+      <Container maxWidth="md" disableGutters>
+        <Card>
+          <CardHeader
+            avatar={
+              <Avatar
+                className={classes.avatar}
+                src={`/static/images/avatars/avatar_${
+                  (Number(idResidente) % 11) + 1
+                }.png`}
+              >
+                {idResidente}
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={residente?.person.name}
+            subheader={residente?.nucleoProfissional.descricao}
+          />
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item sm={12} md={6}>
+                <Typography variant="body1" gutterBottom>
+                  Informações
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Instituição executora:{' '}
+                  {residente?.instituicaoExecutoraPerson.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Instituição formadora:{' '}
+                  {residente?.instituicaoFormadoraPerson.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Email: {pessoa?.email}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Celular: {pessoa?.celular}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Telefone residencial: {pessoa?.telefoneResidencial}
+                </Typography>
+              </Grid>
+              <Grid item sm={12} md={6}>
+                <Typography variant="body1" gutterBottom>
+                  Endereço
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Logradouro: {pessoa?.logradouro}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Número: {pessoa?.numero}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Bairro: {pessoa?.bairro}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Cep: {pessoa?.cep}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Cidade: {pessoa?.cidade.nome}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Estado: {pessoa?.cidade.estado.nome}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton>
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+        </Card>
+      </Container>
     </GenericContent>
   );
 };
