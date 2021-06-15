@@ -27,10 +27,12 @@ import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import { useLoading } from 'src/context/LoadingContext';
 import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import resources from 'src/resources';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import schema from './schema';
@@ -55,6 +57,10 @@ interface FaltasRegistroFromData {
 const FaltasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<FaltasRegistroParams>();
 
+  const { showLoading, hideLoading } = useLoading();
+
+  const { faltas } = resources;
+
   const [openConfirmDialogModal, setOpenConfirmDialogModal] = useState(false);
 
   const [searchValue, setSearchValue] = useState('');
@@ -72,7 +78,11 @@ const FaltasRegistro: React.FC = () => {
     enfase: '',
   });
 
-  const { data: residentesDataReturn, searchResidentes } = useResidentes({
+  const {
+    data: residentesDataReturn,
+    searchResidentes,
+    mutate: resudentesMutate,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -104,15 +114,56 @@ const FaltasRegistro: React.FC = () => {
 
   // TODO: implementar
   // Lembrar que o id representa o id do residente
-  const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
-    console.log(
-      formData.ch.map((elem, id) => {
-        if (elem) return { id };
-      })
-    );
+  const onSubmit = useCallback(async (formData: FaltasRegistroFromData) => {
+    try {
+      setOpenConfirmDialogModal(false);
 
-    toast.success('Faltas salvas com sucesso');
-    setOpenConfirmDialogModal(false);
+      showLoading();
+
+      const data = new Array<{
+        residenteid: number;
+        falta: number;
+        tipo: string;
+        observacao: string;
+      }>();
+
+      Object.entries(formData.ch).forEach((element) => {
+        data.push({
+          residenteid: Number(element[0]),
+          falta: element[1].teoricoConceitual,
+          tipo: 'C',
+          observacao: element[1].teoricoConceitualObs,
+        });
+        data.push({
+          residenteid: Number(element[0]),
+          falta: element[1].pratica,
+          tipo: 'P',
+          observacao: element[1].praticaObs,
+        });
+        data.push({
+          residenteid: Number(element[0]),
+          falta: element[1].teoricoPratica,
+          tipo: 'T',
+          observacao: element[1].teoricoPraticaObs,
+        });
+      });
+
+      await faltas.registar(
+        {
+          faltas: data,
+        },
+        Number(idTurma),
+        Number(idOferta)
+      );
+
+      resudentesMutate();
+
+      toast.success('Faltas salvas com sucesso');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      hideLoading();
+    }
   }, []);
 
   // TODO: implementar
