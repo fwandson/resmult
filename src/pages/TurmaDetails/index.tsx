@@ -200,7 +200,7 @@ const TurmaDetails: React.FC = () => {
               <LibraryAddSharpIcon />
             </CustonIconButton>
             <CustonIconButton
-              tooltipTitle="Lançamento de carga horária complementar"
+              tooltipTitle="Registro de horas complementares"
               onClick={() => handlerGoToRegistroCHComp(oferta.id)}
             >
               <UpdateIcon />
@@ -210,6 +210,11 @@ const TurmaDetails: React.FC = () => {
     }
     return [];
   };
+
+  const handleChips = () =>
+    toPairs(filtros)
+      .filter((pair) => pair[1])
+      .map((pair) => ({ label: pair[0], value: pair[1] }));
 
   return (
     <GenericContent
@@ -237,9 +242,7 @@ const TurmaDetails: React.FC = () => {
       <SimpleTable
         title="Ofertas"
         onClickFilterButton={() => setOpen(true)}
-        chips={toPairs(filtros)
-          .filter((pair) => pair[1])
-          .map((pair) => ({ label: pair[0], value: pair[1] }))}
+        chips={handleChips()}
         headCells={[
           {
             value: '#Id',

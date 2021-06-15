@@ -19,6 +19,7 @@ import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
+import ConfirmDialogModal from 'src/components/modals/ConfirmDialogModal';
 import FiltrosResidentesModal, {
   FiltrosResidentesModalData,
 } from 'src/components/modals/FiltrosResidentesModal';
@@ -54,6 +55,8 @@ interface FaltasRegistroFromData {
 const FaltasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<FaltasRegistroParams>();
 
+  const [openConfirmDialogModal, setOpenConfirmDialogModal] = useState(false);
+
   const [searchValue, setSearchValue] = useState('');
 
   const [searchValueDebaunced] = useDebounce(
@@ -63,7 +66,7 @@ const FaltasRegistro: React.FC = () => {
 
   const {
     filtros,
-    setOpen,
+    setOpen: setOpenFiltrosModal,
     ...rest
   } = useFiltrosModal<FiltrosResidentesModalData>({
     enfase: '',
@@ -103,6 +106,7 @@ const FaltasRegistro: React.FC = () => {
   const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
     console.log(formData);
     toast.success('Faltas salvas com sucesso');
+    setOpenConfirmDialogModal(false);
   }, []);
 
   // TODO: implementar
@@ -274,10 +278,10 @@ const FaltasRegistro: React.FC = () => {
         periodo={oferta?.semestre_descricao}
       />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <SimpleTable
           title="Residentes"
-          onClickFilterButton={() => setOpen(true)}
+          onClickFilterButton={() => setOpenFiltrosModal(true)}
           hideTablePagination
           chips={handleChipsTable()}
           headCells={[
@@ -336,15 +340,15 @@ const FaltasRegistro: React.FC = () => {
         <SaveButton
           variant="extended"
           color="secondary"
-          type="submit"
           disabled={isSubmitting}
+          onClick={() => setOpenConfirmDialogModal(true)}
         >
           <CheckIcon />
           Salvar
         </SaveButton>
       </form>
       <FiltrosResidentesModal
-        setOpen={setOpen}
+        setOpen={setOpenFiltrosModal}
         filtros={filtros}
         enfases={oferta?.atividadeModulo.enfases.map((enfase) => ({
           id: enfase.id,
@@ -352,6 +356,13 @@ const FaltasRegistro: React.FC = () => {
           descricao: enfase.descricao,
         }))}
         {...rest}
+      />
+      <ConfirmDialogModal
+        open={openConfirmDialogModal}
+        setOpen={setOpenConfirmDialogModal}
+        title="Confirmação de lançamento"
+        contentText={`Você está realizando o lançamento de faltas dos residentes da turma ${oferta?.turma.descricao} para a oferta ${oferta?.nome}.`}
+        handleConfirm={handleSubmit(onSubmit)}
       />
       <Box m={2} />
     </GenericContent>
