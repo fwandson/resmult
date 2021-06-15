@@ -7,6 +7,7 @@ enum RESOURCE_URLS {
   GET_ENFASES = '/residencia-multiprofissional/enfases',
   GET_NUCLEOS_PROFISSIONAIS = '/residencia-multiprofissional/nucleos-profissionais',
   GET_PESSOA = '/pessoa/:idPessoa',
+  POST_FALTAS = '/residencia-multiprofissional/supervisores/turma/:idTurma/oferta/:idOferta/faltas',
 }
 
 export default RESOURCE_URLS;
