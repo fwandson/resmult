@@ -103,8 +103,14 @@ const FaltasRegistro: React.FC = () => {
   );
 
   // TODO: implementar
+  // Lembrar que o id representa o id do residente
   const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
-    console.log(formData);
+    console.log(
+      formData.ch.map((elem, id) => {
+        if (elem) return { id };
+      })
+    );
+
     toast.success('Faltas salvas com sucesso');
     setOpenConfirmDialogModal(false);
   }, []);
@@ -175,7 +181,9 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.pratica`}
-              defaultValue={0}
+              defaultValue={Number(
+                residente.faltas.find((falta) => falta.tipo === 'P')?.falta
+              )}
             />
             <Box m={1} />
             <Accordion square>
@@ -189,6 +197,10 @@ const FaltasRegistro: React.FC = () => {
                   multiline
                   control={control}
                   name={`ch.${residente.id}.praticaObs`}
+                  defaultValue={
+                    residente.faltas.find((falta) => falta.tipo === 'P')
+                      ?.observacao
+                  }
                 />
               </AccordionDetails>
             </Accordion>
@@ -205,7 +217,9 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.teoricoConceitual`}
-              defaultValue={0}
+              defaultValue={Number(
+                residente.faltas.find((falta) => falta.tipo === 'C')?.falta
+              )}
             />
             <Box m={1} />
             <Accordion square>
@@ -219,6 +233,10 @@ const FaltasRegistro: React.FC = () => {
                   multiline
                   control={control}
                   name={`ch.${residente.id}.teoricoConceitualObs`}
+                  defaultValue={
+                    residente.faltas.find((falta) => falta.tipo === 'C')
+                      ?.observacao
+                  }
                 />
               </AccordionDetails>
             </Accordion>
@@ -235,7 +253,9 @@ const FaltasRegistro: React.FC = () => {
               type="number"
               control={control}
               name={`ch.${residente.id}.teoricoPratica`}
-              defaultValue={0}
+              defaultValue={Number(
+                residente.faltas.find((falta) => falta.tipo === 'T')?.falta
+              )}
             />
             <Box m={1} />
             <Accordion square>
@@ -249,6 +269,10 @@ const FaltasRegistro: React.FC = () => {
                   multiline
                   control={control}
                   name={`ch.${residente.id}.teoricoPraticaObs`}
+                  defaultValue={
+                    residente.faltas.find((falta) => falta.tipo === 'T')
+                      ?.observacao
+                  }
                 />
               </AccordionDetails>
             </Accordion>
@@ -277,6 +301,8 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
+
+      {/* <pre>{JSON.stringify(residentesDataReturn, null, 2)}</pre> */}
 
       <form>
         <SimpleTable

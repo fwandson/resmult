@@ -1,7 +1,7 @@
 import yup from 'src/config/yup';
 
 const schema = yup.object().shape({
-  ch: yup.array().of(
+  residente: yup.array().of(
     yup.object().shape({
       pratica: yup
         .number()
