@@ -13,7 +13,7 @@ import {
 import CheckIcon from '@material-ui/icons/Check';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { uniqueId } from 'lodash';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { Link as LinkRouter } from 'react-router-dom';
@@ -44,15 +44,24 @@ interface FaltasRegistroParams {
   idOferta: string;
 }
 
+interface Reridente {
+  id: number;
+  pratica: {
+    falta: number;
+    obs: string;
+  };
+  teoricoConceitual: {
+    falta: number;
+    obs: string;
+  };
+  teoricoPratica: {
+    falta: number;
+    obs: string;
+  };
+}
+
 interface FaltasRegistroFromData {
-  ch: Array<{
-    pratica: number;
-    praticaObs: string;
-    teoricoConceitual: number;
-    teoricoConceitualObs: string;
-    teoricoPratica: number;
-    teoricoPraticaObs: string;
-  }>;
+  residentes: Reridente[];
 }
 
 const FaltasRegistro: React.FC = () => {
@@ -102,14 +111,40 @@ const FaltasRegistro: React.FC = () => {
     [oferta]
   );
 
+  const defaultValues = useMemo(
+    () => ({
+      residentes: residentesDataReturn?.residentes.map((residente) => ({
+        id: residente.id,
+        pratica: {
+          falta: Number(
+            residente.faltas.find((falta) => falta.tipo === 'P')?.falta
+          ),
+          obs: residente.faltas.find((falta) => falta.tipo === 'P')?.observacao,
+        },
+        teoricoConceitual: {
+          falta: Number(
+            residente.faltas.find((falta) => falta.tipo === 'C')?.falta
+          ),
+          obs: residente.faltas.find((falta) => falta.tipo === 'C')?.observacao,
+        },
+        teoricoPratica: {
+          falta: Number(
+            residente.faltas.find((falta) => falta.tipo === 'T')?.falta
+          ),
+          obs: residente.faltas.find((falta) => falta.tipo === 'T')?.observacao,
+        },
+      })),
+    }),
+    [residentesDataReturn]
+  );
+
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    reset,
   } = useForm<FaltasRegistroFromData>({
-    defaultValues: {
-      ch: [],
-    },
+    defaultValues,
     resolver: yupResolver(
       generateSchemaFaltas({
         maxPratica: Number(handleCargaHoraria('P')),
@@ -133,24 +168,24 @@ const FaltasRegistro: React.FC = () => {
         observacao: string;
       }>();
 
-      Object.entries(formData.ch).forEach((element) => {
+      formData.residentes.forEach((elem) => {
         data.push({
-          residenteid: Number(element[0]),
-          falta: element[1].teoricoConceitual,
+          residenteid: elem.id,
+          falta: elem.teoricoConceitual.falta,
           tipo: 'C',
-          observacao: element[1].teoricoConceitualObs,
+          observacao: elem.teoricoConceitual.obs,
         });
         data.push({
-          residenteid: Number(element[0]),
-          falta: element[1].pratica,
+          residenteid: elem.id,
+          falta: elem.pratica.falta,
           tipo: 'P',
-          observacao: element[1].praticaObs,
+          observacao: elem.pratica.obs,
         });
         data.push({
-          residenteid: Number(element[0]),
-          falta: element[1].teoricoPratica,
+          residenteid: elem.id,
+          falta: elem.teoricoPratica.falta,
           tipo: 'T',
-          observacao: element[1].teoricoPraticaObs,
+          observacao: elem.teoricoPratica.obs,
         });
       });
 
@@ -166,7 +201,8 @@ const FaltasRegistro: React.FC = () => {
 
       toast.success('Faltas salvas com sucesso');
     } catch (error) {
-      // TODO: melhorar essa parte
+      // TODO: melhorar isso aqui
+      console.error(error);
       toast.error('Algo inesperado aconteceu');
     } finally {
       hideLoading();
@@ -197,7 +233,7 @@ const FaltasRegistro: React.FC = () => {
             return residente.enfase.id === Number(filtros.enfase);
           return true;
         })
-        .map((residente) => [
+        .map((residente, index) => [
           <Box key={uniqueId()} mb={5}>
             <Avatar
               component={LinkRouter}
@@ -243,10 +279,7 @@ const FaltasRegistro: React.FC = () => {
                   <InputAdornment position="end">horas</InputAdornment>
                 ),
               }}
-              name={`ch.${residente.id}.pratica`}
-              defaultValue={Number(
-                residente.faltas.find((falta) => falta.tipo === 'P')?.falta
-              )}
+              name={`residentes.${index}.pratica.falta`}
             />
             <Box m={1} />
             <Accordion square>
@@ -259,11 +292,7 @@ const FaltasRegistro: React.FC = () => {
                   variant="outlined"
                   multiline
                   control={control}
-                  name={`ch.${residente.id}.praticaObs`}
-                  defaultValue={
-                    residente.faltas.find((falta) => falta.tipo === 'P')
-                      ?.observacao
-                  }
+                  name={`residentes.${index}.pratica.obs`}
                 />
               </AccordionDetails>
             </Accordion>
@@ -284,10 +313,7 @@ const FaltasRegistro: React.FC = () => {
                 ),
               }}
               control={control}
-              name={`ch.${residente.id}.teoricoConceitual`}
-              defaultValue={Number(
-                residente.faltas.find((falta) => falta.tipo === 'C')?.falta
-              )}
+              name={`residentes.${index}.teoricoConceitual.falta`}
             />
             <Box m={1} />
             <Accordion square>
@@ -300,11 +326,7 @@ const FaltasRegistro: React.FC = () => {
                   variant="outlined"
                   multiline
                   control={control}
-                  name={`ch.${residente.id}.teoricoConceitualObs`}
-                  defaultValue={
-                    residente.faltas.find((falta) => falta.tipo === 'C')
-                      ?.observacao
-                  }
+                  name={`residentes.${index}.teoricoConceitual.obs`}
                 />
               </AccordionDetails>
             </Accordion>
@@ -325,10 +347,7 @@ const FaltasRegistro: React.FC = () => {
                 ),
               }}
               control={control}
-              name={`ch.${residente.id}.teoricoPratica`}
-              defaultValue={Number(
-                residente.faltas.find((falta) => falta.tipo === 'T')?.falta
-              )}
+              name={`residentes.${index}.teoricoPratica.falta`}
             />
             <Box m={1} />
             <Accordion square>
@@ -341,11 +360,7 @@ const FaltasRegistro: React.FC = () => {
                   variant="outlined"
                   multiline
                   control={control}
-                  name={`ch.${residente.id}.teoricoPraticaObs`}
-                  defaultValue={
-                    residente.faltas.find((falta) => falta.tipo === 'T')
-                      ?.observacao
-                  }
+                  name={`residentes.${index}.teoricoPratica.obs`}
                 />
               </AccordionDetails>
             </Accordion>
@@ -353,6 +368,10 @@ const FaltasRegistro: React.FC = () => {
         ]),
     [searchValueDebaunced, residentesDataReturn, filtros.enfase]
   );
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
 
   return (
     <GenericContent
@@ -374,9 +393,6 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
-      {/* <pre>{JSON.stringify(residentesDataReturn, null, 2)}</pre> */}
-
       <form>
         <SimpleTable
           title="Residentes"

@@ -10,23 +10,29 @@ const generateSchemaFaltas = (params: GenerateSchemaFaltasParams) => {
   const { maxPratica, maxTeoricoConceitual, maxTeoricoPratica } = params;
 
   return yup.object().shape({
-    ch: yup.array().of(
+    residentes: yup.array().of(
       yup.object().shape({
-        pratica: yup
-          .number()
-          .min(0, 'Carga horária inválida')
-          .max(maxPratica)
-          .typeError('Carga horária inválida'),
-        teoricoConceitual: yup
-          .number()
-          .min(0, 'Carga horária inválida')
-          .max(maxTeoricoConceitual)
-          .typeError('Carga horária inválida'),
-        teoricoPratica: yup
-          .number()
-          .min(0, 'Carga horária inválida')
-          .max(maxTeoricoPratica)
-          .typeError('Carga horária inválida'),
+        pratica: yup.object().shape({
+          falta: yup
+            .number()
+            .min(0, 'Carga horária inválida')
+            .max(maxPratica)
+            .typeError('Carga horária inválida'),
+        }),
+        teoricoConceitual: yup.object().shape({
+          falta: yup
+            .number()
+            .min(0, 'Carga horária inválida')
+            .max(maxTeoricoConceitual)
+            .typeError('Carga horária inválida'),
+        }),
+        teoricoPratica: yup.object().shape({
+          falta: yup
+            .number()
+            .min(0, 'Carga horária inválida')
+            .max(maxTeoricoPratica)
+            .typeError('Carga horária inválida'),
+        }),
       })
     ),
   });
