@@ -8,6 +8,7 @@ import {
   Button,
   Tooltip,
   Typography,
+  InputAdornment,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -35,7 +36,7 @@ import useResidentes from 'src/hooks/useResidentes';
 import resources from 'src/resources';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
-import schema from './schema';
+import generateSchemaFaltas from './schema';
 import { SaveButton } from './styles';
 
 interface FaltasRegistroParams {
@@ -81,7 +82,7 @@ const FaltasRegistro: React.FC = () => {
   const {
     data: residentesDataReturn,
     searchResidentes,
-    mutate: resudentesMutate,
+    mutate: residentesMutate,
   } = useResidentes({
     idTurma,
     idOferta,
@@ -95,6 +96,12 @@ const FaltasRegistro: React.FC = () => {
 
   const { findEnfase, data: enfaseDataReturn } = useEnfases();
 
+  const handleCargaHoraria = useCallback(
+    (tipo: string) =>
+      oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
+    [oferta]
+  );
+
   const {
     control,
     handleSubmit,
@@ -103,16 +110,15 @@ const FaltasRegistro: React.FC = () => {
     defaultValues: {
       ch: [],
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      generateSchemaFaltas({
+        maxPratica: Number(handleCargaHoraria('P')),
+        maxTeoricoConceitual: Number(handleCargaHoraria('C')),
+        maxTeoricoPratica: Number(handleCargaHoraria('T')),
+      })
+    ),
   });
 
-  const handleCargaHoraria = useCallback(
-    (tipo: string) =>
-      oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
-    [oferta]
-  );
-
-  // TODO: implementar
   // Lembrar que o id representa o id do residente
   const onSubmit = useCallback(async (formData: FaltasRegistroFromData) => {
     try {
@@ -156,11 +162,12 @@ const FaltasRegistro: React.FC = () => {
         Number(idOferta)
       );
 
-      resudentesMutate();
+      residentesMutate();
 
       toast.success('Faltas salvas com sucesso');
     } catch (error) {
-      console.error(error);
+      // TODO: melhorar essa parte
+      toast.error('Algo inesperado aconteceu');
     } finally {
       hideLoading();
     }
@@ -231,6 +238,11 @@ const FaltasRegistro: React.FC = () => {
               variant="outlined"
               type="number"
               control={control}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
               name={`ch.${residente.id}.pratica`}
               defaultValue={Number(
                 residente.faltas.find((falta) => falta.tipo === 'P')?.falta
@@ -266,6 +278,11 @@ const FaltasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               type="number"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
               control={control}
               name={`ch.${residente.id}.teoricoConceitual`}
               defaultValue={Number(
@@ -302,6 +319,11 @@ const FaltasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               type="number"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
               control={control}
               name={`ch.${residente.id}.teoricoPratica`}
               defaultValue={Number(
