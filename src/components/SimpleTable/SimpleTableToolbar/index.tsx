@@ -43,18 +43,20 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
         width="100%"
       >
         <Typography variant="h4">{title}</Typography>
-        <Tooltip title="Filtros" placement="top">
-          <span>
-            <Button
-              color="secondary"
-              startIcon={<FilterListIcon />}
-              onClick={handleOnClickFilterButton}
-              disabled={!onClickFilterButton}
-            >
-              Filtros
-            </Button>
-          </span>
-        </Tooltip>
+        {onClickFilterButton && (
+          <Tooltip title="Filtros" placement="top">
+            <span>
+              <Button
+                color="secondary"
+                startIcon={<FilterListIcon />}
+                onClick={handleOnClickFilterButton}
+                disabled={!onClickFilterButton}
+              >
+                Filtros
+              </Button>
+            </span>
+          </Tooltip>
+        )}
       </Box>
       <Box display="flex" width="100%">
         <Grid container spacing={1} component={Box}>
