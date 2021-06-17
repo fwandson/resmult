@@ -36,11 +36,28 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
 
   return (
     <Container {...rest}>
-      <Box display="flex" alignItems="center">
-        <Typography variant="h4" component="div">
-          {title}
-        </Typography>
-        <Grid container spacing={1} component={Box} ml={1}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        width="100%"
+      >
+        <Typography variant="h4">{title}</Typography>
+        <Tooltip title="Filtros" placement="top">
+          <span>
+            <Button
+              color="secondary"
+              startIcon={<FilterListIcon />}
+              onClick={handleOnClickFilterButton}
+              disabled={!onClickFilterButton}
+            >
+              Filtros
+            </Button>
+          </span>
+        </Tooltip>
+      </Box>
+      <Box display="flex" width="100%">
+        <Grid container spacing={1} component={Box}>
           {chips?.map((chip) => {
             const aux =
               chip.value instanceof Date
@@ -58,18 +75,6 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
           })}
         </Grid>
       </Box>
-      <Tooltip title="Filtros" placement="top">
-        <span>
-          <Button
-            color="secondary"
-            startIcon={<FilterListIcon />}
-            onClick={handleOnClickFilterButton}
-            disabled={!onClickFilterButton}
-          >
-            Filtros
-          </Button>
-        </span>
-      </Tooltip>
     </Container>
   );
 };

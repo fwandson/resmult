@@ -240,7 +240,7 @@ const TurmaDetails: React.FC = () => {
         fim={turma?.dataFim}
       />
       <SimpleTable
-        title="Ofertas"
+        title="Lista de ofertas"
         onClickFilterButton={() => setOpen(true)}
         chips={handleChips()}
         headCells={[
