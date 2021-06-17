@@ -1,25 +1,16 @@
 import {
-  Typography,
-  Card,
-  Grid,
-  CardHeader,
-  CardActions,
-  CardContent,
-  Avatar,
-  Container,
-  createStyles,
-  Theme,
-  makeStyles,
-  IconButton,
+  Avatar, Box, Card, CardActions,
+  CardContent, CardHeader, Container,
+  createStyles, Grid, IconButton, makeStyles, Theme, Typography
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ShareIcon from '@material-ui/icons/Share';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import usePessoa from 'src/hooks/usePessoa';
 import useResidentes from 'src/hooks/useResidentes';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -145,6 +136,7 @@ const ResidenteDetails: React.FC = () => {
           </CardActions>
         </Card>
       </Container>
+      <Box m={2} />
     </GenericContent>
   );
 };

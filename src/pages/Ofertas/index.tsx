@@ -14,6 +14,7 @@ import useFiltrosModal from 'src/hooks/useFiltrosModal';
 const Ofertas: React.FC = () => {
   const Actions = () => (
     <ActionsMenu
+      tooltipTitle="Actions"
       edge="end"
       data={[
         { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },

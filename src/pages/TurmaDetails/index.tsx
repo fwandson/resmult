@@ -1,4 +1,4 @@
-import { Hidden } from '@material-ui/core';
+import { Box, Hidden } from '@material-ui/core';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
@@ -62,11 +62,6 @@ const TurmaDetails: React.FC = () => {
         inicio={turma?.dataInicio}
         fim={turma?.dataFim}
       />
-
-      <Hidden mdUp>
-        <OfertasTableSmall />
-      </Hidden>
-
       <Hidden smDown>
         <OfertasTable
           turmaId={Number(id)}
@@ -74,6 +69,14 @@ const TurmaDetails: React.FC = () => {
           searchValue={searchValueDebaunced}
         />
       </Hidden>
+      <Hidden mdUp>
+        <OfertasTableSmall
+          turmaId={Number(id)}
+          ofertas={ofertasReturnData}
+          searchValue={searchValueDebaunced}
+        />
+      </Hidden>
+      <Box m={2} />
     </GenericContent>
   );
 };

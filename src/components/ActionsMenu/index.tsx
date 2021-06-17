@@ -1,14 +1,8 @@
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  Typography,
-  IconButtonProps,
-} from '@material-ui/core';
-import { ReactNode, useState } from 'react';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { ListItemIcon, Menu, MenuItem, Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import { uniqueId } from 'lodash';
+import { ReactNode, useState } from 'react';
+import CustonIconButton, { CustonIconButtonProps } from '../CustonIconButton';
 
 interface ActionsMenuData {
   label: string;
@@ -16,7 +10,7 @@ interface ActionsMenuData {
   action?(): void;
 }
 
-export interface ActionsMenuProps extends IconButtonProps {
+export interface ActionsMenuProps extends CustonIconButtonProps {
   data: ActionsMenuData[];
 }
 
@@ -35,14 +29,14 @@ const ActionsMenu: React.FC<ActionsMenuProps> = (props) => {
 
   return (
     <div>
-      <IconButton
+      <CustonIconButton
         {...rest}
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <MoreHorizIcon fontSize="small" />
-      </IconButton>
+        <AddIcon />
+      </CustonIconButton>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

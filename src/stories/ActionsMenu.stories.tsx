@@ -22,11 +22,13 @@ const Template: Story<ActionsMenuProps> = (args) => <ActionsMenu {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
+  tooltipTitle: 'tooltipTitle',
   data: [{ label: 'Editar' }, { label: 'Salvar' }, { label: 'Deletar' }],
 };
 
 export const WithIcons = Template.bind({});
 WithIcons.args = {
+  tooltipTitle: 'tooltipTitle',
   data: [
     { label: 'Editar', icon: <EditIcon /> },
     { label: 'Salvar', icon: <SaveIcon /> },

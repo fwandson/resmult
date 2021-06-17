@@ -112,7 +112,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             <Typography variant="caption" color="textSecondary">
               {oferta.modulo.nome}
             </Typography>
-
             <Typography variant="caption">{oferta.nome}</Typography>
           </Box>,
           <Box key="turma-modulo" display="flex" flexDirection="column">
