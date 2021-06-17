@@ -94,9 +94,8 @@ const NotasRegistro: React.FC = () => {
   const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
     try {
       showLoading();
-      setOpen(false);
 
-      console.log(formData);
+      setOpen(false);
 
       const data = {
         notas: formData.residentes.map((elem) => ({
