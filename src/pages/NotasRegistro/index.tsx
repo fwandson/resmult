@@ -31,8 +31,8 @@ interface NotasRegistroParams {
 interface Residente {
   id: number;
   notas: {
-    teorica: number | undefined;
-    final: number | undefined;
+    teorica: string | undefined;
+    final: string | undefined;
   };
 }
 
@@ -73,8 +73,8 @@ const NotasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         notas: {
-          teorica: Number(residente.nota?.notaDeAtividadeDeProduto),
-          final: Number(residente.nota?.notaDeAvaliacaoDeDesempenho),
+          teorica: residente.nota?.notaDeAtividadeDeProduto,
+          final: residente.nota?.notaDeAvaliacaoDeDesempenho,
         },
       })),
     }),
@@ -88,7 +88,7 @@ const NotasRegistro: React.FC = () => {
     formState: { isSubmitting },
   } = useForm<NotasRegistroFromData>({
     defaultValues,
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
@@ -98,17 +98,15 @@ const NotasRegistro: React.FC = () => {
 
       console.log(formData);
 
-      await notas.registar(
-        {
-          notas: formData.residentes.map((elem) => ({
-            residenteid: elem.id,
-            notadeatividadedeproduto: elem.notas.teorica,
-            notadeavaliacaodedesempenho: elem.notas.final,
-          })),
-        },
-        Number(idTurma),
-        Number(idOferta)
-      );
+      const data = {
+        notas: formData.residentes.map((elem) => ({
+          residenteid: elem.id,
+          notadeatividadedeproduto: elem.notas.teorica || null,
+          notadeavaliacaodedesempenho: elem.notas.final || null,
+        })),
+      };
+
+      await notas.registar(data, Number(idTurma), Number(idOferta));
 
       toast.success('Notas salvas com sucesso');
     } catch (error) {
@@ -155,7 +153,7 @@ const NotasRegistro: React.FC = () => {
           <GenericInput
             fullWidth
             variant="outlined"
-            type="number"
+            // type="number"
             control={control}
             name={`residentes.${index}.notas.teorica`}
           />
@@ -169,7 +167,7 @@ const NotasRegistro: React.FC = () => {
           <GenericInput
             fullWidth
             variant="outlined"
-            type="number"
+            // type="number"
             control={control}
             name={`residentes.${index}.notas.final`}
           />

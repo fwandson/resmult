@@ -15,8 +15,8 @@ export declare namespace PostNames {
 
   export interface NotaParams {
     residenteid: number;
-    notadeatividadedeproduto?: number;
-    notadeavaliacaodedesempenho?: number;
+    notadeatividadedeproduto?: string | null;
+    notadeavaliacaodedesempenho?: string | null;
   }
 
   export interface Params {
