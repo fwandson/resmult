@@ -136,7 +136,7 @@ export declare namespace GetResidentesNames {
     instituicaoFormadoraPerson: InstituicaoFormadoraPerson;
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
     faltas: Falta[];
-    notas: Nota[];
+    nota: Nota;
   }
 
   export interface Return {
