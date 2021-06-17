@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Avatar, Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { uniqueId } from 'lodash';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { Link as LinkRouter } from 'react-router-dom';
@@ -14,6 +14,7 @@ import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import { useLoading } from 'src/context/LoadingContext';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import NAMES from 'src/routes/names';
@@ -26,15 +27,22 @@ interface NotasRegistroParams {
   idOferta: string;
 }
 
+interface Residente {
+  id: number;
+  notas: {
+    teorica: number | undefined;
+    final: number | undefined;
+  };
+}
+
 interface NotasRegistroFromData {
-  notas: Array<{
-    teorica: number;
-    final: number;
-  }>;
+  residentes: Residente[];
 }
 
 const NotasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<NotasRegistroParams>();
+
+  const { showLoading, hideLoading } = useLoading();
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -56,27 +64,49 @@ const NotasRegistro: React.FC = () => {
     idOferta,
   });
 
+  const defaultValues = useMemo(
+    () => ({
+      residentes: residentesDataReturn?.residentes.map((residente) => ({
+        id: residente.id,
+        notas: {
+          teorica: Number(residente.nota?.notaDeAtividadeDeProduto),
+          final: Number(residente.nota?.notaDeAvaliacaoDeDesempenho),
+        },
+      })),
+    }),
+    [residentesDataReturn]
+  );
+
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm<NotasRegistroFromData>({
-    defaultValues: {
-      notas: [],
-    },
+    defaultValues,
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar
-  const onSubmit = useCallback((formData: NotasRegistroFromData) => {
-    console.log(formData);
-    toast.success('Notas salvas com sucesso');
-    setOpen(false);
+  const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
+    try {
+      showLoading();
+
+      console.log(formData);
+
+      setOpen(false);
+      toast.success('Notas salvas com sucesso');
+    } catch (error) {
+      // TODO: melhorar isso aqui
+      console.error(error);
+      toast.error('Algo inesperado aconteceu');
+    } finally {
+      hideLoading();
+    }
   }, []);
 
   const handleRows = useMemo(
     () =>
-      searchResidentes(searchValueDebaunced).map((residente) => [
+      searchResidentes(searchValueDebaunced).map((residente, index) => [
         <Box key={uniqueId()} p={2}>
           <Avatar
             component={LinkRouter}
@@ -111,8 +141,7 @@ const NotasRegistro: React.FC = () => {
             variant="outlined"
             type="number"
             control={control}
-            name={`notas.${residente.id}.teorica`}
-            defaultValue={0}
+            name={`residentes.${index}.notas.teorica`}
           />
         </Box>,
         <Box
@@ -126,13 +155,16 @@ const NotasRegistro: React.FC = () => {
             variant="outlined"
             type="number"
             control={control}
-            name={`notas.${residente.id}.final`}
-            defaultValue={0}
+            name={`residentes.${index}.notas.final`}
           />
         </Box>,
       ]),
     [searchValueDebaunced, residentesDataReturn]
   );
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
 
   return (
     <GenericContent
@@ -154,8 +186,6 @@ const NotasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
-      <pre>{JSON.stringify(residentesDataReturn, null, 2)}</pre>
 
       <form>
         <SimpleTable

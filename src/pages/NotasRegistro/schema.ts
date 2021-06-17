@@ -1,18 +1,22 @@
 import yup from 'src/config/yup';
 
 const schema = yup.object().shape({
-  notas: yup.array().of(
+  residentes: yup.array().of(
     yup.object().shape({
-      teorica: yup
-        .number()
-        .min(0, 'Nota inválida')
-        .max(10, 'Nota invalida')
-        .typeError('Nota inválida'),
-      final: yup
-        .number()
-        .min(0, 'Nota inválida')
-        .max(10, 'Nota invalida')
-        .typeError('Nota inválida'),
+      notas: yup.object().shape({
+        teorica: yup
+          .number()
+          .min(0)
+          .max(10)
+          .nullable(true)
+          .transform((_, val) => (val === val ? val : null)), // necessário 
+        final: yup
+          .number()
+          .min(0)
+          .max(10)
+          .nullable(true)
+          .transform((_, val) => (val === val ? val : null)), // necessário 
+      }),
     })
   ),
 });
