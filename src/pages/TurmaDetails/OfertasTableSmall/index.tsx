@@ -1,40 +1,20 @@
 import SimpleTable from 'src/components/SimpleTable';
 
-const OfertasTable: React.FC = () => {
+const OfertasTableSmall: React.FC = () => {
   return (
     <SimpleTable
       title="Lista de ofertas"
       //onClickFilterButton={() => setOpen(true)}
       //chips={handleChips()}
+      hideTablePagination
       headCells={[
-        {
-          value: '#Id',
-          align: 'left',
-        },
         {
           value: 'Oferta',
           align: 'left',
         },
         {
-          value: 'Turma / Modulo',
-
-          align: 'left',
-        },
-        {
           value: 'Período',
           align: 'left',
-        },
-        {
-          value: 'Início/Fim',
-          align: 'left',
-        },
-        {
-          value: 'CH',
-          align: 'center',
-        },
-        {
-          value: 'Encerramento',
-          align: 'center',
         },
         {
           value: 'Lançamentos',
@@ -47,4 +27,4 @@ const OfertasTable: React.FC = () => {
   );
 };
 
-export default OfertasTable;
+export default OfertasTableSmall;

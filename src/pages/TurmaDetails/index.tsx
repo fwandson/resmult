@@ -1,4 +1,4 @@
-import { Box, Typography, Tooltip, Chip } from '@material-ui/core';
+import { Box, Typography, Tooltip, Chip, Hidden } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -24,6 +24,8 @@ import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
 import InfoIcon from '@material-ui/icons/Info';
+import OfertasTable from './OfertasTable';
+import OfertasTableSmall from './OfertasTableSmall';
 
 interface TurmaDetailsParams {
   id: string;
@@ -239,6 +241,15 @@ const TurmaDetails: React.FC = () => {
         inicio={turma?.dataInicio}
         fim={turma?.dataFim}
       />
+
+      <Hidden mdUp>
+        <OfertasTableSmall />
+      </Hidden>
+
+      <Hidden smDown>
+        <OfertasTable />
+      </Hidden>
+
       <SimpleTable
         title="Lista de ofertas"
         onClickFilterButton={() => setOpen(true)}
