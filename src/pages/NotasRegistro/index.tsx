@@ -155,6 +155,8 @@ const NotasRegistro: React.FC = () => {
         periodo={oferta?.semestre_descricao}
       />
 
+      <pre>{JSON.stringify(residentesDataReturn, null, 2)}</pre>
+
       <form>
         <SimpleTable
           title="Residentes"
