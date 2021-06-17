@@ -17,6 +17,7 @@ import CONSTANTS from 'src/config';
 import { useLoading } from 'src/context/LoadingContext';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import resources from 'src/resources';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import { SaveButton } from '../FaltasRegistro/styles';
@@ -43,6 +44,9 @@ const NotasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<NotasRegistroParams>();
 
   const { showLoading, hideLoading } = useLoading();
+
+  // TODO: seria mais interessante fazer um hook chamado useResources para isso
+  const { notas } = resources;
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -84,16 +88,28 @@ const NotasRegistro: React.FC = () => {
     formState: { isSubmitting },
   } = useForm<NotasRegistroFromData>({
     defaultValues,
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
 
   const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
     try {
       showLoading();
+      setOpen(false);
 
       console.log(formData);
 
-      setOpen(false);
+      await notas.registar(
+        {
+          notas: formData.residentes.map((elem) => ({
+            residenteid: elem.id,
+            notadeatividadedeproduto: elem.notas.teorica,
+            notadeavaliacaodedesempenho: elem.notas.final,
+          })),
+        },
+        Number(idTurma),
+        Number(idOferta)
+      );
+
       toast.success('Notas salvas com sucesso');
     } catch (error) {
       // TODO: melhorar isso aqui
