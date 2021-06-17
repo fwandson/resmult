@@ -18,6 +18,7 @@ const generateSchemaFaltas = (params: GenerateSchemaFaltasParams) => {
             .min(0, 'Carga horária inválida')
             .max(maxPratica)
             .typeError('Carga horária inválida'),
+          obs: yup.string().max(255),
         }),
         teoricoConceitual: yup.object().shape({
           falta: yup
@@ -25,6 +26,7 @@ const generateSchemaFaltas = (params: GenerateSchemaFaltasParams) => {
             .min(0, 'Carga horária inválida')
             .max(maxTeoricoConceitual)
             .typeError('Carga horária inválida'),
+          obs: yup.string().max(255),
         }),
         teoricoPratica: yup.object().shape({
           falta: yup
@@ -32,6 +34,7 @@ const generateSchemaFaltas = (params: GenerateSchemaFaltasParams) => {
             .min(0, 'Carga horária inválida')
             .max(maxTeoricoPratica)
             .typeError('Carga horária inválida'),
+          obs: yup.string().max(255),
         }),
       })
     ),

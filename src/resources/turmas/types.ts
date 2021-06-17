@@ -114,7 +114,16 @@ export declare namespace GetResidentesNames {
     tipo: string;
     falta: string;
     observacao?: string;
-}
+  }
+
+  export interface Nota {
+    id: number;
+    residenteId: number;
+    ofertaId: number;
+    semestre: number;
+    notaDeAtividadeDeProduto: string;
+    notaDeAvaliacaoDeDesempenho: string;
+  }
 
   export interface Residente {
     id: number;
@@ -127,6 +136,7 @@ export declare namespace GetResidentesNames {
     instituicaoFormadoraPerson: InstituicaoFormadoraPerson;
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
     faltas: Falta[];
+    notas: Nota[];
   }
 
   export interface Return {
