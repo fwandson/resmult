@@ -10,14 +10,14 @@ import {
   DialogContent,
   DialogContentText,
 } from '@material-ui/core';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 
 // TODO: colocar a handleConformButton para disparar quando clicar no botão de confirmar
 export interface ConfirmDialogModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
-  contentText: string;
+  contentText: string | ReactNode;
   handleConfirm(): void;
 }
 

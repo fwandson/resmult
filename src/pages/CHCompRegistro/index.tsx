@@ -46,6 +46,7 @@ const CHCompRegistro: React.FC = () => {
       }
     >
       <OfertaInfo
+        id={oferta?.id}
         cod={oferta?.turma.codigoTurma}
         nome={oferta?.nome}
         inicio={oferta?.dataInicio}

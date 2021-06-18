@@ -5,10 +5,9 @@ import {
   AccordionSummary,
   Avatar,
   Box,
-  Button,
+  InputAdornment,
   Tooltip,
   Typography,
-  InputAdornment,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -209,11 +208,6 @@ const FaltasRegistro: React.FC = () => {
     }
   }, []);
 
-  // TODO: implementar
-  const handleGerarRelatorio = useCallback((residenteId: number) => {
-    toast.success(`Relatório gerado com sucesso ${residenteId}`);
-  }, []);
-
   const handleChipsTable = useCallback(() => {
     if (filtros.enfase)
       return [
@@ -234,7 +228,7 @@ const FaltasRegistro: React.FC = () => {
           return true;
         })
         .map((residente, index) => [
-          <Box key={uniqueId()} mb={5}>
+          <Box key={uniqueId()}>
             <Avatar
               component={LinkRouter}
               to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', idTurma)
@@ -256,12 +250,11 @@ const FaltasRegistro: React.FC = () => {
           >
             <Typography>{residente.person.name}</Typography>
             <Typography variant="caption" color="textSecondary">
+              #{residente.id}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
               {residente.enfase.descricao}
             </Typography>
-            <Box m={2} />
-            <Button onClick={() => handleGerarRelatorio(residente.id)}>
-              Gerar Relatório
-            </Button>
           </Box>,
           <Box
             key={uniqueId()}
@@ -386,6 +379,7 @@ const FaltasRegistro: React.FC = () => {
       }
     >
       <OfertaInfo
+        id={oferta?.id}
         cod={oferta?.turma.codigoTurma}
         nome={oferta?.nome}
         inicio={oferta?.dataInicio}
@@ -476,7 +470,13 @@ const FaltasRegistro: React.FC = () => {
         open={openConfirmDialogModal}
         setOpen={setOpenConfirmDialogModal}
         title="Confirmação de lançamento"
-        contentText={`Você está realizando o lançamento de faltas dos residentes da turma ${oferta?.turma.descricao} para a oferta ${oferta?.nome}.`}
+        contentText={
+          <Typography>
+            Você está realizando o lançamento de faltas dos residentes da turma{' '}
+            <strong>{oferta?.turma.descricao}</strong> para a oferta{' '}
+            <strong>{oferta?.nome}</strong>.
+          </Typography>
+        }
         handleConfirm={handleSubmit(onSubmit)}
       />
       <Box m={2} />

@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import theme from 'src/theme';
 
 export interface OfertaInfoProps {
+  id: number | undefined;
   nome: string | undefined;
   cod: string | undefined;
   inicio: string | Date | undefined;
@@ -12,7 +13,7 @@ export interface OfertaInfoProps {
 }
 
 const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
-  const { nome, cod, inicio, fim, cargaHoraria, periodo } = props;
+  const { id, nome, cod, inicio, fim, cargaHoraria, periodo } = props;
 
   const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -29,7 +30,7 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
           {cod}
         </Typography>
         <Typography variant="h6" noWrap>
-          {nome}
+          #{id} - {nome}
         </Typography>
       </Box>
       <Grid

@@ -10,11 +10,16 @@ import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
 import ConfirmDialogModal from 'src/components/modals/ConfirmDialogModal';
+import FiltrosResidentesModal, {
+  FiltrosResidentesModalData,
+} from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
 import { useLoading } from 'src/context/LoadingContext';
+import useEnfases from 'src/hooks/useEnfases';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import resources from 'src/resources';
@@ -57,13 +62,27 @@ const NotasRegistro: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
+  const { findEnfase, data: enfaseDataReturn } = useEnfases();
+
+  const {
+    filtros,
+    setOpen: setOpenFiltrosModal,
+    ...rest
+  } = useFiltrosModal<FiltrosResidentesModalData>({
+    enfase: '',
+  });
+
   const { findOferta, data: ofertasDataReturn } = useOfertas({
     id: Number(idTurma),
   });
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const { searchResidentes, data: residentesDataReturn } = useResidentes({
+  const {
+    searchResidentes,
+    data: residentesDataReturn,
+    mutate: residentesMutate,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -73,8 +92,8 @@ const NotasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         notas: {
-          teorica: residente.nota?.notaDeAtividadeDeProduto,
-          final: residente.nota?.notaDeAvaliacaoDeDesempenho,
+          teorica: residente.nota?.notaDeAtividadeDeProduto || undefined,
+          final: residente.nota?.notaDeAvaliacaoDeDesempenho || undefined,
         },
       })),
     }),
@@ -107,6 +126,8 @@ const NotasRegistro: React.FC = () => {
 
       await notas.registar(data, Number(idTurma), Number(idOferta));
 
+      residentesMutate();
+
       toast.success('Notas salvas com sucesso');
     } catch (error) {
       // TODO: melhorar isso aqui
@@ -119,61 +140,81 @@ const NotasRegistro: React.FC = () => {
 
   const handleRows = useMemo(
     () =>
-      searchResidentes(searchValueDebaunced).map((residente, index) => [
-        <Box key={uniqueId()} p={2}>
-          <Avatar
-            component={LinkRouter}
-            to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', idTurma)
-              .replace(':idOferta', idOferta)
-              .replace(':idResidente', String(residente.id))}
-            src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+      searchResidentes(searchValueDebaunced)
+        .filter((residente) => {
+          if (filtros.enfase)
+            return residente.enfase.id === Number(filtros.enfase);
+          return true;
+        })
+        .map((residente, index) => [
+          <Box key={uniqueId()} p={2}>
+            <Avatar
+              component={LinkRouter}
+              to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', idTurma)
+                .replace(':idOferta', idOferta)
+                .replace(':idResidente', String(residente.id))}
+              src={`/static/images/avatars/avatar_${
+                (residente.id % 11) + 1
+              }.png`}
+            >
+              {residente.person.name[0]}
+            </Avatar>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="space-between"
           >
-            {residente.person.name[0]}
-          </Avatar>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <Typography>{residente.person.name}</Typography>
-          <Typography variant="caption" color="textSecondary">
-            {residente.enfase.descricao}
-          </Typography>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          justifyItems="flex-start"
-        >
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            // type="number"
-            control={control}
-            name={`residentes.${index}.notas.teorica`}
-          />
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          justifyItems="flex-start"
-        >
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            // type="number"
-            control={control}
-            name={`residentes.${index}.notas.final`}
-          />
-        </Box>,
-      ]),
-    [searchValueDebaunced, residentesDataReturn]
+            <Typography>{residente.person.name}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              #{residente.id}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {residente.enfase.descricao}
+            </Typography>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              control={control}
+              name={`residentes.${index}.notas.teorica`}
+            />
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              control={control}
+              name={`residentes.${index}.notas.final`}
+            />
+          </Box>,
+        ]),
+    [searchValueDebaunced, residentesDataReturn, filtros.enfase]
   );
+
+  const handleChipsTable = useCallback(() => {
+    if (filtros.enfase)
+      return [
+        {
+          label: 'Ênfase',
+          value: findEnfase({ id: Number(filtros.enfase) })?.descricao || '',
+        },
+      ];
+    return [];
+  }, [filtros, enfaseDataReturn]);
 
   useEffect(() => {
     reset(defaultValues);
@@ -192,6 +233,7 @@ const NotasRegistro: React.FC = () => {
       }
     >
       <OfertaInfo
+        id={oferta?.id}
         cod={oferta?.turma.codigoTurma}
         nome={oferta?.nome}
         inicio={oferta?.dataInicio}
@@ -204,6 +246,8 @@ const NotasRegistro: React.FC = () => {
         <SimpleTable
           title="Residentes"
           hideTablePagination
+          onClickFilterButton={() => setOpenFiltrosModal(true)}
+          chips={handleChipsTable()}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
@@ -237,11 +281,27 @@ const NotasRegistro: React.FC = () => {
         </SaveButton>
       </form>
       <Box m={2} />
+      <FiltrosResidentesModal
+        setOpen={setOpenFiltrosModal}
+        filtros={filtros}
+        enfases={oferta?.atividadeModulo.enfases.map((enfase) => ({
+          id: enfase.id,
+          abreviatura: enfase.abreviatura,
+          descricao: enfase.descricao,
+        }))}
+        {...rest}
+      />
       <ConfirmDialogModal
         open={open}
         setOpen={setOpen}
         title="Confirmação de lançamento"
-        contentText={`Você está realizando o lançamento de notas dos residentes da turma ${oferta?.turma.descricao} para a oferta ${oferta?.nome}.`}
+        contentText={
+          <Typography>
+            Você está realizando o lançamento de notas dos residentes da turma{' '}
+            <strong>{oferta?.turma.descricao}</strong> para a oferta{' '}
+            <strong>{oferta?.nome}</strong>.
+          </Typography>
+        }
         handleConfirm={handleSubmit(onSubmit)}
       />
     </GenericContent>
