@@ -115,22 +115,31 @@ const FaltasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         pratica: {
-          falta: Number(
-            residente.faltas.find((falta) => falta.tipo === 'P')?.falta
-          ),
-          obs: residente.faltas.find((falta) => falta.tipo === 'P')?.observacao,
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'P')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'P')?.observacao ||
+            '',
         },
         teoricoConceitual: {
-          falta: Number(
-            residente.faltas.find((falta) => falta.tipo === 'C')?.falta
-          ),
-          obs: residente.faltas.find((falta) => falta.tipo === 'C')?.observacao,
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'C')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'C')?.observacao ||
+            '',
         },
         teoricoPratica: {
-          falta: Number(
-            residente.faltas.find((falta) => falta.tipo === 'T')?.falta
-          ),
-          obs: residente.faltas.find((falta) => falta.tipo === 'T')?.observacao,
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'T')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'T')?.observacao ||
+            '',
         },
       })),
     }),
