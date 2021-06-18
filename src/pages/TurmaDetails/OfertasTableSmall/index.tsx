@@ -76,7 +76,6 @@ const OfertasTableSmall: React.FC<OfertasTableSmallProps> = (props) => {
         <Box key="lancamentos" display="flex" flexDirection="column">
           <ActionsMenu
             edge="end"
-            color="secondary"
             tooltipTitle="Lançamentos"
             data={[
               {
