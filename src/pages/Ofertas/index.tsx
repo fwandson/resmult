@@ -9,6 +9,7 @@ import FiltrosOfertasModal, {
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
+import NAMES from 'src/routes/names';
 
 // TODO: provavelmente, essa page não é necessária
 const Ofertas: React.FC = () => {
@@ -40,6 +41,7 @@ const Ofertas: React.FC = () => {
       helmetText="Ofertas | Sagu"
       title="Ofertas"
       letfTitleContent={<SearchField />}
+      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
     >
       <SimpleTable
         title="Residentes"

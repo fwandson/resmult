@@ -1,7 +1,17 @@
 import {
-  Avatar, Box, Card, CardActions,
-  CardContent, CardHeader, Container,
-  createStyles, Grid, IconButton, makeStyles, Theme, Typography
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  createStyles,
+  Grid,
+  IconButton,
+  makeStyles,
+  Theme,
+  Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -11,6 +21,7 @@ import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import usePessoa from 'src/hooks/usePessoa';
 import useResidentes from 'src/hooks/useResidentes';
+import NAMES from 'src/routes/names';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,6 +63,7 @@ const ResidenteDetails: React.FC = () => {
       helmetText="Residente | Sagu"
       title="Residente"
       isLoading={!residentesDataReturn || !pessoa}
+      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
     >
       <Container maxWidth="md" disableGutters>
         <Card>

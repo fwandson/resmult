@@ -9,10 +9,10 @@ import useEnfases from 'src/hooks/useEnfases';
 import useNucleosProfissionais from 'src/hooks/useNucleosProfissionais';
 import useOfertas from 'src/hooks/useOfertas';
 import useTurmas from 'src/hooks/useTurmas';
+import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
 import OfertasTable from './OfertasTable';
 import OfertasTableSmall from './OfertasTableSmall';
-
 interface TurmaDetailsParams {
   id: string;
 }
@@ -55,6 +55,7 @@ const TurmaDetails: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
+      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
     >
       <TurmaInfo
         cod={turma?.codigoTurma}

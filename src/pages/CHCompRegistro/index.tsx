@@ -7,6 +7,7 @@ import CONSTANTS from 'src/config';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import { useDebounce } from 'use-debounce/lib';
+import NAMES from 'src/routes/names';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -44,6 +45,7 @@ const CHCompRegistro: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
+      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
     >
       <OfertaInfo
         id={oferta?.id}

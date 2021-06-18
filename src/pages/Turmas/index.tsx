@@ -3,6 +3,7 @@ import EmptyContentAlert from 'src/components/EmptyContentAlert';
 import GenericContent from 'src/components/GenericContent';
 import TurmaCardInfo from 'src/components/TurmaCardInfo';
 import useTurmas from 'src/hooks/useTurmas';
+import NAMES from 'src/routes/names';
 
 const Turmas: React.FC = () => {
   const { data: turmasData } = useTurmas();
@@ -12,6 +13,7 @@ const Turmas: React.FC = () => {
       helmetText="Turmas | Sagu"
       title="Minhas turmas"
       isLoading={!turmasData}
+      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
     >
       <Box display="flex" flexDirection="column" height="100%">
         {turmasData?.turmas.length === 0 && (
