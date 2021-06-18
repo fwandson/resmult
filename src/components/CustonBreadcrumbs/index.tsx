@@ -1,7 +1,7 @@
-import { Breadcrumbs, Link, Typography } from '@material-ui/core';
+import { Breadcrumbs, Typography } from '@material-ui/core';
 import { uniqueId } from 'lodash';
 import { ReactNode } from 'react';
-
+import { Link as RouterLink } from 'react-router-dom';
 export interface CustonBreadcrumbsData {
   href?: string;
   label: string | ReactNode;
@@ -18,11 +18,13 @@ const CustonBreadcrumbs: React.FC<CustonBreadcrumbsProps> = (props) => {
     <Breadcrumbs aria-label="breadcrumb">
       {links.map((link, index) =>
         index === links.length - 1 ? (
-          <Typography color="textPrimary">{link.label}</Typography>
+          <Typography variant="caption">{link.label}</Typography>
         ) : (
-          <Link key={uniqueId()} color="inherit" href={link.href}>
-            {link.label}
-          </Link>
+          <RouterLink key={uniqueId()} to={link.href}>
+            <Typography variant="caption" color="textSecondary">
+              {link.label}
+            </Typography>
+          </RouterLink>
         )
       )}
     </Breadcrumbs>

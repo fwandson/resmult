@@ -386,7 +386,10 @@ const FaltasRegistro: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'REGISTRO DE FALTAS' },
+      ]}
     >
       <OfertaInfo
         id={oferta?.id}

@@ -7,7 +7,10 @@ const Settings: React.FC = () => {
     <GenericContent
       helmetText="Configurações | Sagu"
       title="Configurações"
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'COMFIGURAÇÕES' },
+      ]}
     >
       <Typography variant="h2">
         Mussum Ipsum, cacilds vidis litro abertis. Admodum accumsan disputationi

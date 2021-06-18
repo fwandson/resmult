@@ -41,7 +41,10 @@ const Ofertas: React.FC = () => {
       helmetText="Ofertas | Sagu"
       title="Ofertas"
       letfTitleContent={<SearchField />}
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'OFERTAS' },
+      ]}
     >
       <SimpleTable
         title="Residentes"

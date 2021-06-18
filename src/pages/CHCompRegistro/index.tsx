@@ -45,7 +45,10 @@ const CHCompRegistro: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'REGISTRO CARGA HORÁRIA' },
+      ]}
     >
       <OfertaInfo
         id={oferta?.id}

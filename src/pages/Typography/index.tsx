@@ -23,7 +23,10 @@ const TypographyPage: React.FC = () => {
     <GenericContent
       helmetText="Typography | Sagu"
       title="Typography"
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'TIPOGRAFIA' },
+      ]}
     >
       {variants.map((varitant, index) => (
         <div key={index}>
