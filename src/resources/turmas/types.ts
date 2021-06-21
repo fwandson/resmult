@@ -83,6 +83,7 @@ export declare namespace GetResidentesNames {
   export interface Person {
     id: number;
     name: string;
+    photourl?: string;
   }
 
   export interface Enfase {
