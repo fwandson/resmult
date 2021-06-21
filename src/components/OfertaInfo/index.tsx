@@ -25,11 +25,11 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
       flexDirection={matchesDownSm ? 'column' : 'row'}
       mb={4}
     >
-      <Box display="flex" flexDirection="column">
-        <Typography variant="body2" color="textSecondary" noWrap>
+      <Box display="flex" flexDirection="column" minWidth={350}>
+        <Typography variant="body2" color="textSecondary">
           {cod}
         </Typography>
-        <Typography variant="h6" noWrap>
+        <Typography variant="h6">
           #{id} - {nome}
         </Typography>
       </Box>
