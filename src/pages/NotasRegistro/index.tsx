@@ -92,8 +92,8 @@ const NotasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         notas: {
-          teorica: residente.nota?.notaDeAtividadeDeProduto || undefined,
-          final: residente.nota?.notaDeAvaliacaoDeDesempenho || undefined,
+          teorica: residente.nota?.notaDeAtividadeDeProduto || '',
+          final: residente.nota?.notaDeAvaliacaoDeDesempenho || '',
         },
       })),
     }),
@@ -113,9 +113,7 @@ const NotasRegistro: React.FC = () => {
   const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
     try {
       showLoading();
-
-      setOpen(false);
-
+      
       const data = {
         notas: formData.residentes.map((elem) => ({
           residenteid: elem.id,
@@ -245,7 +243,6 @@ const NotasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
       <form>
         <SimpleTable
           title="Residentes"

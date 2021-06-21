@@ -165,8 +165,6 @@ const FaltasRegistro: React.FC = () => {
   // Lembrar que o id representa o id do residente
   const onSubmit = useCallback(async (formData: FaltasRegistroFromData) => {
     try {
-      setOpenConfirmDialogModal(false);
-
       showLoading();
 
       const data = new Array<{

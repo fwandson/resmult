@@ -39,7 +39,14 @@ const ConfirmDialogModal: React.FC<ConfirmDialogModalProps> = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setOpen(false)}>Cancelar</Button>
-        <Button onClick={handleConfirm} color="secondary" autoFocus>
+        <Button
+          onClick={() => {
+            setOpen(false);
+            handleConfirm();
+          }}
+          color="secondary"
+          autoFocus
+        >
           Confirmar
         </Button>
       </DialogActions>
