@@ -1,11 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Avatar, Box, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { uniqueId } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
@@ -14,6 +13,7 @@ import FiltrosResidentesModal, {
   FiltrosResidentesModalData,
 } from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
@@ -113,7 +113,7 @@ const NotasRegistro: React.FC = () => {
   const onSubmit = useCallback(async (formData: NotasRegistroFromData) => {
     try {
       showLoading();
-      
+
       const data = {
         notas: formData.residentes.map((elem) => ({
           residenteid: elem.id,
@@ -146,17 +146,12 @@ const NotasRegistro: React.FC = () => {
         })
         .map((residente, index) => [
           <Box key={uniqueId()} p={2}>
-            <Avatar
-              component={LinkRouter}
-              to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', idTurma)
-                .replace(':idOferta', idOferta)
-                .replace(':idResidente', String(residente.id))}
-              src={`/static/images/avatars/avatar_${
-                (residente.id % 11) + 1
-              }.png`}
-            >
-              {residente.person.name[0]}
-            </Avatar>
+            <ResidenteAvatar
+              idTurma={Number(idTurma)}
+              idOferta={Number(idOferta)}
+              idResidente={residente.id}
+              nomeResidente={residente.person.name[0]}
+            />
           </Box>,
           <Box
             key={uniqueId()}
