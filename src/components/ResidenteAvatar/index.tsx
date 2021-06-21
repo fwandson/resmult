@@ -3,7 +3,7 @@ import React from 'react';
 import { Link as LinkRouter } from 'react-router-dom';
 import NAMES from 'src/routes/names';
 
-export interface ResidenteAvatar {
+export interface ResidenteAvatarProps {
   idTurma: number;
   idOferta: number;
   idResidente: number;
@@ -11,7 +11,7 @@ export interface ResidenteAvatar {
   photourl: string | undefined;
 }
 
-const ResidenteAvatar: React.FC<ResidenteAvatar> = (props) => {
+const ResidenteAvatar: React.FC<ResidenteAvatarProps> = (props) => {
   const { idTurma, idOferta, idResidente, nomeResidente, photourl } = props;
 
   return (
