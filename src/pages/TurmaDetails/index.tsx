@@ -61,6 +61,7 @@ const TurmaDetails: React.FC = () => {
       ]}
     >
       <TurmaInfo
+        id={turma?.id}
         cod={turma?.codigoTurma}
         nome={turma?.descricao}
         inicio={turma?.dataInicio}

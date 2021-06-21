@@ -37,7 +37,7 @@ import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import generateSchemaFaltas from './schema';
 import { SaveButton } from './styles';
-
+import InfoIcon from '@material-ui/icons/Info';
 interface FaltasRegistroParams {
   idTurma: string;
   idOferta: string;
@@ -421,7 +421,11 @@ const FaltasRegistro: React.FC = () => {
               value: (
                 <Tooltip title="Prática" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Prática</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">Prática</Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('P')} Horas)`}
                     </Typography>
@@ -434,7 +438,13 @@ const FaltasRegistro: React.FC = () => {
               value: (
                 <Tooltip title="EAD + presencial" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Teórico-conceitual</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">
+                        Teórico-conceitual
+                      </Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('C')} Horas)`}
                     </Typography>
@@ -447,7 +457,11 @@ const FaltasRegistro: React.FC = () => {
               value: (
                 <Tooltip title="Campo + núcleo" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Teórico-prática</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">Teórico-prática</Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('T')} Horas)`}
                     </Typography>

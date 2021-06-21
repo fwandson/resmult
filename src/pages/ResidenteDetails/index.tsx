@@ -63,7 +63,10 @@ const ResidenteDetails: React.FC = () => {
       helmetText="Residente | Sagu"
       title="Residente"
       isLoading={!residentesDataReturn || !pessoa}
-      breadcrumbsLinks={[{ label: 'Home', href: NAMES.HOME }]}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'RESIDENTE' },
+      ]}
     >
       <Container maxWidth="md" disableGutters>
         <Card>
