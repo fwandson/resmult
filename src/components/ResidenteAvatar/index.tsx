@@ -8,10 +8,11 @@ export interface ResidenteAvatar {
   idOferta: number;
   idResidente: number;
   nomeResidente: string;
+  photourl: string | undefined;
 }
 
 const ResidenteAvatar: React.FC<ResidenteAvatar> = (props) => {
-  const { idTurma, idOferta, idResidente, nomeResidente } = props;
+  const { idTurma, idOferta, idResidente, nomeResidente, photourl } = props;
 
   return (
     <Avatar
@@ -19,7 +20,7 @@ const ResidenteAvatar: React.FC<ResidenteAvatar> = (props) => {
       to={NAMES.RESIDENTE_DETAILS.replace(':idTurma', String(idTurma))
         .replace(':idOferta', String(idOferta))
         .replace(':idResidente', String(idResidente))}
-      src={`/static/images/avatars/avatar_${(idResidente % 11) + 1}.png`}
+      src={photourl}
     >
       {nomeResidente}
     </Avatar>

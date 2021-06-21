@@ -151,6 +151,7 @@ const NotasRegistro: React.FC = () => {
               idOferta={Number(idOferta)}
               idResidente={residente.id}
               nomeResidente={residente.person.name[0]}
+              photourl={residente.person.photourl}
             />
           </Box>,
           <Box

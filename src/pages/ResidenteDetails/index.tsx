@@ -74,11 +74,9 @@ const ResidenteDetails: React.FC = () => {
             avatar={
               <Avatar
                 className={classes.avatar}
-                src={`/static/images/avatars/avatar_${
-                  (Number(idResidente) % 11) + 1
-                }.png`}
+                src={residente?.person.photourl}
               >
-                {idResidente}
+                {residente?.person.name[0]}
               </Avatar>
             }
             action={

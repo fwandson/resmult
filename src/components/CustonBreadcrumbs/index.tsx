@@ -18,7 +18,9 @@ const CustonBreadcrumbs: React.FC<CustonBreadcrumbsProps> = (props) => {
     <Breadcrumbs aria-label="breadcrumb">
       {links.map((link, index) =>
         index === links.length - 1 ? (
-          <Typography variant="caption">{link.label}</Typography>
+          <Typography key={uniqueId()} variant="caption">
+            {link.label}
+          </Typography>
         ) : (
           <RouterLink key={uniqueId()} to={link.href}>
             <Typography variant="caption" color="textSecondary">
