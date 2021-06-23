@@ -126,6 +126,21 @@ export declare namespace GetResidentesNames {
     notaDeAvaliacaoDeDesempenho: string;
   }
 
+  export interface TipoCargaHorariaComplementar {
+    id: number;
+    descricao: string;
+  }
+
+  export interface Cargahorariacomplementar {
+    id: number;
+    tipoCargaHorariaComplementar: TipoCargaHorariaComplementar;
+    residente: number;
+    oferta: number;
+    cargaHoraria: string;
+    justificativa: string;
+    tipoCargaHoraria: string;
+  }
+
   export interface Residente {
     id: number;
     inicio: string;
@@ -138,6 +153,8 @@ export declare namespace GetResidentesNames {
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
     faltas: Falta[];
     nota?: Nota;
+    cargahorariapendente: number;
+    cargahorariacomplementar: Cargahorariacomplementar[];
   }
 
   export interface Return {

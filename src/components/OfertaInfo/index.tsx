@@ -61,7 +61,7 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
         {fim && (
           <Grid item>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              INÍCIO
+              FIM
             </Typography>
             <Typography>{format(new Date(fim), 'dd/MM/yyyy')}</Typography>
           </Grid>
