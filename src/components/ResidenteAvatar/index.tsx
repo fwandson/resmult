@@ -1,5 +1,5 @@
 import { Avatar } from '@material-ui/core';
-import React from 'react';
+import React, { memo } from 'react';
 import { Link as LinkRouter } from 'react-router-dom';
 import NAMES from 'src/routes/names';
 
@@ -27,4 +27,4 @@ const ResidenteAvatar: React.FC<ResidenteAvatarProps> = (props) => {
   );
 };
 
-export default ResidenteAvatar;
+export default memo(ResidenteAvatar);
