@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
+import AddCHComplementarModal from 'src/components/modals/AddCHComplementarModal';
 import FiltrosResidentesModal, {
   FiltrosResidentesModalData,
 } from 'src/components/modals/FiltrosResidentesModal';
@@ -29,6 +30,10 @@ const CHCompRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<CHCompRegistroParams>();
 
   const [searchValue, setSearchValue] = useState('');
+
+  const [openAddCHComplementarModal, setOpenAddCHComplementarModal] = useState(
+    false
+  );
 
   const [searchValueDebaunced] = useDebounce(
     searchValue,
@@ -70,6 +75,7 @@ const CHCompRegistro: React.FC = () => {
   // TODO: implementar
   const handleAddCHComplementar = useCallback(() => {
     console.log('handleAddCHComplementar');
+    setOpenAddCHComplementarModal(true);
   }, []);
 
   // TODO: implementar
@@ -208,6 +214,10 @@ const CHCompRegistro: React.FC = () => {
           descricao: enfase.descricao,
         }))}
         {...rest}
+      />
+      <AddCHComplementarModal
+        open={openAddCHComplementarModal}
+        setOpen={setOpenAddCHComplementarModal}
       />
     </GenericContent>
   );
