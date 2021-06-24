@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import { useForm } from 'react-hook-form';
 import GenericInput from 'src/components/inputs/GenericInput';
+
 export interface AddCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }

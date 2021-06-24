@@ -10,6 +10,7 @@ import AddCHComplementarModal from 'src/components/modals/AddCHComplementarModal
 import FiltrosResidentesModal, {
   FiltrosResidentesModalData,
 } from 'src/components/modals/FiltrosResidentesModal';
+import ViewCHComplementarModal from 'src/components/modals/ViewCHComplementarModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import SearchField from 'src/components/SearchField';
@@ -34,6 +35,11 @@ const CHCompRegistro: React.FC = () => {
   const [openAddCHComplementarModal, setOpenAddCHComplementarModal] = useState(
     false
   );
+
+  const [
+    openViewCHComplementarModal,
+    setOpenViewCHComplementarModal,
+  ] = useState(false);
 
   const [searchValueDebaunced] = useDebounce(
     searchValue,
@@ -81,6 +87,7 @@ const CHCompRegistro: React.FC = () => {
   // TODO: implementar
   const handleViewCHComplementar = useCallback(() => {
     console.log('handleViewCHComplementar');
+    setOpenViewCHComplementarModal(true);
   }, []);
 
   const handleRows = useMemo(
@@ -193,7 +200,11 @@ const CHCompRegistro: React.FC = () => {
             align: 'right',
           },
           {
-            value: <Typography variant="body1">Quantidade de CH</Typography>,
+            value: (
+              <Typography variant="body1">
+                Quantidade de CH Complementares
+              </Typography>
+            ),
             align: 'right',
           },
           {
@@ -218,6 +229,10 @@ const CHCompRegistro: React.FC = () => {
       <AddCHComplementarModal
         open={openAddCHComplementarModal}
         setOpen={setOpenAddCHComplementarModal}
+      />
+      <ViewCHComplementarModal
+        open={openViewCHComplementarModal}
+        setOpen={setOpenViewCHComplementarModal}
       />
     </GenericContent>
   );
