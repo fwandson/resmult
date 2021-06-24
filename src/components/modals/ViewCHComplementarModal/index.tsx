@@ -12,9 +12,11 @@ import {
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { Dispatch, SetStateAction } from 'react';
+import { GetResidentesNames } from 'src/resources/turmas/types';
 
 export interface ViewCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
+  residente: GetResidentesNames.Residente | undefined;
 }
 
 export interface ViewCHComplementarModalFormData {
@@ -27,7 +29,7 @@ export interface ViewCHComplementarModalFormData {
 const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   props
 ) => {
-  const { open, setOpen, ...rest } = props;
+  const { open, setOpen, residente, ...rest } = props;
 
   return (
     <Dialog open={open} {...rest} fullWidth>
@@ -39,7 +41,11 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
           </IconButton>
         </Grid>
       </DialogTitle>
-      <DialogContent></DialogContent>
+      <DialogContent>
+        <Typography>
+          {JSON.stringify(residente?.cargahorariacomplementar, null, 2)}
+        </Typography>
+      </DialogContent>
       <DialogActions>
         <Grid container justify="space-between">
           <Button onClick={() => setOpen(false)}>Cancelar</Button>

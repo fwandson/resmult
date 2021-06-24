@@ -20,6 +20,7 @@ import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 
@@ -37,6 +38,11 @@ const CHCompRegistro: React.FC = () => {
   );
 
   const [
+    residenteSelected,
+    setResidenteSelected,
+  ] = useState<GetResidentesNames.Residente>();
+
+  const [
     openViewCHComplementarModal,
     setOpenViewCHComplementarModal,
   ] = useState(false);
@@ -52,7 +58,11 @@ const CHCompRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const { searchResidentes, data: residentesDataReturn } = useResidentes({
+  const {
+    searchResidentes,
+    data: residentesDataReturn,
+    mutate: residentesMutate,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -78,17 +88,21 @@ const CHCompRegistro: React.FC = () => {
     return [];
   }, [filtros, enfaseDataReturn]);
 
-  // TODO: implementar
-  const handleAddCHComplementar = useCallback(() => {
-    console.log('handleAddCHComplementar');
-    setOpenAddCHComplementarModal(true);
-  }, []);
+  const handleAddCHComplementar = useCallback(
+    (residente: GetResidentesNames.Residente) => {
+      setResidenteSelected(residente);
+      setOpenAddCHComplementarModal(true);
+    },
+    []
+  );
 
-  // TODO: implementar
-  const handleViewCHComplementar = useCallback(() => {
-    console.log('handleViewCHComplementar');
-    setOpenViewCHComplementarModal(true);
-  }, []);
+  const handleViewCHComplementar = useCallback(
+    (residente: GetResidentesNames.Residente) => {
+      setResidenteSelected(residente);
+      setOpenViewCHComplementarModal(true);
+    },
+    []
+  );
 
   const handleRows = useMemo(
     () =>
@@ -138,13 +152,13 @@ const CHCompRegistro: React.FC = () => {
           <Box key={uniqueId()} display="flex" justifyContent="flex-end">
             <CustonIconButton
               tooltipTitle="Adicionar carga horária complementar"
-              onClick={() => handleAddCHComplementar()}
+              onClick={() => handleAddCHComplementar(residente)}
             >
               <AddAlarmIcon />
             </CustonIconButton>
             <CustonIconButton
               tooltipTitle="Visualizar cargas horárias complementares"
-              onClick={() => handleViewCHComplementar()}
+              onClick={() => handleViewCHComplementar(residente)}
             >
               <AlarmOnIcon />
             </CustonIconButton>
@@ -229,10 +243,13 @@ const CHCompRegistro: React.FC = () => {
       <AddCHComplementarModal
         open={openAddCHComplementarModal}
         setOpen={setOpenAddCHComplementarModal}
+        residente={residenteSelected}
+        mutate={residentesMutate}
       />
       <ViewCHComplementarModal
         open={openViewCHComplementarModal}
         setOpen={setOpenViewCHComplementarModal}
+        residente={residenteSelected}
       />
     </GenericContent>
   );

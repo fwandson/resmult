@@ -9,15 +9,24 @@ import {
   DialogActions,
   Button,
   MenuItem,
+  Box,
+  InputAdornment,
 } from '@material-ui/core';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
 import { useForm } from 'react-hook-form';
 import GenericInput from 'src/components/inputs/GenericInput';
+import { GetResidentesNames } from 'src/resources/turmas/types';
+import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
+import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from './schema';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
+  residente: GetResidentesNames.Residente | undefined;
+  mutate(): void;
 }
 
 export interface AddCHComplementarModalFormData {
@@ -30,21 +39,42 @@ export interface AddCHComplementarModalFormData {
 const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   props
 ) => {
-  const { open, setOpen, ...rest } = props;
+  const {
+    open,
+    setOpen,
+    residente,
+    // mutate,
+    ...rest
+  } = props;
 
-  const { control, handleSubmit } = useForm<AddCHComplementarModalFormData>({
+  const { data: tiposCH } = useTiposCargaHoraria();
+
+  const { data: tiposCHComplementar } = useTiposCargaHorariaComplementar();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+  } = useForm<AddCHComplementarModalFormData>({
     defaultValues: {
       chComplementar: 0,
       tipoCh: 0,
       tipoChComplementar: 0,
       descricao: '',
     },
+    resolver: yupResolver(schema),
   });
 
   // TODO: implementar
   const onSubmit = useCallback((formaData: AddCHComplementarModalFormData) => {
     console.log(formaData);
     setOpen(false);
+    reset();
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setOpen(false);
+    reset();
   }, []);
 
   return (
@@ -54,14 +84,22 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           <Typography variant="h5">
             Adicionar carga horária complementar
           </Typography>
-          <IconButton onClick={() => setOpen(false)} edge="end">
+          <IconButton onClick={handleCancel} edge="end">
             <CloseIcon />
           </IconButton>
         </Grid>
       </DialogTitle>
       <DialogContent>
+        <Box mb={2}>
+          <Typography gutterBottom>
+            Residente: {residente?.person.name}
+          </Typography>
+          <Typography gutterBottom>
+            Carga horária pendente: {residente?.cargahorariapendente} horas
+          </Typography>
+        </Box>
         <form>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             <Grid item xs={6}>
               <GenericInput
                 variant="outlined"
@@ -74,9 +112,11 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 <MenuItem value={0} disabled>
                   Escolha
                 </MenuItem>
-                <MenuItem value={1}>Primeiro Ano</MenuItem>
-                <MenuItem value={2}>Segundo Ano</MenuItem>
-                <MenuItem value={3}>Terceiro Ano</MenuItem>
+                {tiposCHComplementar?.map((elem) => (
+                  <MenuItem key={elem.id} value={elem.id}>
+                    {elem.descricao}
+                  </MenuItem>
+                ))}
               </GenericInput>
             </Grid>
             <Grid item xs={6}>
@@ -91,9 +131,11 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 <MenuItem value={0} disabled>
                   Escolha
                 </MenuItem>
-                <MenuItem value={1}>Primeiro Ano</MenuItem>
-                <MenuItem value={2}>Segundo Ano</MenuItem>
-                <MenuItem value={3}>Terceiro Ano</MenuItem>
+                {tiposCH?.map((elem) => (
+                  <MenuItem key={elem.id} value={elem.id}>
+                    {elem.descricao}
+                  </MenuItem>
+                ))}
               </GenericInput>
             </Grid>
             <Grid item xs={12}>
@@ -101,6 +143,11 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 variant="outlined"
                 label="Carga horária complementar"
                 type="number"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">horas</InputAdornment>
+                  ),
+                }}
                 fullWidth
                 control={control}
                 name="chComplementar"
@@ -122,7 +169,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
       </DialogContent>
       <DialogActions>
         <Grid container justify="space-between">
-          <Button onClick={() => setOpen(false)}>Cancelar</Button>
+          <Button onClick={handleCancel}>Cancelar</Button>
           <Button
             color="secondary"
             startIcon={<CheckIcon />}
