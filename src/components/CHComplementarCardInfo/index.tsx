@@ -7,6 +7,8 @@ import {
   Button,
 } from '@material-ui/core';
 import React from 'react';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Container } from './styles';
 
@@ -29,10 +31,11 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
 
   return (
     <Container variant="outlined">
-      <CardHeader title={`#ID: ${data.id}`} />
+      <CardHeader
+        title={<Typography variant="subtitle1">#ID: {data.id}</Typography>}
+      />
       <CardContent>
-        <Box mb={2}>
-          <Typography>#ID: {data.id}</Typography>
+        <Box>
           <Typography>
             Quantidade de horas: {data.cargaHoraria} horas
           </Typography>
@@ -43,9 +46,9 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
           <Typography>Justificativa: {data.justificativa}</Typography>
         </Box>
       </CardContent>
-      <CardActions disableSpacing>
-        <Button>Remover</Button>
-        <Button>Editar</Button>
+      <CardActions style={{ justifyContent: 'flex-end' }}>
+        <Button startIcon={<DeleteIcon />}>Remover</Button>
+        <Button startIcon={<EditIcon />}>Editar</Button>
       </CardActions>
     </Container>
   );

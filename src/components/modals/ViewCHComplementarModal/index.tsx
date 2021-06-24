@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogProps,
   DialogTitle,
@@ -10,12 +8,11 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-import { Dispatch, SetStateAction } from 'react';
-import { GetResidentesNames } from 'src/resources/turmas/types';
 import { reduce } from 'lodash';
+import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
+import { GetResidentesNames } from 'src/resources/turmas/types';
 
 export interface ViewCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -59,6 +56,11 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             Carga horária pendente: {residente?.cargahorariapendente} horas
           </Typography>
         </Box>
+        {residente?.cargahorariacomplementar.length === 0 && (
+          <Typography color="secondary" align="center" paragraph>
+            Sem cargas horárias complemetares cadastradas
+          </Typography>
+        )}
         {residente?.cargahorariacomplementar.map((elem) => (
           <CHComplementarCardInfo
             key={elem.id}
@@ -72,24 +74,12 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             }}
           />
         ))}
-        <Box mt={2}>
+        <Box mt={2} mb={2}>
           <Typography>
             Total de horas de CH complementares: {totalCHComplementates} horas
           </Typography>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Grid container justify="space-between">
-          <Button onClick={() => setOpen(false)}>Cancelar</Button>
-          <Button
-            onClick={() => setOpen(false)}
-            color="secondary"
-            startIcon={<CheckIcon />}
-          >
-            Confirmar
-          </Button>
-        </Grid>
-      </DialogActions>
     </Dialog>
   );
 };
