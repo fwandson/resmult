@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Dispatch, SetStateAction } from 'react';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 import { reduce } from 'lodash';
+import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
 
 export interface ViewCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -59,21 +60,23 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
           </Typography>
         </Box>
         {residente?.cargahorariacomplementar.map((elem) => (
-          <Box mb={2} key={elem.id}>
-            <Typography>#ID: {elem.id}</Typography>
-            <Typography>
-              Quantidade de horas: {elem.cargaHoraria} horas
-            </Typography>
-            <Typography>
-              Tipo CH coomplementar:{' '}
-              {elem.tipoCargaHorariaComplementar.descricao}
-            </Typography>
-            <Typography>Tipo da CH: {elem.tipoCargaHoraria}</Typography>
-          </Box>
+          <CHComplementarCardInfo
+            key={elem.id}
+            data={{
+              id: elem.id,
+              cargaHoraria: Number(elem.cargaHoraria),
+              tipoCargaHoraria: elem.tipoCargaHoraria,
+              tipoCargaHorariaComplementar:
+                elem.tipoCargaHorariaComplementar.descricao,
+              justificativa: elem.justificativa,
+            }}
+          />
         ))}
-        <Typography>
-          Total de horas de CH complementares: {totalCHComplementates} horas
-        </Typography>
+        <Box mt={2}>
+          <Typography>
+            Total de horas de CH complementares: {totalCHComplementates} horas
+          </Typography>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Grid container justify="space-between">

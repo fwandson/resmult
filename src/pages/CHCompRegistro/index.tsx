@@ -1,7 +1,6 @@
 import { Box, Typography } from '@material-ui/core';
 import AddAlarmIcon from '@material-ui/icons/AddAlarm';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
-import { uniqueId } from 'lodash';
 import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import CustonIconButton from 'src/components/CustonIconButton';
@@ -23,6 +22,7 @@ import useResidentes from 'src/hooks/useResidentes';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
+import { reduce } from 'lodash';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -113,7 +113,7 @@ const CHCompRegistro: React.FC = () => {
           return true;
         })
         .map((residente) => [
-          <Box key={uniqueId()} p={2}>
+          <Box key="foto">
             <ResidenteAvatar
               idTurma={Number(idTurma)}
               idOferta={Number(idOferta)}
@@ -123,7 +123,7 @@ const CHCompRegistro: React.FC = () => {
             />
           </Box>,
           <Box
-            key={uniqueId()}
+            key="residente"
             display="flex"
             flexDirection="column"
             alignItems="flex-start"
@@ -137,7 +137,7 @@ const CHCompRegistro: React.FC = () => {
               {residente.enfase.descricao}
             </Typography>
           </Box>,
-          <Box key={uniqueId()} display="flex" flexDirection="column">
+          <Box key="chPendente" display="flex" flexDirection="column">
             <Typography
               color={
                 residente.cargahorariapendente === 0 ? 'primary' : 'secondary'
@@ -146,10 +146,18 @@ const CHCompRegistro: React.FC = () => {
               {residente.cargahorariapendente} horas
             </Typography>
           </Box>,
-          <Box key={uniqueId()} display="flex" flexDirection="column">
+          <Box key="chComplementares" display="flex" flexDirection="column">
             <Typography>{residente.cargahorariacomplementar.length}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              {reduce(
+                residente?.cargahorariacomplementar,
+                (sum, elem) => sum + Number(elem.cargaHoraria),
+                0
+              )}{' '}
+              horas
+            </Typography>
           </Box>,
-          <Box key={uniqueId()} display="flex" justifyContent="flex-end">
+          <Box key="actions" display="flex" justifyContent="flex-end">
             <CustonIconButton
               tooltipTitle="Adicionar carga horária complementar"
               onClick={() => handleAddCHComplementar(residente)}
@@ -208,17 +216,11 @@ const CHCompRegistro: React.FC = () => {
             align: 'left',
           },
           {
-            value: (
-              <Typography variant="body1">Carga horária pendente</Typography>
-            ),
+            value: <Typography variant="body1">CH Pendente</Typography>,
             align: 'right',
           },
           {
-            value: (
-              <Typography variant="body1">
-                Quantidade de CH Complementares
-              </Typography>
-            ),
+            value: <Typography variant="body1">CH Complementares</Typography>,
             align: 'right',
           },
           {
