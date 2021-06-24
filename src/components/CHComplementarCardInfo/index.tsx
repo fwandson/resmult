@@ -1,15 +1,15 @@
 import {
-  CardContent,
   Box,
-  Typography,
-  CardHeader,
-  CardActions,
   Button,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Typography,
 } from '@material-ui/core';
-import React from 'react';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import EditIcon from '@material-ui/icons/Edit';
+import React from 'react';
+import DoubleConfirmButton from '../DoubleConfirmButton';
 import { Container } from './styles';
 
 interface CHComplementarData {
@@ -47,7 +47,13 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
         </Box>
       </CardContent>
       <CardActions style={{ justifyContent: 'flex-end' }}>
-        <Button startIcon={<DeleteIcon />}>Remover</Button>
+        <DoubleConfirmButton
+          delay={2000}
+          handleConfirm={() => console.log('handleConfirm')}
+          startIcon={<DeleteIcon />}
+        >
+          Remover
+        </DoubleConfirmButton>
         <Button startIcon={<EditIcon />}>Editar</Button>
       </CardActions>
     </Container>
