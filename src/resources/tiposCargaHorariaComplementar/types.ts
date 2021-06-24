@@ -1,6 +1,6 @@
 export declare namespace GetNames {
   export interface Return {
-    id: string;
+    id: number;
     descricao: string;
   }
 }

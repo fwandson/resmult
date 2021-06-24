@@ -69,7 +69,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
               cargaHoraria: Number(elem.cargaHoraria),
               tipoCargaHoraria: elem.tipoCargaHoraria,
               tipoCargaHorariaComplementar:
-                elem.tipoCargaHorariaComplementar.descricao,
+                elem.tipoCargaHorariaComplementar.id,
               justificativa: elem.justificativa,
             }}
           />

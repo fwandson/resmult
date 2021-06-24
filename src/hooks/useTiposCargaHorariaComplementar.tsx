@@ -1,7 +1,7 @@
 import { find, ListIterateeCustom } from 'lodash';
 import { useCallback } from 'react';
 import RESOURCE_URLS from 'src/resources/names';
-import { GetNames } from 'src/resources/tiposCargaHoraria/types';
+import { GetNames } from 'src/resources/tiposCargaHorariaComplementar/types';
 import { useApiWithSwr } from './useApiWithSwr';
 
 function useTiposCargaHorariaComplementar() {
@@ -12,13 +12,13 @@ function useTiposCargaHorariaComplementar() {
     },
   });
 
-  const findTipoCargaHoraria = useCallback(
+  const findTipoCargaHorariaComplementar = useCallback(
     (predicate?: ListIterateeCustom<GetNames.Return, boolean>) =>
       find(data, predicate),
     [data]
   );
 
-  return { data, error, isValidating, findTipoCargaHoraria };
+  return { data, error, isValidating, findTipoCargaHorariaComplementar };
 }
 
 export default useTiposCargaHorariaComplementar;
