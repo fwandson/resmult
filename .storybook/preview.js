@@ -1,13 +1,14 @@
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import ptBRLocale from 'date-fns/locale/pt-BR';
+import { BrowserRouter } from 'react-router-dom';
 import GlobalStyles from 'src/components/GlobalStyles';
 import CustonToastContainer from 'src/config/CustonToastContainer';
 import { LoadingProvider } from 'src/context/LoadingContext';
 import theme from 'src/theme';
 import sbTheme from './sbTheme';
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 const customViewports = {
   xsMUI: {
@@ -61,11 +62,13 @@ export const decorators = [
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <CustonToastContainer />
-      <LoadingProvider>
-        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBRLocale}>
-          <Story />
-        </MuiPickersUtilsProvider>
-      </LoadingProvider>
+      <BrowserRouter>
+        <LoadingProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptBRLocale}>
+            <Story />
+          </MuiPickersUtilsProvider>
+        </LoadingProvider>
+      </BrowserRouter>
     </ThemeProvider>
   ),
 ];
