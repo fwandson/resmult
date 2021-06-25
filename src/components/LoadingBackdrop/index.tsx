@@ -13,7 +13,7 @@ interface LoadingBackdrop {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
+      zIndex: 10000,
       color: theme.palette.primary.dark,
     },
   })

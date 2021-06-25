@@ -17,15 +17,10 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { uniqueId } from 'lodash';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import useTurmas from 'src/hooks/useTurmas';
 
 export interface FiltrosOfertasModalData {
-  turma: number | undefined;
   periodo: string | undefined;
-  nucleo: number | undefined;
-  enfase: number | undefined;
   inicio: MaterialUiPickersDate | undefined;
   fim: MaterialUiPickersDate | undefined;
 }
@@ -41,32 +36,18 @@ export interface FiltrosOfertasModalProps extends DialogProps {
 const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   const { open, filtros, handleOnChange, setOpen, ...rest } = props;
 
-  const { data: turmasDataReturn } = useTurmas();
-
   const [values, setValues] = useState<FiltrosOfertasModalData>(filtros);
 
   const handleLimparFiltros = useCallback(() => {
     setValues({
-      turma: 0,
       periodo: '',
-      nucleo: 0,
-      enfase: 0,
       inicio: undefined,
       fim: undefined,
     });
-    handleOnChange('turma', 0);
-    handleOnChange('periodo', '');
-    handleOnChange('nucleo', 0);
-    handleOnChange('enfase', 0);
-    handleOnChange('inicio', undefined);
-    handleOnChange('fim', undefined);
   }, []);
 
   const handleAplicarFiltros = useCallback(() => {
-    handleOnChange('turma', values.turma);
     handleOnChange('periodo', values.periodo);
-    handleOnChange('nucleo', values.nucleo);
-    handleOnChange('enfase', values.enfase);
     handleOnChange('inicio', values.inicio);
     handleOnChange('fim', values.fim);
     setOpen(false);
@@ -75,42 +56,16 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Filtros</Typography>
           <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              select
-              label="Turma"
-              fullWidth
-              variant="outlined"
-              name="turma"
-              onChange={(e) =>
-                setValues((old) => ({
-                  ...old,
-                  turma: Number(e.target.value),
-                }))
-              }
-              value={values.turma}
-              defaultValue={0}
-            >
-              <MenuItem value={0} disabled>
-                Escolha
-              </MenuItem>
-              {turmasDataReturn?.turmas.map((turma) => (
-                <MenuItem key={uniqueId()} value={turma.id}>
-                  {turma.descricao}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               select
               label="Período"
@@ -126,58 +81,12 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
               value={values.periodo}
               defaultValue=""
             >
-              <MenuItem value="" disabled></MenuItem>
+              <MenuItem value="" disabled>
+                Escolha
+              </MenuItem>
               <MenuItem value="P1">Primeiro Ano</MenuItem>
               <MenuItem value="P2">Segundo Ano</MenuItem>
               <MenuItem value="P3">Terceiro Ano</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              select
-              label="Núcleos profissionais"
-              fullWidth
-              variant="outlined"
-              name="nucleo"
-              onChange={(e) =>
-                setValues((old) => ({
-                  ...old,
-                  nucleo: Number(e.target.value),
-                }))
-              }
-              value={values.nucleo}
-              defaultValue={0}
-            >
-              <MenuItem value={0} disabled>
-                Escolha
-              </MenuItem>
-              <MenuItem value={1}>Ten</MenuItem>
-              <MenuItem value={2}>Twenty</MenuItem>
-              <MenuItem value={3}>Thirty</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              select
-              label="Ênfases"
-              fullWidth
-              variant="outlined"
-              name="enfase"
-              onChange={(e) =>
-                setValues((old) => ({
-                  ...old,
-                  enfase: Number(e.target.value),
-                }))
-              }
-              value={values.enfase}
-              defaultValue={0}
-            >
-              <MenuItem value={0} disabled>
-                Escolha
-              </MenuItem>
-              <MenuItem value={1}>Ten</MenuItem>
-              <MenuItem value={2}>Twenty</MenuItem>
-              <MenuItem value={3}>Thirty</MenuItem>
             </TextField>
           </Grid>
         </Grid>

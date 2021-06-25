@@ -1,7 +1,10 @@
-import { Hidden, makeStyles } from '@material-ui/core';
+import {
+  // Hidden,
+  makeStyles,
+} from '@material-ui/core';
 import React, { useState } from 'react';
 import NavBar from './NavBar';
-import NavBottomBar from './NavBottomBar';
+// import NavBottomBar from './NavBottomBar';
 import TopBar from './TopBar';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,9 +57,10 @@ const DashboardLayout: React.FC = ({ children }) => {
           <div className={classes.content}>{children}</div>
         </div>
       </div>
-      <Hidden mdUp>
+      {/* TODO: verificar com o time se isso é necessário */}
+      {/* <Hidden mdUp>
         <NavBottomBar />
-      </Hidden>
+      </Hidden> */}
     </div>
   );
 };

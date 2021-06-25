@@ -14,6 +14,7 @@ import LoginLaytout from 'src/layouts/LoginLaytout';
 import FaltasRegistro from 'src/pages/FaltasRegistro';
 import NotasRegistro from 'src/pages/NotasRegistro';
 import CHCompRegistro from 'src/pages/CHCompRegistro';
+import ResidenteDetails from 'src/pages/ResidenteDetails';
 
 const Routes = () => {
   return (
@@ -45,6 +46,13 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.OFERTAS}
         component={Ofertas}
+        isPrivate
+        exact
+      />
+      <RouterWithLayout
+        layout={DashboardLayout}
+        path={NAMES.RESIDENTE_DETAILS}
+        component={ResidenteDetails}
         isPrivate
         exact
       />

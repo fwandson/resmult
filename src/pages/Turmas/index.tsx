@@ -12,6 +12,7 @@ const Turmas: React.FC = () => {
       helmetText="Turmas | Sagu"
       title="Minhas turmas"
       isLoading={!turmasData}
+      breadcrumbsLinks={[{ label: 'MINHAS TURMAS' }]}
     >
       <Box display="flex" flexDirection="column" height="100%">
         {turmasData?.turmas.length === 0 && (

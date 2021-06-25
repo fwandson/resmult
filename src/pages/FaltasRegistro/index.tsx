@@ -1,47 +1,75 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Avatar,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
-  Button,
-  // Card,
-  // CardContent,
-  // Divider,
-  // Grid,
+  InputAdornment,
   Tooltip,
-  Typography
+  Typography,
 } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import InfoIcon from '@material-ui/icons/Info';
 import { uniqueId } from 'lodash';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
 import GenericInput from 'src/components/inputs/GenericInput';
+import ConfirmDialogModal from 'src/components/modals/ConfirmDialogModal';
+import FiltrosResidentesModal, {
+  FiltrosResidentesModalData,
+} from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import { useLoading } from 'src/context/LoadingContext';
+import useEnfases from 'src/hooks/useEnfases';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import resources from 'src/resources';
+import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
+import generateSchemaFaltas from './schema';
 import { SaveButton } from './styles';
-
 interface FaltasRegistroParams {
   idTurma: string;
   idOferta: string;
 }
 
+interface Reridente {
+  id: number;
+  pratica: {
+    falta: number;
+    obs: string;
+  };
+  teoricoConceitual: {
+    falta: number;
+    obs: string;
+  };
+  teoricoPratica: {
+    falta: number;
+    obs: string;
+  };
+}
+
 interface FaltasRegistroFromData {
-  ch: Array<{
-    pratica: number;
-    teoricoConceitual: number;
-    teoricoPratica: number;
-  }>;
+  residentes: Reridente[];
 }
 
 const FaltasRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<FaltasRegistroParams>();
+
+  const { showLoading, hideLoading } = useLoading();
+
+  const { faltas } = resources;
+
+  const [openConfirmDialogModal, setOpenConfirmDialogModal] = useState(false);
 
   const [searchValue, setSearchValue] = useState('');
 
@@ -50,7 +78,19 @@ const FaltasRegistro: React.FC = () => {
     CONSTANTS.DEBOUNCE_TIME
   );
 
-  const { data: residentesDataReturn, searchResidentes } = useResidentes({
+  const {
+    filtros,
+    setOpen: setOpenFiltrosModal,
+    ...rest
+  } = useFiltrosModal<FiltrosResidentesModalData>({
+    enfase: '',
+  });
+
+  const {
+    data: residentesDataReturn,
+    searchResidentes,
+    mutate: residentesMutate,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
@@ -61,88 +101,272 @@ const FaltasRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
+  const { findEnfase, data: enfaseDataReturn } = useEnfases();
+
   const handleCargaHoraria = useCallback(
     (tipo: string) =>
       oferta?.tipoCargaHoraria.find((elem) => elem.tipo === tipo)?.cargahoraria,
     [oferta]
   );
 
-  const { control, handleSubmit } = useForm<FaltasRegistroFromData>({
-    defaultValues: {
-      ch: [],
-    },
+  const defaultValues = useMemo(
+    () => ({
+      residentes: residentesDataReturn?.residentes.map((residente) => ({
+        id: residente.id,
+        pratica: {
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'P')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'P')?.observacao ||
+            '',
+        },
+        teoricoConceitual: {
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'C')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'C')?.observacao ||
+            '',
+        },
+        teoricoPratica: {
+          falta:
+            Number(
+              residente.faltas.find((falta) => falta.tipo === 'T')?.falta
+            ) || 0,
+          obs:
+            residente.faltas.find((falta) => falta.tipo === 'T')?.observacao ||
+            '',
+        },
+      })),
+    }),
+    [residentesDataReturn]
+  );
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<FaltasRegistroFromData>({
+    defaultValues,
+    resolver: yupResolver(
+      generateSchemaFaltas({
+        maxPratica: Number(handleCargaHoraria('P')),
+        maxTeoricoConceitual: Number(handleCargaHoraria('C')),
+        maxTeoricoPratica: Number(handleCargaHoraria('T')),
+      })
+    ),
   });
 
-  // TODO: implementar aqui
-  const onSubmit = useCallback((formData: FaltasRegistroFromData) => {
-    console.log(formData);
-    toast.success('Faltas salvas com sucesso');
+  // Lembrar que o id representa o id do residente
+  const onSubmit = useCallback(async (formData: FaltasRegistroFromData) => {
+    try {
+      showLoading();
+
+      const data = new Array<{
+        residenteid: number;
+        falta: number;
+        tipo: string;
+        observacao: string;
+      }>();
+
+      formData.residentes.forEach((elem) => {
+        data.push({
+          residenteid: elem.id,
+          falta: elem.teoricoConceitual.falta,
+          tipo: 'C',
+          observacao: elem.teoricoConceitual.obs,
+        });
+        data.push({
+          residenteid: elem.id,
+          falta: elem.pratica.falta,
+          tipo: 'P',
+          observacao: elem.pratica.obs,
+        });
+        data.push({
+          residenteid: elem.id,
+          falta: elem.teoricoPratica.falta,
+          tipo: 'T',
+          observacao: elem.teoricoPratica.obs,
+        });
+      });
+
+      await faltas.registar(
+        {
+          faltas: data,
+        },
+        Number(idTurma),
+        Number(idOferta)
+      );
+
+      residentesMutate();
+
+      toast.success('Faltas salvas com sucesso');
+    } catch (error) {
+      // TODO: melhorar isso aqui
+      console.error(error);
+      toast.error('Algo inesperado aconteceu');
+    } finally {
+      hideLoading();
+    }
   }, []);
+
+  const handleChipsTable = useCallback(() => {
+    if (filtros.enfase)
+      return [
+        {
+          label: 'Ênfase',
+          value: findEnfase({ id: Number(filtros.enfase) })?.descricao || '',
+        },
+      ];
+    return [];
+  }, [filtros, enfaseDataReturn]);
 
   const handleRows = useMemo(
     () =>
-      searchResidentes(searchValueDebaunced).map((residente) => [
-        <Box key={uniqueId()} mb={5}>
-          <Avatar
-            src={`/static/images/avatars/avatar_${(residente.id % 11) + 1}.png`}
+      searchResidentes(searchValueDebaunced)
+        .filter((residente) => {
+          if (filtros.enfase)
+            return residente.enfase.id === Number(filtros.enfase);
+          return true;
+        })
+        .map((residente, index) => [
+          <Box key={uniqueId()}>
+            <ResidenteAvatar
+              idTurma={Number(idTurma)}
+              idOferta={Number(idOferta)}
+              idResidente={residente.id}
+              nomeResidente={residente.person.name[0]}
+              photourl={residente.person.photourl}
+            />
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="space-between"
           >
-            {residente.person.name[0]}
-          </Avatar>
-        </Box>,
-        <Box
-          key={uniqueId()}
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          <Typography>{residente.person.name}</Typography>
-          <Box m={2} />
-          <Button>Gerar Relatório</Button>
-        </Box>,
-
-        <Box key={uniqueId()}>
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.pratica`}
-          />
-          <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
-        </Box>,
-        <Box key={uniqueId()}>
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.teoricoConceitual`}
-          />
-          <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
-        </Box>,
-        <Box key={uniqueId()}>
-          <GenericInput
-            fullWidth
-            variant="outlined"
-            type="number"
-            control={control}
-            name={`ch.${residente.id}.teoricoPratica`}
-          />
-          <Box m={1} />
-          <Button fullWidth startIcon={<AddIcon />}>
-            Observação
-          </Button>
-        </Box>,
-      ]),
-    [residentesDataReturn]
+            <Typography>{residente.person.name}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              #{residente.id}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {residente.enfase.descricao}
+            </Typography>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              control={control}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
+              name={`residentes.${index}.pratica.falta`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`residentes.${index}.pratica.obs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
+              control={control}
+              name={`residentes.${index}.teoricoConceitual.falta`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`residentes.${index}.teoricoConceitual.obs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            justifyItems="flex-start"
+          >
+            <GenericInput
+              fullWidth
+              variant="outlined"
+              type="number"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">horas</InputAdornment>
+                ),
+              }}
+              control={control}
+              name={`residentes.${index}.teoricoPratica.falta`}
+            />
+            <Box m={1} />
+            <Accordion square>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Observação</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <GenericInput
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  control={control}
+                  name={`residentes.${index}.teoricoPratica.obs`}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Box>,
+        ]),
+    [searchValueDebaunced, residentesDataReturn, filtros.enfase]
   );
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues]);
 
   return (
     <GenericContent
@@ -155,8 +379,13 @@ const FaltasRegistro: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'REGISTRO DE FALTAS' },
+      ]}
     >
       <OfertaInfo
+        id={oferta?.id}
         cod={oferta?.turma.codigoTurma}
         nome={oferta?.nome}
         inicio={oferta?.dataInicio}
@@ -164,25 +393,32 @@ const FaltasRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <SimpleTable
           title="Residentes"
+          onClickFilterButton={() => setOpenFiltrosModal(true)}
           hideTablePagination
+          chips={handleChipsTable()}
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
               align: 'left',
             },
             {
-              value: <Typography variant="body1">Residente</Typography>,
+              value: (
+                <Typography variant="body1">Residente / Ênfase</Typography>
+              ),
               align: 'left',
             },
             {
               value: (
                 <Tooltip title="Prática" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Prática</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">Prática</Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('P')} Horas)`}
                     </Typography>
@@ -195,7 +431,13 @@ const FaltasRegistro: React.FC = () => {
               value: (
                 <Tooltip title="EAD + presencial" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Teórico-conceitual</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">
+                        Teórico-conceitual
+                      </Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('C')} Horas)`}
                     </Typography>
@@ -208,7 +450,11 @@ const FaltasRegistro: React.FC = () => {
               value: (
                 <Tooltip title="Campo + núcleo" placement="top-start">
                   <Box>
-                    <Typography variant="body1">Teórico-prática</Typography>
+                    <Box display="flex" alignItems="center">
+                      <Typography variant="body1">Teórico-prática</Typography>
+                      <Box m={1} />
+                      <InfoIcon fontSize="small" />
+                    </Box>
                     <Typography variant="body2" color="textSecondary">
                       {`(${handleCargaHoraria('T')} Horas)`}
                     </Typography>
@@ -220,123 +466,39 @@ const FaltasRegistro: React.FC = () => {
           ]}
           rows={handleRows}
         />
-
-        {/* TODO: remover isso depois do levantamento dos requisitos */}
-        {/* <Card>
-          <Grid container component={CardContent} spacing={2}>
-            <Grid item xs={1}>
-              <Typography variant="body1">Foto</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="body1">Residente</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Tooltip title="Prática" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Prática</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('P')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={3}>
-              <Tooltip title="EAD + presencial" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Teórico-conceitual</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('C')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={3}>
-              <Tooltip title="Campo + núcleo" placement="top-start">
-                <Box>
-                  <Typography variant="body1">Teórico-prática</Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {`(${handleCargaHoraria('T')} Horas)`}
-                  </Typography>
-                </Box>
-              </Tooltip>
-            </Grid>
-
-            {searchResidentes(searchValueDebaunced).map((residente) => (
-              <React.Fragment key={residente.id}>
-                <Grid item xs={12}>
-                  <Divider />
-                </Grid>
-                <Grid item xs={1}>
-                  <Avatar
-                    src={`/static/images/avatars/avatar_${
-                      (residente.id % 11) + 1
-                    }.png`}
-                  >
-                    {residente.person.name[0]}
-                  </Avatar>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  xs={3}
-                  justify="space-between"
-                  direction="column"
-                >
-                  <Grid item>
-                    <Typography>{residente.person.name}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button>Gerar Relatório</Button>
-                  </Grid>
-                </Grid>
-                <Grid item xs={2} justify="space-between">
-                  <GenericInput
-                    fullWidth
-                    variant="outlined"
-                    type="number"
-                    control={control}
-                    name={`ch.${residente.id}.pratica`}
-                  />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-                <Grid item xs={3}>
-                  <GenericInput
-                    fullWidth
-                    variant="outlined"
-                    type="number"
-                    control={control}
-                    name={`ch.${residente.id}.teoricoConceitual`}
-                  />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-                <Grid item xs={3}>
-                  <GenericInput
-                    fullWidth
-                    variant="outlined"
-                    type="number"
-                    control={control}
-                    name={`ch.${residente.id}.teoricoPratica`}
-                  />
-                  <Box m={1} />
-                  <Button fullWidth startIcon={<AddIcon />}>
-                    Observação
-                  </Button>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Card> */}
-        <SaveButton variant="extended" color="secondary" type="submit">
+        <SaveButton
+          variant="extended"
+          color="secondary"
+          disabled={isSubmitting}
+          onClick={() => setOpenConfirmDialogModal(true)}
+        >
           <CheckIcon />
           Salvar
         </SaveButton>
       </form>
+      <FiltrosResidentesModal
+        setOpen={setOpenFiltrosModal}
+        filtros={filtros}
+        enfases={oferta?.atividadeModulo.enfases.map((enfase) => ({
+          id: enfase.id,
+          abreviatura: enfase.abreviatura,
+          descricao: enfase.descricao,
+        }))}
+        {...rest}
+      />
+      <ConfirmDialogModal
+        open={openConfirmDialogModal}
+        setOpen={setOpenConfirmDialogModal}
+        title="Confirmação de lançamento"
+        contentText={
+          <Typography>
+            Você está realizando o lançamento de faltas dos residentes da turma{' '}
+            <strong>{oferta?.turma.descricao}</strong> para a oferta{' '}
+            <strong>{oferta?.nome}</strong>.
+          </Typography>
+        }
+        handleConfirm={handleSubmit(onSubmit)}
+      />
       <Box m={2} />
     </GenericContent>
   );

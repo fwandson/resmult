@@ -2,6 +2,7 @@ import { Box, Typography, Grid, useMediaQuery } from '@material-ui/core';
 import theme from 'src/theme';
 
 export interface TurmaInfoProps {
+  id: number | undefined;
   nome: string | undefined;
   cod: string | undefined;
   inicio: string | Date | undefined;
@@ -9,7 +10,7 @@ export interface TurmaInfoProps {
 }
 
 const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
-  const { nome, cod, inicio, fim } = props;
+  const { id, nome, cod, inicio, fim } = props;
 
   const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -21,12 +22,12 @@ const TurmaInfo: React.FC<TurmaInfoProps> = (props) => {
       flexDirection={matchesDownSm ? 'column' : 'row'}
       mb={4}
     >
-      <Box display="flex" flexDirection="column">
-        <Typography variant="body2" color="textSecondary" noWrap>
+      <Box display="flex" flexDirection="column" minWidth={350}>
+        <Typography variant="body2" color="textSecondary">
           {cod}
         </Typography>
-        <Typography variant="h6" noWrap>
-          {nome}
+        <Typography variant="h6">
+          #{id} - {nome}
         </Typography>
       </Box>
       <Grid

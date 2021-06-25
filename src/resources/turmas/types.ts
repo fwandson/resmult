@@ -15,6 +15,13 @@ export declare namespace GetNames {
 }
 
 export declare namespace GetOfertasNames {
+  export interface Turma {
+    id?: number;
+    codigoTurma: string;
+    descricao: string;
+    dataInicio?: string;
+    dataFim?: string;
+  }
   export interface Modulo {
     nome: string;
     id: number;
@@ -25,6 +32,28 @@ export declare namespace GetOfertasNames {
     cargahoraria: string;
   }
 
+  export interface Nucleosprofissionai {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }
+
+  export interface Enfas {
+    id: number;
+    descricao: string;
+    abreviatura: string;
+  }
+  export interface AtividadeModulo {
+    id: number;
+    periodo: string;
+    descricao: string;
+    sumula?: unknown;
+    cargaHoraria: string;
+    modulo?: unknown;
+    enfases: Enfas[];
+    nucleosprofissionais: Nucleosprofissionai[];
+  }
+
   export interface OfertasModulo {
     id: number;
     dataInicio: string;
@@ -33,17 +62,12 @@ export declare namespace GetOfertasNames {
     nome: string;
     semestre: number;
     semestre_descricao: string;
-    turma: {
-      id?: number;
-      codigoTurma: string;
-      descricao: string;
-      dataInicio?: Date;
-      dataFim?: Date;
-    };
+    turma: Turma;
     modulo: Modulo;
     cargahoraria: string;
     unidadetematicaid: number;
     tipoCargaHoraria: TipoCargaHoraria[];
+    atividadeModulo: AtividadeModulo;
   }
 
   export interface Params {
@@ -59,6 +83,7 @@ export declare namespace GetResidentesNames {
   export interface Person {
     id: number;
     name: string;
+    photourl?: string;
   }
 
   export interface Enfase {
@@ -83,6 +108,39 @@ export declare namespace GetResidentesNames {
     name: string;
   }
 
+  export interface Falta {
+    id: number;
+    residenteId: number;
+    ofertaId: number;
+    tipo: string;
+    falta: string;
+    observacao?: string;
+  }
+
+  export interface Nota {
+    id: number;
+    residenteId: number;
+    ofertaId: number;
+    semestre: number;
+    notaDeAtividadeDeProduto: string;
+    notaDeAvaliacaoDeDesempenho: string;
+  }
+
+  export interface TipoCargaHorariaComplementar {
+    id: number;
+    descricao: string;
+  }
+
+  export interface Cargahorariacomplementar {
+    id: number;
+    tipoCargaHorariaComplementar: TipoCargaHorariaComplementar;
+    residente: number;
+    oferta: number;
+    cargaHoraria: string;
+    justificativa: string;
+    tipoCargaHoraria: string;
+  }
+
   export interface Residente {
     id: number;
     inicio: string;
@@ -93,6 +151,10 @@ export declare namespace GetResidentesNames {
     turma: Turma;
     instituicaoFormadoraPerson: InstituicaoFormadoraPerson;
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
+    faltas: Falta[];
+    nota?: Nota;
+    cargahorariapendente: number;
+    cargahorariacomplementar: Cargahorariacomplementar[];
   }
 
   export interface Return {

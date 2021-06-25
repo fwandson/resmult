@@ -5,6 +5,9 @@ export default {
   title: 'Components/OfertaInfo',
   component: OfertaInfo,
   argTypes: {
+    id: {
+      description: 'Id da Oferta',
+    },
     nome: {
       description: 'Nome da Oferta',
     },
@@ -36,6 +39,7 @@ const Template: Story<OfertaInfoProps> = (args) => <OfertaInfo {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
+  id: 10,
   cod: 'T2HOSPITALAR',
   nome: 'Turma II',
   inicio: new Date(),

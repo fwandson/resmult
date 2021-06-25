@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { Box, Typography } from '@material-ui/core';
+import AddAlarmIcon from '@material-ui/icons/AddAlarm';
+import AlarmOnIcon from '@material-ui/icons/AlarmOn';
+import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
+import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
+import AddCHComplementarModal from 'src/components/modals/AddCHComplementarModal';
+import FiltrosResidentesModal, {
+  FiltrosResidentesModalData,
+} from 'src/components/modals/FiltrosResidentesModal';
+import ViewCHComplementarModal from 'src/components/modals/ViewCHComplementarModal';
 import OfertaInfo from 'src/components/OfertaInfo';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import SearchField from 'src/components/SearchField';
+import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
+import useEnfases from 'src/hooks/useEnfases';
+import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
+import { GetResidentesNames } from 'src/resources/turmas/types';
+import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
+import { reduce } from 'lodash';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -16,6 +32,20 @@ const CHCompRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<CHCompRegistroParams>();
 
   const [searchValue, setSearchValue] = useState('');
+
+  const [openAddCHComplementarModal, setOpenAddCHComplementarModal] = useState(
+    false
+  );
+
+  const [
+    residenteSelected,
+    setResidenteSelected,
+  ] = useState<GetResidentesNames.Residente>();
+
+  const [
+    openViewCHComplementarModal,
+    setOpenViewCHComplementarModal,
+  ] = useState(false);
 
   const [searchValueDebaunced] = useDebounce(
     searchValue,
@@ -28,10 +58,122 @@ const CHCompRegistro: React.FC = () => {
 
   const oferta = findOferta({ id: Number(idOferta) });
 
-  const { searchResidentes, data: residentesDataReturn } = useResidentes({
+  const {
+    searchResidentes,
+    data: residentesDataReturn,
+    mutate: residentesMutate,
+  } = useResidentes({
     idTurma,
     idOferta,
   });
+
+  const { findEnfase, data: enfaseDataReturn } = useEnfases();
+
+  const {
+    filtros,
+    setOpen: setOpenFiltrosModal,
+    ...rest
+  } = useFiltrosModal<FiltrosResidentesModalData>({
+    enfase: '',
+  });
+
+  const handleChipsTable = useCallback(() => {
+    if (filtros.enfase)
+      return [
+        {
+          label: 'Ênfase',
+          value: findEnfase({ id: Number(filtros.enfase) })?.descricao || '',
+        },
+      ];
+    return [];
+  }, [filtros, enfaseDataReturn]);
+
+  const handleAddCHComplementar = useCallback(
+    (residente: GetResidentesNames.Residente) => {
+      setResidenteSelected(residente);
+      setOpenAddCHComplementarModal(true);
+    },
+    []
+  );
+
+  const handleViewCHComplementar = useCallback(
+    (residente: GetResidentesNames.Residente) => {
+      setResidenteSelected(residente);
+      setOpenViewCHComplementarModal(true);
+    },
+    []
+  );
+
+  const handleRows = useMemo(
+    () =>
+      searchResidentes(searchValueDebaunced)
+        .filter((residente) => {
+          if (filtros.enfase)
+            return residente.enfase.id === Number(filtros.enfase);
+          return true;
+        })
+        .map((residente) => [
+          <Box key="foto">
+            <ResidenteAvatar
+              idTurma={Number(idTurma)}
+              idOferta={Number(idOferta)}
+              idResidente={residente.id}
+              nomeResidente={residente.person.name[0]}
+              photourl={residente.person.photourl}
+            />
+          </Box>,
+          <Box
+            key="residente"
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="space-between"
+          >
+            <Typography>{residente.person.name}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              #{residente.id}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {residente.enfase.descricao}
+            </Typography>
+          </Box>,
+          <Box key="chPendente" display="flex" flexDirection="column">
+            <Typography
+              color={
+                residente.cargahorariapendente === 0 ? 'primary' : 'secondary'
+              }
+            >
+              {residente.cargahorariapendente} horas
+            </Typography>
+          </Box>,
+          <Box key="chComplementares" display="flex" flexDirection="column">
+            <Typography>{residente.cargahorariacomplementar.length}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              {reduce(
+                residente?.cargahorariacomplementar,
+                (sum, elem) => sum + Number(elem.cargaHoraria),
+                0
+              )}{' '}
+              horas
+            </Typography>
+          </Box>,
+          <Box key="actions" display="flex" justifyContent="flex-end">
+            <CustonIconButton
+              tooltipTitle="Adicionar carga horária complementar"
+              onClick={() => handleAddCHComplementar(residente)}
+            >
+              <AddAlarmIcon />
+            </CustonIconButton>
+            <CustonIconButton
+              tooltipTitle="Visualizar cargas horárias complementares"
+              onClick={() => handleViewCHComplementar(residente)}
+            >
+              <AlarmOnIcon />
+            </CustonIconButton>
+          </Box>,
+        ]),
+    [searchValueDebaunced, residentesDataReturn, filtros.enfase]
+  );
 
   return (
     <GenericContent
@@ -44,8 +186,13 @@ const CHCompRegistro: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       }
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'REGISTRO CARGA HORÁRIA' },
+      ]}
     >
       <OfertaInfo
+        id={oferta?.id}
         cod={oferta?.turma.codigoTurma}
         nome={oferta?.nome}
         inicio={oferta?.dataInicio}
@@ -53,14 +200,63 @@ const CHCompRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-      <pre>{JSON.stringify(oferta, null, 2)}</pre>
-      <pre>
-        {JSON.stringify(
-          { residentes: searchResidentes(searchValueDebaunced) },
-          null,
-          2
-        )}
-      </pre>
+
+      <SimpleTable
+        title="Residentes"
+        hideTablePagination
+        onClickFilterButton={() => setOpenFiltrosModal(true)}
+        chips={handleChipsTable()}
+        headCells={[
+          {
+            value: <Typography variant="body1">Foto</Typography>,
+            align: 'left',
+          },
+          {
+            value: <Typography variant="body1">Residente / Ênfase</Typography>,
+            align: 'left',
+          },
+          {
+            value: <Typography variant="body1">CH Pendente</Typography>,
+            align: 'right',
+          },
+          {
+            value: <Typography variant="body1">CH Complementares</Typography>,
+            align: 'right',
+          },
+          {
+            value: <Typography variant="body1">Ações</Typography>,
+            align: 'right',
+          },
+        ]}
+        rows={handleRows}
+      />
+
+      <Box m={2} />
+      <FiltrosResidentesModal
+        setOpen={setOpenFiltrosModal}
+        filtros={filtros}
+        enfases={oferta?.atividadeModulo.enfases.map((enfase) => ({
+          id: enfase.id,
+          abreviatura: enfase.abreviatura,
+          descricao: enfase.descricao,
+        }))}
+        {...rest}
+      />
+      <AddCHComplementarModal
+        idTurma={Number(idTurma)}
+        idOferta={Number(idOferta)}
+        open={openAddCHComplementarModal}
+        setOpen={setOpenAddCHComplementarModal}
+        residente={residenteSelected}
+        mutate={residentesMutate}
+      />
+      <ViewCHComplementarModal
+        idTurma={Number(idTurma)}
+        idOferta={Number(idOferta)}
+        open={openViewCHComplementarModal}
+        setOpen={setOpenViewCHComplementarModal}
+        residente={residenteSelected}
+      />
     </GenericContent>
   );
 };

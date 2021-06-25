@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import theme from 'src/theme';
 
 export interface OfertaInfoProps {
+  id: number | undefined;
   nome: string | undefined;
   cod: string | undefined;
   inicio: string | Date | undefined;
@@ -12,7 +13,7 @@ export interface OfertaInfoProps {
 }
 
 const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
-  const { nome, cod, inicio, fim, cargaHoraria, periodo } = props;
+  const { id, nome, cod, inicio, fim, cargaHoraria, periodo } = props;
 
   const matchesDownSm = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -24,12 +25,12 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
       flexDirection={matchesDownSm ? 'column' : 'row'}
       mb={4}
     >
-      <Box display="flex" flexDirection="column">
-        <Typography variant="body2" color="textSecondary" noWrap>
+      <Box display="flex" flexDirection="column" minWidth={350}>
+        <Typography variant="body2" color="textSecondary">
           {cod}
         </Typography>
-        <Typography variant="h6" noWrap>
-          {nome}
+        <Typography variant="h6">
+          #{id} - {nome}
         </Typography>
       </Box>
       <Grid
@@ -60,7 +61,7 @@ const OfertaInfo: React.FC<OfertaInfoProps> = (props) => {
         {fim && (
           <Grid item>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              INÍCIO
+              FIM
             </Typography>
             <Typography>{format(new Date(fim), 'dd/MM/yyyy')}</Typography>
           </Grid>

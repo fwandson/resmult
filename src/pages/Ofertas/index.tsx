@@ -9,11 +9,13 @@ import FiltrosOfertasModal, {
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
+import NAMES from 'src/routes/names';
 
 // TODO: provavelmente, essa page não é necessária
 const Ofertas: React.FC = () => {
   const Actions = () => (
     <ActionsMenu
+      tooltipTitle="Actions"
       edge="end"
       data={[
         { label: 'Salvar', icon: <ScheduleIcon fontSize="small" /> },
@@ -29,10 +31,7 @@ const Ofertas: React.FC = () => {
     setOpen,
     ...rest
   } = useFiltrosModal<FiltrosOfertasModalData>({
-    turma: 0,
     periodo: '',
-    nucleo: 0,
-    enfase: 0,
     inicio: new Date(),
     fim: new Date(),
   });
@@ -42,6 +41,10 @@ const Ofertas: React.FC = () => {
       helmetText="Ofertas | Sagu"
       title="Ofertas"
       letfTitleContent={<SearchField />}
+      breadcrumbsLinks={[
+        { label: 'MINHAS TURMAS', href: NAMES.TURMAS },
+        { label: 'OFERTAS' },
+      ]}
     >
       <SimpleTable
         title="Residentes"

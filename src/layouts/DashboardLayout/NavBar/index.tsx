@@ -10,8 +10,8 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import ClassIcon from '@material-ui/icons/Class';
+// import BorderColorIcon from '@material-ui/icons/BorderColor';
+// import ClassIcon from '@material-ui/icons/Class';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import GroupIcon from '@material-ui/icons/Group';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -28,21 +28,21 @@ const items = [
     icon: GroupIcon,
     title: 'Minhas Turmas',
   },
-  {
-    href: NAMES.OFERTAS,
-    icon: ClassIcon,
-    title: 'Ofertas',
-  },
+  // {
+  //   href: NAMES.OFERTAS,
+  //   icon: ClassIcon,
+  //   title: 'Ofertas',
+  // },
   {
     href: NAMES.SETTINGS,
     icon: SettingsIcon,
     title: 'Configurações',
   },
-  {
-    href: NAMES.TYPOGRAPHY,
-    icon: BorderColorIcon,
-    title: 'Typography',
-  },
+  // {
+  //   href: NAMES.TYPOGRAPHY,
+  //   icon: BorderColorIcon,
+  //   title: 'Typography',
+  // },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +90,7 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src="/static/images/avatars/avatar_10.png"
+          src="/static/images/avatars/avatar_12.png"
           to={NAMES.HOME}
         />
         <Typography color="textPrimary" variant="h6">
