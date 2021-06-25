@@ -25,6 +25,7 @@ import schema from './schema';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import resources from 'src/resources';
 import { useLoading } from 'src/context/LoadingContext';
+import { find } from 'lodash';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   idTurma: number;
@@ -151,8 +152,26 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
-          <Typography gutterBottom>
-            Carga horária pendente: {residente?.cargahorariapendente} horas
+          <Typography>
+            {
+              find(residente?.cargaHorariaPendente, { tipo: 'T' })
+                ?.cargaHorariaPendente
+            }{' '}
+            horas
+          </Typography>
+          <Typography>
+            {
+              find(residente?.cargaHorariaPendente, { tipo: 'C' })
+                ?.cargaHorariaPendente
+            }{' '}
+            horas
+          </Typography>
+          <Typography>
+            {
+              find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                ?.cargaHorariaPendente
+            }{' '}
+            horas
           </Typography>
         </Box>
         <form>

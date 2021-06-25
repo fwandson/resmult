@@ -22,7 +22,7 @@ import useResidentes from 'src/hooks/useResidentes';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
-import { reduce } from 'lodash';
+import { find, reduce } from 'lodash';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -137,13 +137,30 @@ const CHCompRegistro: React.FC = () => {
               {residente.enfase.descricao}
             </Typography>
           </Box>,
-          <Box key="chPendente" display="flex" flexDirection="column">
-            <Typography
-              color={
-                residente.cargahorariapendente === 0 ? 'primary' : 'secondary'
-              }
-            >
-              {residente.cargahorariapendente} horas
+          <Box key="chPendente" display="flex" flexDirection="column" alignItems="center">
+            <Typography>
+              TEÓRICO-PRÁTICA:{' '}
+              {
+                find(residente.cargaHorariaPendente, { tipo: 'T' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
+            </Typography>
+            <Typography>
+              TEÓRICO-CONCEITUAL:{' '}
+              {
+                find(residente.cargaHorariaPendente, { tipo: 'C' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
+            </Typography>
+            <Typography>
+              PRÁTICA:{' '}
+              {
+                find(residente.cargaHorariaPendente, { tipo: 'P' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
             </Typography>
           </Box>,
           <Box key="chComplementares" display="flex" flexDirection="column">
@@ -217,7 +234,7 @@ const CHCompRegistro: React.FC = () => {
           },
           {
             value: <Typography variant="body1">CH Pendente</Typography>,
-            align: 'right',
+            align: 'center',
           },
           {
             value: <Typography variant="body1">CH Complementares</Typography>,

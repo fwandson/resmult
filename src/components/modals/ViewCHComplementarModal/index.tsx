@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { reduce } from 'lodash';
+import { find, reduce } from 'lodash';
 import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
@@ -72,9 +72,29 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
               </Typography>
             </Box>
           </Box>
-          <Typography gutterBottom>
-            Carga horária pendente: {residente?.cargahorariapendente} horas
-          </Typography>
+          <Box>
+            <Typography>
+              {
+                find(residente?.cargaHorariaPendente, { tipo: 'T' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
+            </Typography>
+            <Typography>
+              {
+                find(residente?.cargaHorariaPendente, { tipo: 'C' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
+            </Typography>
+            <Typography>
+              {
+                find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                  ?.cargaHorariaPendente
+              }{' '}
+              horas
+            </Typography>
+          </Box>
         </Box>
         <Box>
           <Grid container spacing={2}>

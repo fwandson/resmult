@@ -158,7 +158,7 @@ export declare namespace GetResidentesNames {
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
     faltas: Falta[];
     nota?: Nota;
-    cargahorariapendente: CargaHorariaPendente[];
+    cargaHorariaPendente: CargaHorariaPendente[];
     cargahorariacomplementar: Cargahorariacomplementar[];
   }
 
