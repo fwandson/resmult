@@ -1,16 +1,22 @@
 export declare namespace PostNames {
-  export interface NotaReturn {
+  export interface TipoCargaHorariaComplementar {
     id: number;
-    residenteId: number;
-    ofertaId: number;
-    semestre: number;
-    notaDeAtividadeDeProduto: string;
-    notaDeAvaliacaoDeDesempenho: string;
+    descricao: string;
+  }
+
+  export interface CargaHorariaComplementar {
+    id: number;
+    tipoCargaHorariaComplementar: TipoCargaHorariaComplementar;
+    residente: number;
+    oferta: number;
+    cargaHoraria: string;
+    justificativa: string;
+    tipoCargaHoraria: string;
   }
 
   export interface Return {
     sucesso: boolean;
-    notas: NotaReturn[];
+    cargaHorariaComplementar: CargaHorariaComplementar;
   }
 
   export interface CargaHoraria {

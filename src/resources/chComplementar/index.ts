@@ -4,7 +4,7 @@ import RESOURCE_URLS from '../names';
 import { PostNames } from './types';
 
 const chComplementar = {
-  registar: (
+  adicionar: (
     params: PostNames.Params,
     idTurma: number,
     idOferta: number

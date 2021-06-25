@@ -23,6 +23,8 @@ import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComp
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from './schema';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import resources from 'src/resources';
+import { useLoading } from 'src/context/LoadingContext';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   idTurma: number;
@@ -53,6 +55,10 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     ...rest
   } = props;
 
+  const { showLoading, hideLoading } = useLoading();
+
+  const { chComplementar } = resources;
+
   const { data: tiposCH } = useTiposCargaHoraria();
 
   const { data: tiposCHComplementar } = useTiposCargaHorariaComplementar();
@@ -72,11 +78,39 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   });
 
   // TODO: implementar
-  const onSubmit = useCallback((formaData: AddCHComplementarModalFormData) => {
-    console.log(formaData);
-    setOpen(false);
-    reset();
-  }, []);
+  const onSubmit = useCallback(
+    async (formaData: AddCHComplementarModalFormData) => {
+      try {
+        showLoading();
+
+        const cargaHoraria = {
+          residenteId: residente?.id || 0,
+          cargaHoraria: formaData.chComplementar,
+          justificativa: formaData.descricao,
+          tipoCargaHoraria: String(formaData.tipoCh),
+          tipoCargaHorariaComplementar: formaData.tipoChComplementar,
+        };
+
+        console.log(cargaHoraria);
+
+        const response = await chComplementar.adicionar(
+          {
+            cargaHoraria,
+          },
+          idTurma,
+          idOferta
+        );
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        hideLoading();
+        setOpen(false);
+        reset();
+      }
+    },
+    []
+  );
 
   const handleCancel = useCallback(() => {
     setOpen(false);
