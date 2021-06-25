@@ -5,6 +5,7 @@ import enfases from './enfases';
 import nucleosProfissionais from './nucleosProfissionais';
 import faltas from './faltas';
 import notas from './notas';
+import chComplementar from './chComplementar';
 
 const resources = {
   autentication,
@@ -14,6 +15,7 @@ const resources = {
   nucleosProfissionais,
   faltas,
   notas,
+  chComplementar,
 };
 
 export default resources;
