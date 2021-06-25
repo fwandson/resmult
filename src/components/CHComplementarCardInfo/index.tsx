@@ -13,6 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useLoading } from 'src/context/LoadingContext';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
 import DoubleConfirmButton from '../DoubleConfirmButton';
@@ -42,6 +43,8 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
   props
 ) => {
   const { data } = props;
+
+  const { showLoading, hideLoading } = useLoading();
 
   const [asEditing, setAsEditing] = useState(false);
 
@@ -79,9 +82,21 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
   });
 
   // TODO: implementar
-  const onSubmit = useCallback((formaData: CHComplementarCardInfoFormData) => {
-    console.log(formaData);
-  }, []);
+  const onSubmit = useCallback(
+    async (formaData: CHComplementarCardInfoFormData) => {
+      try {
+        showLoading();
+        setTimeout(() => {
+          console.log(formaData);
+          hideLoading();
+          setAsEditing(false);
+        }, 1000);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
 
   const handleEditar = () => {
     reset(defaultValues);
