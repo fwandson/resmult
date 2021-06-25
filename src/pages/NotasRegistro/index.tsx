@@ -257,11 +257,19 @@ const NotasRegistro: React.FC = () => {
               align: 'left',
             },
             {
-              value: <Typography variant="body1">Nota teórica</Typography>,
+              value: (
+                <Typography variant="body1">
+                  Nota atividade do produto
+                </Typography>
+              ),
               align: 'left',
             },
             {
-              value: <Typography variant="body1">Nota final</Typography>,
+              value: (
+                <Typography variant="body1">
+                  Nota de avaliação discente
+                </Typography>
+              ),
               align: 'left',
             },
           ]}

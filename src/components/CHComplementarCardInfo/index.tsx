@@ -200,10 +200,10 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
         {asEditing ? (
           <>
             <Button onClick={handleCancelarEditar} color="secondary">
-              Cancelar Editão
+              Cancelar Edição
             </Button>
             <Button onClick={handleSubmit(onSubmit)} color="primary">
-              Confirmar Editão
+              Confirmar Edição
             </Button>
           </>
         ) : (
