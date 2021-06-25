@@ -243,6 +243,8 @@ const CHCompRegistro: React.FC = () => {
         {...rest}
       />
       <AddCHComplementarModal
+        idTurma={Number(idTurma)}
+        idOferta={Number(idOferta)}
         open={openAddCHComplementarModal}
         setOpen={setOpenAddCHComplementarModal}
         residente={residenteSelected}

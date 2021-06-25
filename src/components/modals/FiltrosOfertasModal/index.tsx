@@ -56,12 +56,12 @@ const FiltrosOfertasModal: React.FC<FiltrosOfertasModalProps> = (props) => {
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Filtros</Typography>
           <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>

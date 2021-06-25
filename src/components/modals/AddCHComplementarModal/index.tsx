@@ -22,8 +22,11 @@ import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from './schema';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
 
 export interface AddCHComplementarModalProps extends DialogProps {
+  idTurma: number;
+  idOferta: number;
   setOpen: Dispatch<SetStateAction<boolean>>;
   residente: GetResidentesNames.Residente | undefined;
   mutate(): void;
@@ -40,10 +43,13 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   props
 ) => {
   const {
+    idTurma,
+    idOferta,
     open,
     setOpen,
     residente,
-    // mutate,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    mutate,
     ...rest
   } = props;
 
@@ -80,20 +86,37 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">
             Adicionar carga horária complementar
           </Typography>
           <IconButton onClick={handleCancel} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
+        <Box display="flex" alignItems="center" mb={2}>
+          {residente && (
+            <ResidenteAvatar
+              idTurma={Number(idTurma)}
+              idOferta={Number(idOferta)}
+              idResidente={residente.id}
+              nomeResidente={residente.person.name[0]}
+              photourl={residente.person.photourl}
+            />
+          )}
+          <Box ml={2} display="flex" flexDirection="column">
+            <Typography>{residente?.person.name}</Typography>
+            <Typography variant="caption" color="textSecondary">
+              #{residente?.id}
+            </Typography>
+            <Typography variant="caption" color="textSecondary">
+              {residente?.enfase.descricao}
+            </Typography>
+          </Box>
+        </Box>
         <Box mb={2}>
-          <Typography gutterBottom>
-            Residente: {residente?.person.name}
-          </Typography>
           <Typography gutterBottom>
             Carga horária pendente: {residente?.cargahorariapendente} horas
           </Typography>

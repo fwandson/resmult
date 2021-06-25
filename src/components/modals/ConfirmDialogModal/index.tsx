@@ -1,17 +1,17 @@
 import {
-  DialogProps,
+  Box,
   Button,
-  DialogActions,
   Dialog,
-  DialogTitle,
-  Grid,
-  Typography,
-  IconButton,
+  DialogActions,
   DialogContent,
   DialogContentText,
+  DialogProps,
+  DialogTitle,
+  IconButton,
+  Typography,
 } from '@material-ui/core';
-import { Dispatch, ReactNode, SetStateAction } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 export interface ConfirmDialogModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -26,12 +26,12 @@ const ConfirmDialogModal: React.FC<ConfirmDialogModalProps> = (props) => {
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">{title}</Typography>
           <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>{contentText}</DialogContentText>

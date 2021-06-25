@@ -11,6 +11,7 @@ import {
   DialogContent,
   Grid,
   MenuItem,
+  Box,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
@@ -52,12 +53,12 @@ const FiltrosResidentesModal: React.FC<FiltrosResidentesModalProps> = (
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Filtros</Typography>
           <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>

@@ -43,12 +43,12 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   return (
     <Dialog open={open} {...rest} fullWidth>
       <DialogTitle>
-        <Grid container justify="space-between" alignItems="center">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Cargas horárias complementares</Typography>
           <IconButton onClick={() => setOpen(false)} edge="end">
             <CloseIcon />
           </IconButton>
-        </Grid>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Box mb={2}>
