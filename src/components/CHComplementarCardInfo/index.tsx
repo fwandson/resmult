@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
@@ -19,6 +20,7 @@ import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComp
 import DoubleConfirmButton from '../DoubleConfirmButton';
 import GenericInput from '../inputs/GenericInput';
 import { Container } from './styles';
+import schema from './schema';
 
 interface CHComplementarData {
   id: number;
@@ -79,6 +81,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
     reset,
   } = useForm<CHComplementarCardInfoFormData>({
     defaultValues,
+    resolver: yupResolver(schema),
   });
 
   // TODO: implementar
@@ -117,7 +120,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
         {asEditing ? (
           <form>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <GenericInput
                   variant="outlined"
                   label="Tipo CH complementar"
@@ -133,7 +136,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
                   ))}
                 </GenericInput>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <GenericInput
                   variant="outlined"
                   label="Tipo CH"
