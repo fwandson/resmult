@@ -249,6 +249,8 @@ const CHCompRegistro: React.FC = () => {
         mutate={residentesMutate}
       />
       <ViewCHComplementarModal
+        idTurma={Number(idTurma)}
+        idOferta={Number(idOferta)}
         open={openViewCHComplementarModal}
         setOpen={setOpenViewCHComplementarModal}
         residente={residenteSelected}

@@ -12,11 +12,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import { reduce } from 'lodash';
 import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 
 export interface ViewCHComplementarModalProps extends DialogProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   residente: GetResidentesNames.Residente | undefined;
+  idTurma: number;
+  idOferta: number;
 }
 
 export interface ViewCHComplementarModalFormData {
@@ -29,7 +32,7 @@ export interface ViewCHComplementarModalFormData {
 const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   props
 ) => {
-  const { open, setOpen, residente, ...rest } = props;
+  const { open, setOpen, residente, idTurma, idOferta, ...rest } = props;
 
   const totalCHComplementates = reduce(
     residente?.cargahorariacomplementar,
@@ -49,9 +52,26 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
       </DialogTitle>
       <DialogContent>
         <Box mb={2}>
-          <Typography gutterBottom>
-            Residente: {residente?.person.name}
-          </Typography>
+          <Box display="flex" alignItems="center" mb={2}>
+            {residente && (
+              <ResidenteAvatar
+                idTurma={Number(idTurma)}
+                idOferta={Number(idOferta)}
+                idResidente={residente.id}
+                nomeResidente={residente.person.name[0]}
+                photourl={residente.person.photourl}
+              />
+            )}
+            <Box ml={2} display="flex" flexDirection="column">
+              <Typography>{residente?.person.name}</Typography>
+              <Typography variant="caption" color="textSecondary">
+                #{residente?.id}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {residente?.enfase.descricao}
+              </Typography>
+            </Box>
+          </Box>
           <Typography gutterBottom>
             Carga horária pendente: {residente?.cargahorariapendente} horas
           </Typography>
