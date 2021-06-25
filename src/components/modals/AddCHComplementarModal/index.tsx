@@ -32,7 +32,8 @@ export interface AddCHComplementarModalProps extends DialogProps {
   idOferta: number;
   setOpen: Dispatch<SetStateAction<boolean>>;
   residente: GetResidentesNames.Residente | undefined;
-  mutate(): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
 }
 
 export interface AddCHComplementarModalFormData {
@@ -78,7 +79,6 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar
   const onSubmit = useCallback(
     async (formaData: AddCHComplementarModalFormData) => {
       try {
@@ -101,6 +101,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           idTurma,
           idOferta
         );
+
+        await mutate();
+
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -110,7 +113,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
         reset();
       }
     },
-    []
+    [residente]
   );
 
   const handleCancel = useCallback(() => {
