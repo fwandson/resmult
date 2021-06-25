@@ -76,24 +76,31 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             Carga horária pendente: {residente?.cargahorariapendente} horas
           </Typography>
         </Box>
-        {residente?.cargahorariacomplementar.length === 0 && (
-          <Typography color="secondary" align="center" paragraph>
-            Sem cargas horárias complemetares cadastradas
-          </Typography>
-        )}
-        {residente?.cargahorariacomplementar.map((elem) => (
-          <CHComplementarCardInfo
-            key={elem.id}
-            data={{
-              id: elem.id,
-              cargaHoraria: Number(elem.cargaHoraria),
-              tipoCargaHoraria: elem.tipoCargaHoraria,
-              tipoCargaHorariaComplementar:
-                elem.tipoCargaHorariaComplementar.id,
-              justificativa: elem.justificativa,
-            }}
-          />
-        ))}
+        <Box>
+          <Grid container spacing={2}>
+            {residente?.cargahorariacomplementar.length === 0 && (
+              <Grid item xs={12}>
+                <Typography color="secondary" align="center" paragraph>
+                  Sem cargas horárias complemetares cadastradas
+                </Typography>
+              </Grid>
+            )}
+            {residente?.cargahorariacomplementar.map((elem) => (
+              <Grid key={elem.id} item xs={12}>
+                <CHComplementarCardInfo
+                  data={{
+                    id: elem.id,
+                    cargaHoraria: Number(elem.cargaHoraria),
+                    tipoCargaHoraria: elem.tipoCargaHoraria,
+                    tipoCargaHorariaComplementar:
+                      elem.tipoCargaHorariaComplementar.id,
+                    justificativa: elem.justificativa,
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
         <Box mt={2} mb={2}>
           <Typography>
             Total de horas de CH complementares: {totalCHComplementates} horas
