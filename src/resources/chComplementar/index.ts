@@ -35,7 +35,7 @@ const chComplementar = {
       )
         .replace(':idOferta', String(params.idOferta))
         .replace(':idChComplementar', String(params.idChComplementar)),
-      params.cargaHoraria
+      { cargaHoraria: params.cargaHoraria }
     ),
 };
 

@@ -35,6 +35,7 @@ interface CHComplementarCardInfoProps {
   mutate: any;
   idTurma: number;
   idOferta: number;
+  idResidente: number;
 }
 
 export interface CHComplementarCardInfoFormData {
@@ -47,7 +48,7 @@ export interface CHComplementarCardInfoFormData {
 const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
   props
 ) => {
-  const { data, idTurma, idOferta, mutate } = props;
+  const { data, idTurma, idOferta, idResidente, mutate } = props;
 
   const { chComplementar } = resources;
 
@@ -89,18 +90,35 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar
   const onSubmit = useCallback(
     async (formaData: CHComplementarCardInfoFormData) => {
       try {
         showLoading();
-        setTimeout(() => {
-          console.log(formaData);
-          hideLoading();
-          setAsEditing(false);
-        }, 1000);
+
+        await chComplementar.editar({
+          idTurma,
+          idOferta,
+          idChComplementar: data.id,
+          cargaHoraria: {
+            cargaHoraria: formaData.chComplementar,
+            justificativa: formaData.descricao,
+            residenteId: idResidente,
+            tipoCargaHoraria: formaData.tipoCh,
+            tipoCargaHorariaComplementar: formaData.tipoChComplementar,
+          },
+        });
+
+        await mutate();
+
+        toast.success('CH editada com sucesso');
+
+        setAsEditing(false);
       } catch (error) {
         console.error(error);
+        // TODO: melhorar isso
+        toast.error('Algo inesperado aconteceu');
+      } finally {
+        hideLoading();
       }
     },
     []

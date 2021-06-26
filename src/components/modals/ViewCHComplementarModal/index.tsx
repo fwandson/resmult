@@ -121,6 +121,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
                   mutate={mutate}
                   idTurma={idTurma}
                   idOferta={idOferta}
+                  idResidente={residente.id}
                 />
               </Grid>
             ))}
