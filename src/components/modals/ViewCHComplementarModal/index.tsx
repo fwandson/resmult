@@ -20,6 +20,8 @@ export interface ViewCHComplementarModalProps extends DialogProps {
   residente: GetResidentesNames.Residente | undefined;
   idTurma: number;
   idOferta: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
 }
 
 export interface ViewCHComplementarModalFormData {
@@ -32,7 +34,15 @@ export interface ViewCHComplementarModalFormData {
 const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   props
 ) => {
-  const { open, setOpen, residente, idTurma, idOferta, ...rest } = props;
+  const {
+    open,
+    setOpen,
+    residente,
+    idTurma,
+    idOferta,
+    mutate,
+    ...rest
+  } = props;
 
   const totalCHComplementates = reduce(
     residente?.cargahorariacomplementar,
@@ -51,6 +61,11 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
         </Box>
       </DialogTitle>
       <DialogContent>
+        <Box>
+          <Typography>
+            {JSON.stringify(residente?.cargahorariacomplementar, null, 2)}
+          </Typography>
+        </Box>
         <Box mb={2}>
           <Box display="flex" alignItems="center" mb={2}>
             {residente && (
@@ -116,6 +131,9 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
                       elem.tipoCargaHorariaComplementar.id,
                     justificativa: elem.justificativa,
                   }}
+                  mutate={mutate}
+                  idTurma={idTurma}
+                  idOferta={idOferta}
                 />
               </Grid>
             ))}

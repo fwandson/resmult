@@ -19,15 +19,13 @@ const chComplementar = {
   remover: (
     params: DeleteNames.Params
   ): Promise<AxiosResponse<DeleteNames.Return>> =>
-    api.post(
-      RESOURCE_URLS.POST_CARGA_HORARIA_COMPLEMENTAR.replace(
+    api.delete(
+      RESOURCE_URLS.DELETE_CARGA_HORARIA_COMPLEMENTAR.replace(
         ':idTurma',
         String(params.idTurma)
       )
         .replace(':idOferta', String(params.idOferta))
-        .replace(':idChComplementar', String(params.idChComplementar)),
-
-      params
+        .replace(':idChComplementar', String(params.idChComplementar))
     ),
 };
 

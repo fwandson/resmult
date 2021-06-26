@@ -4,23 +4,23 @@ import {
   Button,
   CardActions,
   CardContent,
-  CardHeader,
-  Grid,
-  InputAdornment,
-  MenuItem,
-  Typography,
+  CardHeader, Typography
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useLoading } from 'src/context/LoadingContext';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
+import resources from 'src/resources';
+import RESOURCE_URLS from 'src/resources/names';
+import { mutate as globalMutate } from 'swr';
 import DoubleConfirmButton from '../DoubleConfirmButton';
-import GenericInput from '../inputs/GenericInput';
-import { Container } from './styles';
+import CHComplementarCardInfoForm from './CHComplementarCardInfoForm';
 import schema from './schema';
+import { Container } from './styles';
 
 interface CHComplementarData {
   id: number;
@@ -32,6 +32,10 @@ interface CHComplementarData {
 
 interface CHComplementarCardInfoProps {
   data: CHComplementarData;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
+  idTurma: number;
+  idOferta: number;
 }
 
 export interface CHComplementarCardInfoFormData {
@@ -44,7 +48,9 @@ export interface CHComplementarCardInfoFormData {
 const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
   props
 ) => {
-  const { data } = props;
+  const { data, idTurma, idOferta, mutate } = props;
+
+  const { chComplementar } = resources;
 
   const { showLoading, hideLoading } = useLoading();
 
@@ -111,6 +117,35 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
     setAsEditing(false);
   };
 
+  const handleConfirmDelete = useCallback(async () => {
+    try {
+      showLoading();
+
+      const response = await chComplementar.remover({
+        idTurma,
+        idOferta,
+        idChComplementar: data.id,
+      });
+
+      console.log(response);
+
+      await globalMutate(
+        RESOURCE_URLS.GET_OFERTA_RESIDENTES.replace(
+          ':idTurma',
+          String(idTurma)
+        ).replace(':idOferta', String(idOferta))
+      );
+
+      await mutate();
+    } catch (error) {
+      console.error(error);
+      toast.error('Algo de errado aconteceu');
+    } finally {
+      hideLoading();
+      setAsEditing(false);
+    }
+  }, [data]);
+
   return (
     <Container variant="outlined">
       <CardHeader
@@ -118,68 +153,11 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
       />
       <CardContent>
         {asEditing ? (
-          <form>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6}>
-                <GenericInput
-                  variant="outlined"
-                  label="Tipo CH complementar"
-                  select
-                  fullWidth
-                  control={control}
-                  name="tipoChComplementar"
-                >
-                  {tiposCHComplementar?.map((elem) => (
-                    <MenuItem key={elem.id} value={elem.id}>
-                      {elem.descricao}
-                    </MenuItem>
-                  ))}
-                </GenericInput>
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <GenericInput
-                  variant="outlined"
-                  label="Tipo CH"
-                  select
-                  fullWidth
-                  control={control}
-                  name="tipoCh"
-                >
-                  {tiposCH?.map((elem) => (
-                    <MenuItem key={elem.id} value={elem.id}>
-                      {elem.descricao}
-                    </MenuItem>
-                  ))}
-                </GenericInput>
-              </Grid>
-              <Grid item xs={12}>
-                <GenericInput
-                  variant="outlined"
-                  label="Carga horária complementar"
-                  type="number"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">horas</InputAdornment>
-                    ),
-                  }}
-                  fullWidth
-                  control={control}
-                  name="chComplementar"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <GenericInput
-                  variant="outlined"
-                  label="Descrição"
-                  fullWidth
-                  multiline
-                  rows={3}
-                  control={control}
-                  name="descricao"
-                />
-              </Grid>
-            </Grid>
-          </form>
+          <CHComplementarCardInfoForm
+            control={control}
+            tiposCH={tiposCH}
+            tiposCHComplementar={tiposCHComplementar}
+          />
         ) : (
           <Box>
             <Typography>
@@ -210,7 +188,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
           <>
             <DoubleConfirmButton
               delay={2000}
-              handleConfirm={() => console.log('handleConfirm')}
+              handleConfirm={handleConfirmDelete}
               startIcon={<DeleteIcon />}
               color="secondary"
             >

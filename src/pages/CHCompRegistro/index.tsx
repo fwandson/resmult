@@ -137,7 +137,12 @@ const CHCompRegistro: React.FC = () => {
               {residente.enfase.descricao}
             </Typography>
           </Box>,
-          <Box key="chPendente" display="flex" flexDirection="column" alignItems="center">
+          <Box
+            key="chPendente"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
             <Typography>
               TEÓRICO-PRÁTICA:{' '}
               {
@@ -273,6 +278,7 @@ const CHCompRegistro: React.FC = () => {
         open={openViewCHComplementarModal}
         setOpen={setOpenViewCHComplementarModal}
         residente={residenteSelected}
+        mutate={residentesMutate}
       />
     </GenericContent>
   );
