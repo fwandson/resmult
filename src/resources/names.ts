@@ -5,6 +5,7 @@ enum RESOURCE_URLS {
   GET_TIPOS_CARGA_HORARIA = '/residencia-multiprofissional/carga-horaria/tipos',
   GET_TIPOS_CARGA_HORARIA_COMPLEMENTAR = '/residencia-multiprofissional/carga-horaria-complementar/tipos',
   POST_CARGA_HORARIA_COMPLEMENTAR = '/residencia-multiprofissional/supervisores/turma/:idTurma/oferta/:idOferta/cargahoraria-complementar',
+  DELETE_CARGA_HORARIA_COMPLEMENTAR = '/residencia-multiprofissional/supervisores/turma/:idTurma/oferta/:idOferta/cargahoraria-complementar/:idChComplementar',
   GET_OFERTA_RESIDENTES = '/residencia-multiprofissional/supervisores/turma/:idTurma/oferta/:idOferta/residentes',
   GET_ENFASES = '/residencia-multiprofissional/enfases',
   GET_NUCLEOS_PROFISSIONAIS = '/residencia-multiprofissional/nucleos-profissionais',

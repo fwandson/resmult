@@ -31,3 +31,15 @@ export declare namespace PostNames {
     cargaHoraria: CargaHoraria;
   }
 }
+
+export declare namespace DeleteNames {
+  export interface Return {
+    sucesso: boolean;
+  }
+
+  export interface Params {
+    idTurma: number;
+    idOferta: number;
+    idChComplementar: number;
+  }
+}

@@ -52,7 +52,6 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     open,
     setOpen,
     residente,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutate,
     ...rest
   } = props;
