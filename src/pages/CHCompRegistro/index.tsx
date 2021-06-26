@@ -23,6 +23,7 @@ import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import { find, reduce } from 'lodash';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -37,10 +38,7 @@ const CHCompRegistro: React.FC = () => {
     false
   );
 
-  const [
-    residenteSelected,
-    setResidenteSelected,
-  ] = useState<GetResidentesNames.Residente>();
+  const [residenteSelectedId, setResidenteSelectedId] = useState<number>();
 
   const [
     openViewCHComplementarModal,
@@ -62,6 +60,7 @@ const CHCompRegistro: React.FC = () => {
     searchResidentes,
     data: residentesDataReturn,
     mutate: residentesMutate,
+    findResidente,
   } = useResidentes({
     idTurma,
     idOferta,
@@ -90,7 +89,7 @@ const CHCompRegistro: React.FC = () => {
 
   const handleAddCHComplementar = useCallback(
     (residente: GetResidentesNames.Residente) => {
-      setResidenteSelected(residente);
+      setResidenteSelectedId(residente.id);
       setOpenAddCHComplementarModal(true);
     },
     []
@@ -98,7 +97,7 @@ const CHCompRegistro: React.FC = () => {
 
   const handleViewCHComplementar = useCallback(
     (residente: GetResidentesNames.Residente) => {
-      setResidenteSelected(residente);
+      setResidenteSelectedId(residente.id);
       setOpenViewCHComplementarModal(true);
     },
     []
@@ -143,30 +142,18 @@ const CHCompRegistro: React.FC = () => {
             flexDirection="column"
             alignItems="center"
           >
-            <Typography>
-              TEÓRICO-PRÁTICA:{' '}
-              {
-                find(residente.cargaHorariaPendente, { tipo: 'T' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
-            <Typography>
-              TEÓRICO-CONCEITUAL:{' '}
-              {
-                find(residente.cargaHorariaPendente, { tipo: 'C' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
-            <Typography>
-              PRÁTICA:{' '}
-              {
-                find(residente.cargaHorariaPendente, { tipo: 'P' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
+            <CHPendentesInfo
+              data={{
+                pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                  ?.cargaHorariaPendente,
+                teoricoPratica: find(residente?.cargaHorariaPendente, {
+                  tipo: 'T',
+                })?.cargaHorariaPendente,
+                teoricoConceitual: find(residente?.cargaHorariaPendente, {
+                  tipo: 'C',
+                })?.cargaHorariaPendente,
+              }}
+            />
           </Box>,
           <Box key="chComplementares" display="flex" flexDirection="column">
             <Typography>{residente.cargahorariacomplementar.length}</Typography>
@@ -269,7 +256,7 @@ const CHCompRegistro: React.FC = () => {
         idOferta={Number(idOferta)}
         open={openAddCHComplementarModal}
         setOpen={setOpenAddCHComplementarModal}
-        residente={residenteSelected}
+        residente={findResidente({ id: residenteSelectedId })}
         mutate={residentesMutate}
       />
       <ViewCHComplementarModal
@@ -277,7 +264,7 @@ const CHCompRegistro: React.FC = () => {
         idOferta={Number(idOferta)}
         open={openViewCHComplementarModal}
         setOpen={setOpenViewCHComplementarModal}
-        residente={residenteSelected}
+        residente={findResidente({ id: residenteSelectedId })}
         mutate={residentesMutate}
       />
     </GenericContent>

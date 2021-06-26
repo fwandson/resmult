@@ -4,7 +4,8 @@ import {
   Button,
   CardActions,
   CardContent,
-  CardHeader, Typography
+  CardHeader,
+  Typography,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -15,8 +16,6 @@ import { useLoading } from 'src/context/LoadingContext';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
 import resources from 'src/resources';
-import RESOURCE_URLS from 'src/resources/names';
-import { mutate as globalMutate } from 'swr';
 import DoubleConfirmButton from '../DoubleConfirmButton';
 import CHComplementarCardInfoForm from './CHComplementarCardInfoForm';
 import schema from './schema';
@@ -121,23 +120,17 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
     try {
       showLoading();
 
-      const response = await chComplementar.remover({
+      await chComplementar.remover({
         idTurma,
         idOferta,
         idChComplementar: data.id,
       });
 
-      console.log(response);
-
-      await globalMutate(
-        RESOURCE_URLS.GET_OFERTA_RESIDENTES.replace(
-          ':idTurma',
-          String(idTurma)
-        ).replace(':idOferta', String(idOferta))
-      );
-
       await mutate();
+
+      toast.success(`CH Complementar #${data.id} removida com sucesso`);
     } catch (error) {
+      // TODO: melhorar isso aqui
       console.error(error);
       toast.error('Algo de errado aconteceu');
     } finally {

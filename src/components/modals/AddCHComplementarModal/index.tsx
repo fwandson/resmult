@@ -26,6 +26,8 @@ import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import resources from 'src/resources';
 import { useLoading } from 'src/context/LoadingContext';
 import { find } from 'lodash';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import { toast } from 'react-toastify';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   idTurma: number;
@@ -91,9 +93,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           tipoCargaHorariaComplementar: formaData.tipoChComplementar,
         };
 
-        console.log(cargaHoraria);
-
-        const response = await chComplementar.adicionar(
+        await chComplementar.adicionar(
           {
             cargaHoraria,
           },
@@ -103,9 +103,11 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
 
         await mutate();
 
-        console.log(response);
+        toast.success('CH Complementar adicionada com sucesso');
       } catch (error) {
+        // TODO: melhorar isso aqui
         console.error(error);
+        toast.error('Algo inesperado aconteceu');
       } finally {
         hideLoading();
         setOpen(false);
@@ -154,27 +156,18 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
-          <Typography>
-            {
-              find(residente?.cargaHorariaPendente, { tipo: 'T' })
-                ?.cargaHorariaPendente
-            }{' '}
-            horas
-          </Typography>
-          <Typography>
-            {
-              find(residente?.cargaHorariaPendente, { tipo: 'C' })
-                ?.cargaHorariaPendente
-            }{' '}
-            horas
-          </Typography>
-          <Typography>
-            {
-              find(residente?.cargaHorariaPendente, { tipo: 'P' })
-                ?.cargaHorariaPendente
-            }{' '}
-            horas
-          </Typography>
+          <CHPendentesInfo
+            data={{
+              pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                ?.cargaHorariaPendente,
+              teoricoPratica: find(residente?.cargaHorariaPendente, {
+                tipo: 'T',
+              })?.cargaHorariaPendente,
+              teoricoConceitual: find(residente?.cargaHorariaPendente, {
+                tipo: 'C',
+              })?.cargaHorariaPendente,
+            }}
+          />
         </Box>
         <form>
           <Grid container spacing={2}>

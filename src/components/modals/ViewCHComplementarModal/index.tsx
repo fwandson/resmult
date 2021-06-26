@@ -12,6 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { find, reduce } from 'lodash';
 import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 
@@ -61,11 +62,6 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
         </Box>
       </DialogTitle>
       <DialogContent>
-        <Box>
-          <Typography>
-            {JSON.stringify(residente?.cargahorariacomplementar, null, 2)}
-          </Typography>
-        </Box>
         <Box mb={2}>
           <Box display="flex" alignItems="center" mb={2}>
             {residente && (
@@ -88,27 +84,18 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             </Box>
           </Box>
           <Box>
-            <Typography>
-              {
-                find(residente?.cargaHorariaPendente, { tipo: 'T' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
-            <Typography>
-              {
-                find(residente?.cargaHorariaPendente, { tipo: 'C' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
-            <Typography>
-              {
-                find(residente?.cargaHorariaPendente, { tipo: 'P' })
-                  ?.cargaHorariaPendente
-              }{' '}
-              horas
-            </Typography>
+            <CHPendentesInfo
+              data={{
+                pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                  ?.cargaHorariaPendente,
+                teoricoPratica: find(residente?.cargaHorariaPendente, {
+                  tipo: 'T',
+                })?.cargaHorariaPendente,
+                teoricoConceitual: find(residente?.cargaHorariaPendente, {
+                  tipo: 'C',
+                })?.cargaHorariaPendente,
+              }}
+            />
           </Box>
         </Box>
         <Box>

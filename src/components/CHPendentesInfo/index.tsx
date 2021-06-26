@@ -1,9 +1,9 @@
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 
 interface CHPendentesInfoData {
-  teoricoPratica: string | number;
-  teoricoConceitual: string | number;
-  pratica: string | number;
+  teoricoPratica: string | number | undefined;
+  teoricoConceitual: string | number | undefined;
+  pratica: string | number | undefined;
 }
 
 interface CHPendentesInfoProps {
@@ -16,11 +16,11 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
   } = props;
 
   return (
-    <>
-      <Typography>TEÓRICO-PRÁTICA: {teoricoPratica} horas</Typography>
-      <Typography>TEÓRICO-CONCEITUAL: {teoricoConceitual} horas</Typography>
-      <Typography>PRÁTICA: {pratica} horas</Typography>
-    </>
+    <Box display="flex" flexDirection="column" alignItems="flex-start">
+      <Typography>Teórico-prática: {teoricoPratica} horas</Typography>
+      <Typography>Teórico-conceitual: {teoricoConceitual} horas</Typography>
+      <Typography>Prática: {pratica} horas</Typography>
+    </Box>
   );
 };
 
