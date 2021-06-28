@@ -1,12 +1,12 @@
 import { Box, Typography } from '@material-ui/core';
 
-interface CHPendentesInfoData {
+export interface CHPendentesInfoData {
   teoricoPratica: string | number | undefined;
   teoricoConceitual: string | number | undefined;
   pratica: string | number | undefined;
 }
 
-interface CHPendentesInfoProps {
+export interface CHPendentesInfoProps {
   data: CHPendentesInfoData;
 }
 

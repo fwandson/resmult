@@ -1,0 +1,42 @@
+import { TextFieldProps } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core/';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import CONSTANTS from 'src/config';
+
+<Meta title="DOCS/CHPendentesInfo" component={CHPendentesInfo} />
+
+# CHPendentesInfo
+
+O `CHPendentesInfo` é component para representar as Cargas Horárias faltantes de um residente.
+
+export const Template = (args) => {
+  return <CHPendentesInfo {...args} />;
+};
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      data: {
+        pratica: 10,
+        teoricoConceitual: 10,
+        teoricoPratica: 10,
+      },
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+Modo de usar:
+
+```tsx
+<CHPendentesInfo
+  data={{
+    pratica: 10,
+    teoricoPratica: 10,
+    teoricoConceitual: 10,
+  }}
+/>
+```
