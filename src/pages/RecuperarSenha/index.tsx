@@ -10,21 +10,26 @@ import {
   Typography,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { Link as LinkRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import InputCPF from 'src/components/inputs/InputCPF';
 import Logo from 'src/components/Logo';
 import NAMES from 'src/routes/names';
 import { Container, ContainerWrapper } from '../Login/styles';
 import schema from './schema';
 
+import ReCAPTCHA from 'react-google-recaptcha';
+
 interface RecuperarSenhaData {
   cpf: string;
 }
 
 const RecuperarSenha: React.FC = () => {
+  const recaptchaRef = useRef<ReCAPTCHA>({} as ReCAPTCHA);
+
   const { control, handleSubmit } = useForm<RecuperarSenhaData>({
     defaultValues: {
       cpf: '',
@@ -32,14 +37,49 @@ const RecuperarSenha: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
+  // TODO: implementar
   const onSubmit = useCallback(async (formaData: RecuperarSenhaData) => {
-    console.log(formaData);
+    try {
+      console.log(formaData);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const token = await recaptchaRef.current.executeAsync();
+
+      // const isHuman = handleValidateHuman(token);
+
+      recaptchaRef.current.reset();
+
+      toast.success(
+        'As instruções de recuperação de senha foram enviadas para o e-mail: ...'
+      );
+    } catch (error) {
+      toast.error(error.response.data.mensagem || error.message);
+    }
   }, []);
+
+  // Precisa fazer isso no back end
+  // const handleValidateHuman = async (token: string | null) => {
+  //   const secret = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
+
+  //   // passar isso para o Axios
+  //   const response = await fetch(
+  //     `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,
+  //     {
+  //       method: 'POST',
+  //     }
+  //   );
+
+  //   const data = await response.json();
+
+  //   console.log(data);
+
+  //   return data.success;
+  // };
 
   return (
     <>
       <Helmet>
-        <title>Login | Sagu</title>
+        <title>Recuperar Senha | Sagu</title>
       </Helmet>
       <ContainerWrapper>
         <Container maxWidth="sm">
@@ -80,6 +120,15 @@ const RecuperarSenha: React.FC = () => {
                         </InputAdornment>
                       ),
                     }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={
+                      process.env.REACT_APP_PUBLIC_RECAPTCHA_SITE_KEY as string
+                    }
+                    size="invisible"
                   />
                 </Grid>
                 <Grid item xs={12}>
