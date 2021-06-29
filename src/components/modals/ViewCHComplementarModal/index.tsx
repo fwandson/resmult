@@ -84,7 +84,11 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             </Box>
           </Box>
           <Box>
+            <Typography variant="body1" gutterBottom>
+              Pendências
+            </Typography>
             <CHPendentesInfo
+              inline
               data={{
                 pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
                   ?.cargaHorariaPendente,
@@ -107,7 +111,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
                 </Typography>
               </Grid>
             )}
-            {residente?.cargahorariacomplementar.map((elem) => (
+            {residente?.cargahorariacomplementar.reverse().map((elem) => (
               <Grid key={elem.id} item xs={12}>
                 <CHComplementarCardInfo
                   data={{

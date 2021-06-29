@@ -11,6 +11,7 @@ import {
   MenuItem,
   Box,
   InputAdornment,
+  Divider,
 } from '@material-ui/core';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
@@ -72,7 +73,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     reset,
   } = useForm<AddCHComplementarModalFormData>({
     defaultValues: {
-      chComplementar: 0,
+      chComplementar: 1,
       tipoCh: 0,
       tipoChComplementar: 0,
       descricao: '',
@@ -105,9 +106,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
 
         toast.success('CH Complementar adicionada com sucesso');
       } catch (error) {
-        // TODO: melhorar isso aqui
-        console.error(error);
-        toast.error('Algo inesperado aconteceu');
+        toast.error(error.response.data.mensagem);
       } finally {
         hideLoading();
         setOpen(false);
@@ -156,7 +155,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
+          <Typography variant="body1" gutterBottom>Pendências</Typography>
           <CHPendentesInfo
+            inline
             data={{
               pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
                 ?.cargaHorariaPendente,
@@ -168,6 +169,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
               })?.cargaHorariaPendente,
             }}
           />
+        </Box>
+        <Box mb={2}>
+          <Divider />
         </Box>
         <form>
           <Grid container spacing={2}>

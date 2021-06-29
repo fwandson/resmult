@@ -95,7 +95,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
       try {
         showLoading();
 
-        await chComplementar.editar({
+        const response = await chComplementar.editar({
           idTurma,
           idOferta,
           idChComplementar: data.id,
@@ -110,13 +110,13 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
 
         await mutate();
 
-        toast.success('CH editada com sucesso');
+        toast.success(
+          `CH #${response.data.cargaHorariaComplementar.id} editada com sucesso`
+        );
 
         setAsEditing(false);
       } catch (error) {
-        console.error(error);
-        // TODO: melhorar isso
-        toast.error('Algo inesperado aconteceu');
+        toast.error(error.response.data.mensagem);
       } finally {
         hideLoading();
       }
@@ -148,9 +148,7 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
 
       toast.success(`CH Complementar #${data.id} removida com sucesso`);
     } catch (error) {
-      // TODO: melhorar isso aqui
-      console.error(error);
-      toast.error('Algo de errado aconteceu');
+      toast.error(error.response.data.mensagem);
     } finally {
       hideLoading();
       setAsEditing(false);
