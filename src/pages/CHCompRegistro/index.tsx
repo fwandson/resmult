@@ -129,12 +129,15 @@ const CHCompRegistro: React.FC = () => {
             justifyContent="space-between"
           >
             <Typography>{residente.person.name}</Typography>
-            <Typography variant="caption" color="textSecondary">
-              #{residente.id}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {residente.enfase.descricao}
-            </Typography>
+            <Box display="flex" alignItems="center">
+              <Typography variant="body1" color="textSecondary">
+                #{residente.id}
+              </Typography>
+              <Box m="4px" />
+              <Typography variant="body2" color="textSecondary">
+                {residente.enfase.descricao}
+              </Typography>
+            </Box>
           </Box>,
           <Box
             key="chPendente"
@@ -156,14 +159,16 @@ const CHCompRegistro: React.FC = () => {
             />
           </Box>,
           <Box key="chComplementares" display="flex" flexDirection="column">
-            <Typography>{residente.cargahorariacomplementar.length}</Typography>
-            <Typography variant="caption" color="textSecondary">
+            <Typography variant="body1">
+              {residente.cargahorariacomplementar.length}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
               {reduce(
                 residente?.cargahorariacomplementar,
                 (sum, elem) => sum + Number(elem.cargaHoraria),
                 0
               )}{' '}
-              horas
+              h
             </Typography>
           </Box>,
           <Box key="actions" display="flex" justifyContent="flex-end">
