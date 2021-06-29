@@ -1,5 +1,5 @@
-import { Box, Typography } from '@material-ui/core';
-
+import { Box } from '@material-ui/core';
+import LabelAndInfo from '../LabelAndInfo';
 export interface CHPendentesInfoData {
   teoricoPratica: string | number | undefined;
   teoricoConceitual: string | number | undefined;
@@ -17,9 +17,12 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="flex-start">
-      <Typography>Teórico-prática: {teoricoPratica} h</Typography>
-      <Typography>Teórico-conceitual: {teoricoConceitual} h</Typography>
-      <Typography>Prática: {pratica} h</Typography>
+      <LabelAndInfo label="Teórico-prática" info={`${teoricoPratica} h`} />
+      <LabelAndInfo
+        label="Teórico-conceitual"
+        info={`${teoricoConceitual} h`}
+      />
+      <LabelAndInfo label="Prática" info={`${pratica} h`} />
     </Box>
   );
 };

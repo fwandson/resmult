@@ -11,6 +11,7 @@ import {
   MenuItem,
   Box,
   InputAdornment,
+  Divider,
 } from '@material-ui/core';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
@@ -166,6 +167,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
               })?.cargaHorariaPendente,
             }}
           />
+        </Box>
+        <Box mb={2}>
+          <Divider />
         </Box>
         <form>
           <Grid container spacing={2}>

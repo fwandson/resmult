@@ -42,6 +42,18 @@ const typografy: TypographyOptions = {
     fontSize: 20,
     letterSpacing: '-0.05px',
   },
+  body1: {
+    fontWeight: 700,
+    fontSize: 14,
+    lineHeight: '20px',
+    letterSpacing: '-0.05px',
+  },
+  body2: {
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '20px',
+    letterSpacing: '-0.05px',
+  },
   button: {
     fontWeight: 500,
     fontSize: 14,
