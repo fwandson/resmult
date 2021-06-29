@@ -17,9 +17,9 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="flex-start">
-      <Typography>Teórico-prática: {teoricoPratica} horas</Typography>
-      <Typography>Teórico-conceitual: {teoricoConceitual} horas</Typography>
-      <Typography>Prática: {pratica} horas</Typography>
+      <Typography>Teórico-prática: {teoricoPratica} h</Typography>
+      <Typography>Teórico-conceitual: {teoricoConceitual} h</Typography>
+      <Typography>Prática: {pratica} h</Typography>
     </Box>
   );
 };

@@ -72,7 +72,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     reset,
   } = useForm<AddCHComplementarModalFormData>({
     defaultValues: {
-      chComplementar: 0,
+      chComplementar: 1,
       tipoCh: 0,
       tipoChComplementar: 0,
       descricao: '',
@@ -105,9 +105,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
 
         toast.success('CH Complementar adicionada com sucesso');
       } catch (error) {
-        // TODO: melhorar isso aqui
-        console.error(error);
-        toast.error('Algo inesperado aconteceu');
+        toast.error(error.response.data.mensagem);
       } finally {
         hideLoading();
         setOpen(false);

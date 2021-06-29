@@ -107,7 +107,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
                 </Typography>
               </Grid>
             )}
-            {residente?.cargahorariacomplementar.map((elem) => (
+            {residente?.cargahorariacomplementar.reverse().map((elem) => (
               <Grid key={elem.id} item xs={12}>
                 <CHComplementarCardInfo
                   data={{

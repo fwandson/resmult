@@ -206,9 +206,7 @@ const FaltasRegistro: React.FC = () => {
 
       toast.success('Faltas salvas com sucesso');
     } catch (error) {
-      // TODO: melhorar isso aqui
-      console.error(error);
-      toast.error('Algo inesperado aconteceu');
+      toast.error(error.response.data.mensagem);
     } finally {
       hideLoading();
     }
