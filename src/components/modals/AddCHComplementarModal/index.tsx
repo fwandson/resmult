@@ -155,7 +155,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
+          <Typography variant="body1" gutterBottom>Pendências</Typography>
           <CHPendentesInfo
+            inline
             data={{
               pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
                 ?.cargaHorariaPendente,

@@ -143,7 +143,7 @@ const CHCompRegistro: React.FC = () => {
             key="chPendente"
             display="flex"
             flexDirection="column"
-            alignItems="center"
+            alignItems="flex-start"
           >
             <CHPendentesInfo
               data={{
@@ -231,7 +231,7 @@ const CHCompRegistro: React.FC = () => {
           },
           {
             value: <Typography variant="body1">CH Pendente</Typography>,
-            align: 'center',
+            align: 'left',
           },
           {
             value: <Typography variant="body1">CH Complementares</Typography>,

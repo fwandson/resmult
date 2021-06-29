@@ -84,7 +84,11 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
             </Box>
           </Box>
           <Box>
+            <Typography variant="body1" gutterBottom>
+              Pendências
+            </Typography>
             <CHPendentesInfo
+              inline
               data={{
                 pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
                   ?.cargaHorariaPendente,
