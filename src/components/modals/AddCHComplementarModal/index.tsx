@@ -23,13 +23,19 @@ import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComp
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from './schema';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import resources from 'src/resources';
+import { useLoading } from 'src/context/LoadingContext';
+import { find } from 'lodash';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import { toast } from 'react-toastify';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   idTurma: number;
   idOferta: number;
   setOpen: Dispatch<SetStateAction<boolean>>;
   residente: GetResidentesNames.Residente | undefined;
-  mutate(): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
 }
 
 export interface AddCHComplementarModalFormData {
@@ -48,10 +54,13 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     open,
     setOpen,
     residente,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mutate,
     ...rest
   } = props;
+
+  const { showLoading, hideLoading } = useLoading();
+
+  const { chComplementar } = resources;
 
   const { data: tiposCH } = useTiposCargaHoraria();
 
@@ -71,12 +80,42 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar
-  const onSubmit = useCallback((formaData: AddCHComplementarModalFormData) => {
-    console.log(formaData);
-    setOpen(false);
-    reset();
-  }, []);
+  const onSubmit = useCallback(
+    async (formaData: AddCHComplementarModalFormData) => {
+      try {
+        showLoading();
+
+        const cargaHoraria = {
+          residenteId: residente?.id || 0,
+          cargaHoraria: formaData.chComplementar,
+          justificativa: formaData.descricao,
+          tipoCargaHoraria: String(formaData.tipoCh),
+          tipoCargaHorariaComplementar: formaData.tipoChComplementar,
+        };
+
+        await chComplementar.adicionar(
+          {
+            cargaHoraria,
+          },
+          idTurma,
+          idOferta
+        );
+
+        await mutate();
+
+        toast.success('CH Complementar adicionada com sucesso');
+      } catch (error) {
+        // TODO: melhorar isso aqui
+        console.error(error);
+        toast.error('Algo inesperado aconteceu');
+      } finally {
+        hideLoading();
+        setOpen(false);
+        reset();
+      }
+    },
+    [residente]
+  );
 
   const handleCancel = useCallback(() => {
     setOpen(false);
@@ -117,9 +156,18 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
-          <Typography gutterBottom>
-            Carga horária pendente: {residente?.cargahorariapendente} horas
-          </Typography>
+          <CHPendentesInfo
+            data={{
+              pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                ?.cargaHorariaPendente,
+              teoricoPratica: find(residente?.cargaHorariaPendente, {
+                tipo: 'T',
+              })?.cargaHorariaPendente,
+              teoricoConceitual: find(residente?.cargaHorariaPendente, {
+                tipo: 'C',
+              })?.cargaHorariaPendente,
+            }}
+          />
         </Box>
         <form>
           <Grid container spacing={2}>

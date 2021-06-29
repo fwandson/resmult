@@ -141,6 +141,11 @@ export declare namespace GetResidentesNames {
     tipoCargaHoraria: string;
   }
 
+  export interface CargaHorariaPendente {
+    tipo: string;
+    cargaHorariaPendente: number;
+  }
+
   export interface Residente {
     id: number;
     inicio: string;
@@ -153,7 +158,7 @@ export declare namespace GetResidentesNames {
     instituicaoExecutoraPerson: InstituicaoExecutoraPerson;
     faltas: Falta[];
     nota?: Nota;
-    cargahorariapendente: number;
+    cargaHorariaPendente: CargaHorariaPendente[];
     cargahorariacomplementar: Cargahorariacomplementar[];
   }
 

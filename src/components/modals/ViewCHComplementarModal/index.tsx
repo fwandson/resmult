@@ -9,9 +9,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { reduce } from 'lodash';
+import { find, reduce } from 'lodash';
 import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 
@@ -20,6 +21,8 @@ export interface ViewCHComplementarModalProps extends DialogProps {
   residente: GetResidentesNames.Residente | undefined;
   idTurma: number;
   idOferta: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: any;
 }
 
 export interface ViewCHComplementarModalFormData {
@@ -32,7 +35,15 @@ export interface ViewCHComplementarModalFormData {
 const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   props
 ) => {
-  const { open, setOpen, residente, idTurma, idOferta, ...rest } = props;
+  const {
+    open,
+    setOpen,
+    residente,
+    idTurma,
+    idOferta,
+    mutate,
+    ...rest
+  } = props;
 
   const totalCHComplementates = reduce(
     residente?.cargahorariacomplementar,
@@ -72,9 +83,20 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
               </Typography>
             </Box>
           </Box>
-          <Typography gutterBottom>
-            Carga horária pendente: {residente?.cargahorariapendente} horas
-          </Typography>
+          <Box>
+            <CHPendentesInfo
+              data={{
+                pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
+                  ?.cargaHorariaPendente,
+                teoricoPratica: find(residente?.cargaHorariaPendente, {
+                  tipo: 'T',
+                })?.cargaHorariaPendente,
+                teoricoConceitual: find(residente?.cargaHorariaPendente, {
+                  tipo: 'C',
+                })?.cargaHorariaPendente,
+              }}
+            />
+          </Box>
         </Box>
         <Box>
           <Grid container spacing={2}>
@@ -96,6 +118,10 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
                       elem.tipoCargaHorariaComplementar.id,
                     justificativa: elem.justificativa,
                   }}
+                  mutate={mutate}
+                  idTurma={idTurma}
+                  idOferta={idOferta}
+                  idResidente={residente.id}
                 />
               </Grid>
             ))}
