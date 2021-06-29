@@ -15,6 +15,7 @@ import FaltasRegistro from 'src/pages/FaltasRegistro';
 import NotasRegistro from 'src/pages/NotasRegistro';
 import CHCompRegistro from 'src/pages/CHCompRegistro';
 import ResidenteDetails from 'src/pages/ResidenteDetails';
+import RecuperarSenha from 'src/pages/RecuperarSenha';
 
 const Routes = () => {
   return (
@@ -88,6 +89,12 @@ const Routes = () => {
         path={NAMES.TYPOGRAPHY}
         component={TypographyPage}
         isPrivate
+      />
+      <RouterWithLayout
+        layout={LoginLaytout}
+        path={NAMES.RECUPERAR_SENHA}
+        component={RecuperarSenha}
+        exact
       />
       <RouterWithLayout
         layout={MainLayout}
