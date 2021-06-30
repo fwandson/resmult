@@ -53,7 +53,7 @@ const RecuperarSenha: React.FC = () => {
 
       const cpf = formaData.cpf.replace(/[^0-9]/g, '');
 
-      await recuperarSenha.enviarEmail({
+      const { data } = await recuperarSenha.enviarEmail({
         cpf,
       });
 
@@ -63,9 +63,13 @@ const RecuperarSenha: React.FC = () => {
 
       // recaptchaRef.current.reset();
 
-      toast.success(
-        'As instruções de recuperação de senha foram enviadas para o e-mail cadastrado no sistema'
-      );
+      if (data.sucesso) {
+        toast.success(
+          'As instruções de recuperação de senha foram enviadas para o e-mail cadastrado no sistema'
+        );
+      } else {
+        toast.error(`Mensagem: ${data.messagem}`);
+      }
     } catch (error) {
       toast.error(error.response.data.mensagem);
     } finally {

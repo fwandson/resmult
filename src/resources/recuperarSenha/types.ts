@@ -1,7 +1,7 @@
 export declare namespace PostNames {
   export interface Return {
     sucesso: boolean;
-    messagem?: string;
+    messagem: string;
   }
 
   export interface Params {
