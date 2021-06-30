@@ -1,16 +1,19 @@
-import { TextFieldProps } from '@material-ui/core';
+import { InputBaseComponentProps, TextFieldProps } from '@material-ui/core';
+import { ElementType } from 'react';
 import GenericInput, {
   GenericInputProps,
 } from 'src/components/inputs/GenericInput';
 import TextMaskCPF from 'src/components/masks/TextMaskCPF';
 
 const InputCPF: React.FC<GenericInputProps & TextFieldProps> = (props) => {
+  const { InputProps, ...rest } = props;
+
   return (
     <GenericInput
-      {...props}
+      {...rest}
       InputProps={{
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        inputComponent: TextMaskCPF as any,
+        ...InputProps,
+        inputComponent: TextMaskCPF as ElementType<InputBaseComponentProps>,
       }}
     />
   );
