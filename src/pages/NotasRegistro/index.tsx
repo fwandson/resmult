@@ -178,6 +178,7 @@ const NotasRegistro: React.FC = () => {
               variant="outlined"
               control={control}
               name={`residentes.${index}.notas.teorica`}
+              inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
           <Box
@@ -191,6 +192,7 @@ const NotasRegistro: React.FC = () => {
               variant="outlined"
               control={control}
               name={`residentes.${index}.notas.final`}
+              inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
         ]),
