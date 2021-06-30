@@ -6,6 +6,7 @@ import nucleosProfissionais from './nucleosProfissionais';
 import faltas from './faltas';
 import notas from './notas';
 import chComplementar from './chComplementar';
+import recuperarSenha from './recuperarSenha';
 
 const resources = {
   autentication,
@@ -16,6 +17,7 @@ const resources = {
   faltas,
   notas,
   chComplementar,
+  recuperarSenha,
 };
 
 export default resources;

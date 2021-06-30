@@ -10,25 +10,33 @@ import {
   Typography,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
-import { useCallback, useRef } from 'react';
+import {
+  useCallback,
+  // useRef
+} from 'react';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import InputCPF from 'src/components/inputs/InputCPF';
 import Logo from 'src/components/Logo';
+import { useLoading } from 'src/context/LoadingContext';
+import resources from 'src/resources';
 import NAMES from 'src/routes/names';
 import { Container, ContainerWrapper } from '../Login/styles';
 import schema from './schema';
-
-import ReCAPTCHA from 'react-google-recaptcha';
 
 interface RecuperarSenhaData {
   cpf: string;
 }
 
 const RecuperarSenha: React.FC = () => {
-  const recaptchaRef = useRef<ReCAPTCHA>({} as ReCAPTCHA);
+  // const recaptchaRef = useRef<ReCAPTCHA>({} as ReCAPTCHA);
+
+  const { showLoading, hideLoading } = useLoading();
+
+  const { recuperarSenha } = resources;
 
   const { control, handleSubmit } = useForm<RecuperarSenhaData>({
     defaultValues: {
@@ -37,23 +45,31 @@ const RecuperarSenha: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  // TODO: implementar
   const onSubmit = useCallback(async (formaData: RecuperarSenhaData) => {
     try {
+      showLoading();
+
       console.log(formaData);
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const token = await recaptchaRef.current.executeAsync();
+      const cpf = formaData.cpf.replace(/[^0-9]/g, '');
+
+      await recuperarSenha.enviarEmail({
+        cpf,
+      });
+
+      // const token = await recaptchaRef.current.executeAsync();
 
       // const isHuman = handleValidateHuman(token);
 
-      recaptchaRef.current.reset();
+      // recaptchaRef.current.reset();
 
       toast.success(
-        'As instruções de recuperação de senha foram enviadas para o e-mail: ...'
+        'As instruções de recuperação de senha foram enviadas para o e-mail cadastrado no sistema'
       );
     } catch (error) {
-      toast.error(error.response.data.mensagem || error.message);
+      toast.error(error.response.data.mensagem);
+    } finally {
+      hideLoading();
     }
   }, []);
 
@@ -123,15 +139,6 @@ const RecuperarSenha: React.FC = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={
-                      process.env.REACT_APP_PUBLIC_RECAPTCHA_SITE_KEY as string
-                    }
-                    size="invisible"
-                  />
-                </Grid>
-                <Grid item xs={12}>
                   <Button
                     type="submit"
                     variant="contained"
@@ -149,6 +156,11 @@ const RecuperarSenha: React.FC = () => {
             Página de login
           </Link>
         </Container>
+        {/* <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={process.env.REACT_APP_PUBLIC_RECAPTCHA_SITE_KEY as string}
+          size="invisible"
+        /> */}
       </ContainerWrapper>
     </>
   );
