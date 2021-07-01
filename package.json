@@ -15,7 +15,6 @@
     "axios": "^0.21.1",
     "babel-loader": "8.1.0",
     "date-fns": "^2.21.3",
-    "fontsource-roboto": "^4.0.0",
     "history": "^5.0.0",
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
