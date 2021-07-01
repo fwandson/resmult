@@ -23,7 +23,11 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
       flexDirection={inline ? 'rown' : 'column'}
       alignItems="flex-start"
     >
-      <LabelAndInfo label="Teórico-prática" info={`${teoricoPratica} h`} />
+      <LabelAndInfo
+        label="Teórico-prática"
+        info={`${teoricoPratica} h`}
+        color={Number(teoricoPratica) <= 0 ? 'textSecondary' : 'secondary'}
+      />
       {inline && (
         <Box ml={1} mr={1}>
           <Typography variant="body1" color="textSecondary">
@@ -34,6 +38,7 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
       <LabelAndInfo
         label="Teórico-conceitual"
         info={`${teoricoConceitual} h`}
+        color={Number(teoricoConceitual) <= 0 ? 'textSecondary' : 'secondary'}
       />
       {inline && (
         <Box ml={1} mr={1}>
@@ -42,7 +47,11 @@ const CHPendentesInfo: React.FC<CHPendentesInfoProps> = (props) => {
           </Typography>
         </Box>
       )}
-      <LabelAndInfo label="Prática" info={`${pratica} h`} />
+      <LabelAndInfo
+        label="Prática"
+        info={`${pratica} h`}
+        color={Number(pratica) <= 0 ? 'textSecondary' : 'secondary'}
+      />
     </Box>
   );
 };
