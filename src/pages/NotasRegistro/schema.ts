@@ -5,7 +5,7 @@ const schema = yup.object().shape({
   residentes: yup.array().of(
     yup.object().shape({
       notas: yup.object().shape({
-        teorica: yup
+        atividadeDeProduto: yup
           .string()
           .test({
             name: 'inNumberOrNull',
@@ -24,7 +24,7 @@ const schema = yup.object().shape({
           })
           .nullable(true)
           .transform((_, val) => (val === val ? val : null)), // necessário
-        final: yup
+        avaliacaoDeDesempenho: yup
           .string()
           .test({
             name: 'inNumberOrNull',

@@ -36,8 +36,8 @@ interface NotasRegistroParams {
 interface Residente {
   id: number;
   notas: {
-    teorica: string | undefined;
-    final: string | undefined;
+    atividadeDeProduto: string | undefined;
+    avaliacaoDeDesempenho: string | undefined;
   };
 }
 
@@ -50,7 +50,6 @@ const NotasRegistro: React.FC = () => {
 
   const { showLoading, hideLoading } = useLoading();
 
-  // TODO: seria mais interessante fazer um hook chamado useResources para isso
   const { notas } = resources;
 
   const [searchValue, setSearchValue] = useState('');
@@ -92,8 +91,9 @@ const NotasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         notas: {
-          teorica: residente.nota?.notaDeAtividadeDeProduto || '',
-          final: residente.nota?.notaDeAvaliacaoDeDesempenho || '',
+          atividadeDeProduto: residente.nota?.notaDeAtividadeDeProduto || '',
+          avaliacaoDeDesempenho:
+            residente.nota?.notaDeAvaliacaoDeDesempenho || '',
         },
       })),
     }),
@@ -117,8 +117,9 @@ const NotasRegistro: React.FC = () => {
       const data = {
         notas: formData.residentes.map((elem) => ({
           residenteid: elem.id,
-          notadeatividadedeproduto: elem.notas.teorica || null,
-          notadeavaliacaodedesempenho: elem.notas.final || null,
+          notadeatividadedeproduto: elem.notas.atividadeDeProduto || null,
+          // Nota avaliação discente <=> nota de avaliação de desempenho
+          notadeavaliacaodedesempenho: elem.notas.avaliacaoDeDesempenho || null,
         })),
       };
 
@@ -176,7 +177,7 @@ const NotasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               control={control}
-              name={`residentes.${index}.notas.teorica`}
+              name={`residentes.${index}.notas.atividadeDeProduto`}
               inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
@@ -190,7 +191,7 @@ const NotasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               control={control}
-              name={`residentes.${index}.notas.final`}
+              name={`residentes.${index}.notas.avaliacaoDeDesempenho`}
               inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
