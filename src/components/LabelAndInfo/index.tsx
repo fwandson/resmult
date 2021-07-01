@@ -1,8 +1,16 @@
-import { Box, Typography, TypographyProps } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 
-export interface LabelAndInfoProps extends TypographyProps {
+export interface LabelAndInfoProps {
   label: string;
   info: string;
+  color?:
+    | 'initial'
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'textPrimary'
+    | 'textSecondary'
+    | 'error';
 }
 
 const LabelAndInfo: React.FC<LabelAndInfoProps> = (props) => {
@@ -12,7 +20,6 @@ const LabelAndInfo: React.FC<LabelAndInfoProps> = (props) => {
       <Box mr={1}>
         <Typography variant="body1" color={color}>{`${label}:`}</Typography>
       </Box>
-
       <Typography variant="body2" color={color}>
         {info}
       </Typography>
