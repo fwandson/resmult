@@ -10,11 +10,8 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-// import BorderColorIcon from '@material-ui/icons/BorderColor';
-// import ClassIcon from '@material-ui/icons/Class';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import GroupIcon from '@material-ui/icons/Group';
-import SettingsIcon from '@material-ui/icons/Settings';
 import { useCallback, useEffect } from 'react';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/context/AuthContext';
@@ -28,21 +25,6 @@ const items = [
     icon: GroupIcon,
     title: 'Minhas Turmas',
   },
-  // {
-  //   href: NAMES.OFERTAS,
-  //   icon: ClassIcon,
-  //   title: 'Ofertas',
-  // },
-  {
-    href: NAMES.SETTINGS,
-    icon: SettingsIcon,
-    title: 'Configurações',
-  },
-  // {
-  //   href: NAMES.TYPOGRAPHY,
-  //   icon: BorderColorIcon,
-  //   title: 'Typography',
-  // },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -96,10 +78,6 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         <Typography color="textPrimary" variant="h6">
           {userInfo.nome}
         </Typography>
-        {/* TODO: recolocar quando tiver essa informação vindo do backend  */}
-        {/* <Typography color="textSecondary" variant="body2">
-          Perfil: {userInfo.perfil}
-        </Typography> */}
       </Box>
       <Divider />
       <Box p={2}>

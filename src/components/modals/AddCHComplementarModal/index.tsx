@@ -41,8 +41,8 @@ export interface AddCHComplementarModalProps extends DialogProps {
 
 export interface AddCHComplementarModalFormData {
   chComplementar: number;
-  tipoCh: number;
-  tipoChComplementar: number;
+  tipoCh: string;
+  tipoChComplementar: string;
   descricao: string;
 }
 
@@ -74,8 +74,8 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   } = useForm<AddCHComplementarModalFormData>({
     defaultValues: {
       chComplementar: 1,
-      tipoCh: 0,
-      tipoChComplementar: 0,
+      tipoCh: '',
+      tipoChComplementar: '',
       descricao: '',
     },
     resolver: yupResolver(schema),
@@ -90,11 +90,11 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           residenteId: residente?.id || 0,
           cargaHoraria: formaData.chComplementar,
           justificativa: formaData.descricao,
-          tipoCargaHoraria: String(formaData.tipoCh),
-          tipoCargaHorariaComplementar: formaData.tipoChComplementar,
+          tipoCargaHoraria: formaData.tipoCh,
+          tipoCargaHorariaComplementar: Number(formaData.tipoChComplementar),
         };
 
-        await chComplementar.adicionar(
+        const response = await chComplementar.adicionar(
           {
             cargaHoraria,
           },
@@ -104,7 +104,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
 
         await mutate();
 
-        toast.success('CH Complementar adicionada com sucesso');
+        toast.success(
+          `CH Complementar #${response.data.cargaHorariaComplementar.id} adicionada com sucesso`
+        );
       } catch (error) {
         toast.error(error.response.data.mensagem);
       } finally {
@@ -155,7 +157,9 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Box>
         </Box>
         <Box mb={2}>
-          <Typography variant="body1" gutterBottom>Pendências</Typography>
+          <Typography variant="body1" gutterBottom>
+            Pendências
+          </Typography>
           <CHPendentesInfo
             inline
             data={{
@@ -184,11 +188,8 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 control={control}
                 name="tipoChComplementar"
               >
-                <MenuItem value={0} disabled>
-                  Escolha
-                </MenuItem>
                 {tiposCHComplementar?.map((elem) => (
-                  <MenuItem key={elem.id} value={elem.id}>
+                  <MenuItem key={elem.id} value={String(elem.id)}>
                     {elem.descricao}
                   </MenuItem>
                 ))}
@@ -203,9 +204,6 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 control={control}
                 name="tipoCh"
               >
-                <MenuItem value={0} disabled>
-                  Escolha
-                </MenuItem>
                 {tiposCH?.map((elem) => (
                   <MenuItem key={elem.id} value={elem.id}>
                     {elem.descricao}

@@ -24,6 +24,7 @@ import FiltrosResidentesModal, {
 } from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import ResidenteInfo from 'src/components/ResidenteInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
@@ -232,7 +233,13 @@ const FaltasRegistro: React.FC = () => {
           return true;
         })
         .map((residente, index) => [
-          <Box key={uniqueId()}>
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
             <ResidenteAvatar
               idTurma={Number(idTurma)}
               idOferta={Number(idOferta)}
@@ -248,13 +255,14 @@ const FaltasRegistro: React.FC = () => {
             alignItems="flex-start"
             justifyContent="space-between"
           >
-            <Typography>{residente.person.name}</Typography>
-            <Typography variant="caption" color="textSecondary">
-              #{residente.id}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {residente.enfase.descricao}
-            </Typography>
+            <ResidenteInfo
+              data={{
+                id: residente.id,
+                name: residente.person.name,
+                enfase: residente.enfase.descricao,
+              }}
+            />
+            {/* TODO: colocar aqui o button para gerar o relatório do residente */}
           </Box>,
           <Box
             key={uniqueId()}
@@ -400,7 +408,7 @@ const FaltasRegistro: React.FC = () => {
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
-              align: 'left',
+              align: 'center',
             },
             {
               value: (

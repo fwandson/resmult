@@ -6,15 +6,13 @@ import RouterWithLayout from './RouterWithLayout';
 import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
 import Turmas from 'src/pages/Turmas';
-import Settings from 'src/pages/Settings';
-import Ofertas from 'src/pages/Ofertas';
 import TurmaDetails from 'src/pages/TurmaDetails';
-import TypographyPage from 'src/pages/Typography';
 import LoginLaytout from 'src/layouts/LoginLaytout';
 import FaltasRegistro from 'src/pages/FaltasRegistro';
 import NotasRegistro from 'src/pages/NotasRegistro';
 import CHCompRegistro from 'src/pages/CHCompRegistro';
 import ResidenteDetails from 'src/pages/ResidenteDetails';
+import RecuperarSenha from 'src/pages/RecuperarSenha';
 
 const Routes = () => {
   return (
@@ -39,13 +37,6 @@ const Routes = () => {
         layout={DashboardLayout}
         path={NAMES.TURMA_DETAILS}
         component={TurmaDetails}
-        isPrivate
-        exact
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.OFERTAS}
-        component={Ofertas}
         isPrivate
         exact
       />
@@ -78,16 +69,10 @@ const Routes = () => {
         exact
       />
       <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.SETTINGS}
-        component={Settings}
-        isPrivate
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.TYPOGRAPHY}
-        component={TypographyPage}
-        isPrivate
+        layout={LoginLaytout}
+        path={NAMES.RECUPERAR_SENHA}
+        component={RecuperarSenha}
+        exact
       />
       <RouterWithLayout
         layout={MainLayout}

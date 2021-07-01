@@ -12,5 +12,6 @@ export default {
   DASHBOARD: '/dashboard',
   SETTINGS: '/settings',
   TYPOGRAPHY: '/typography',
+  RECUPERAR_SENHA: '/recuperar-senha',
   NOT_FOUND: '*',
 };

@@ -15,6 +15,7 @@ import { useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
+import { Link as LinkRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import InputCPF from 'src/components/inputs/InputCPF';
 import PasswordInput from 'src/components/inputs/PasswordInput';
@@ -24,6 +25,7 @@ import { useLoading } from 'src/context/LoadingContext';
 import NAMES from 'src/routes/names';
 import schema from './schema';
 import { Container, ContainerWrapper } from './styles';
+
 interface LoginFromData {
   cpf: string;
   password: string;
@@ -140,8 +142,9 @@ const Login: React.FC = () => {
             </CardContent>
           </Card>
           <Link
+            component={LinkRouter}
             variant="subtitle1"
-            onClick={() => console.log('Go to recuperar senha')}
+            to={NAMES.RECUPERAR_SENHA}
           >
             Esqueci minha senha
           </Link>

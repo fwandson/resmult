@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import { uniqueId } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -14,6 +13,7 @@ import FiltrosResidentesModal, {
 } from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import ResidenteInfo from 'src/components/ResidenteInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
@@ -36,8 +36,8 @@ interface NotasRegistroParams {
 interface Residente {
   id: number;
   notas: {
-    teorica: string | undefined;
-    final: string | undefined;
+    atividadeDeProduto: string | undefined;
+    avaliacaoDeDesempenho: string | undefined;
   };
 }
 
@@ -50,7 +50,6 @@ const NotasRegistro: React.FC = () => {
 
   const { showLoading, hideLoading } = useLoading();
 
-  // TODO: seria mais interessante fazer um hook chamado useResources para isso
   const { notas } = resources;
 
   const [searchValue, setSearchValue] = useState('');
@@ -92,8 +91,9 @@ const NotasRegistro: React.FC = () => {
       residentes: residentesDataReturn?.residentes.map((residente) => ({
         id: residente.id,
         notas: {
-          teorica: residente.nota?.notaDeAtividadeDeProduto || '',
-          final: residente.nota?.notaDeAvaliacaoDeDesempenho || '',
+          atividadeDeProduto: residente.nota?.notaDeAtividadeDeProduto || '',
+          avaliacaoDeDesempenho:
+            residente.nota?.notaDeAvaliacaoDeDesempenho || '',
         },
       })),
     }),
@@ -117,8 +117,9 @@ const NotasRegistro: React.FC = () => {
       const data = {
         notas: formData.residentes.map((elem) => ({
           residenteid: elem.id,
-          notadeatividadedeproduto: elem.notas.teorica || null,
-          notadeavaliacaodedesempenho: elem.notas.final || null,
+          notadeatividadedeproduto: elem.notas.atividadeDeProduto || null,
+          // Nota avaliação discente <=> nota de avaliação de desempenho
+          notadeavaliacaodedesempenho: elem.notas.avaliacaoDeDesempenho || null,
         })),
       };
 
@@ -143,7 +144,13 @@ const NotasRegistro: React.FC = () => {
           return true;
         })
         .map((residente, index) => [
-          <Box key={uniqueId()} p={2}>
+          <Box
+            key="foto"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
             <ResidenteAvatar
               idTurma={Number(idTurma)}
               idOferta={Number(idOferta)}
@@ -152,23 +159,16 @@ const NotasRegistro: React.FC = () => {
               photourl={residente.person.photourl}
             />
           </Box>,
+          <ResidenteInfo
+            key="residente"
+            data={{
+              id: residente.id,
+              name: residente.person.name,
+              enfase: residente.enfase.descricao,
+            }}
+          />,
           <Box
-            key={uniqueId()}
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
-            <Typography>{residente.person.name}</Typography>
-            <Typography variant="caption" color="textSecondary">
-              #{residente.id}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {residente.enfase.descricao}
-            </Typography>
-          </Box>,
-          <Box
-            key={uniqueId()}
+            key="nota-atividade-produto"
             display="flex"
             flexDirection="column"
             justifyItems="flex-start"
@@ -177,11 +177,12 @@ const NotasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               control={control}
-              name={`residentes.${index}.notas.teorica`}
+              name={`residentes.${index}.notas.atividadeDeProduto`}
+              inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
           <Box
-            key={uniqueId()}
+            key="nota-avaliacao-discente"
             display="flex"
             flexDirection="column"
             justifyItems="flex-start"
@@ -190,7 +191,8 @@ const NotasRegistro: React.FC = () => {
               fullWidth
               variant="outlined"
               control={control}
-              name={`residentes.${index}.notas.final`}
+              name={`residentes.${index}.notas.avaliacaoDeDesempenho`}
+              inputProps={{ style: { textAlign: 'center' } }}
             />
           </Box>,
         ]),
@@ -246,7 +248,7 @@ const NotasRegistro: React.FC = () => {
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
-              align: 'left',
+              align: 'center',
             },
             {
               value: (

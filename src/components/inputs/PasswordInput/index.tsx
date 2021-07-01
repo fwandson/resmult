@@ -18,7 +18,10 @@ const PasswordInput: React.FC<GenericInputProps & TextFieldProps> = (props) => {
         ...InputProps,
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton onClick={() => setVisible((old) => !old)}>
+            <IconButton
+              onClick={() => setVisible((old) => !old)}
+              color="inherit"
+            >
               {visible ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>

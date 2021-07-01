@@ -2,21 +2,15 @@ import {
   Avatar,
   Box,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Container,
   createStyles,
   Grid,
-  IconButton,
   makeStyles,
   Theme,
   Typography,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ShareIcon from '@material-ui/icons/Share';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
 import usePessoa from 'src/hooks/usePessoa';
@@ -79,18 +73,13 @@ const ResidenteDetails: React.FC = () => {
                 {residente?.person.name[0]}
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
             title={residente?.person.name}
             subheader={residente?.nucleoProfissional.descricao}
           />
           <CardContent>
             <Grid container spacing={2}>
               <Grid item sm={12} md={6}>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Informações
                 </Typography>
                 <Typography variant="body2" color="textSecondary" gutterBottom>
@@ -112,7 +101,7 @@ const ResidenteDetails: React.FC = () => {
                 </Typography>
               </Grid>
               <Grid item sm={12} md={6}>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   Endereço
                 </Typography>
                 <Typography variant="body2" color="textSecondary" gutterBottom>
@@ -136,17 +125,6 @@ const ResidenteDetails: React.FC = () => {
               </Grid>
             </Grid>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
-            </IconButton>
-            <IconButton>
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
         </Card>
       </Container>
       <Box m={2} />
