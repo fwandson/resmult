@@ -112,7 +112,13 @@ const CHCompRegistro: React.FC = () => {
           return true;
         })
         .map((residente) => [
-          <Box key="foto">
+          <Box
+            key="foto"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
             <ResidenteAvatar
               idTurma={Number(idTurma)}
               idOferta={Number(idOferta)}
@@ -223,7 +229,7 @@ const CHCompRegistro: React.FC = () => {
         headCells={[
           {
             value: <Typography variant="body1">Foto</Typography>,
-            align: 'left',
+            align: 'center',
           },
           {
             value: <Typography variant="body1">Residente / Ênfase</Typography>,

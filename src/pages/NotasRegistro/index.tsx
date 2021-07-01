@@ -143,7 +143,13 @@ const NotasRegistro: React.FC = () => {
           return true;
         })
         .map((residente, index) => [
-          <Box key={uniqueId()} p={2}>
+          <Box
+            key={uniqueId()}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
             <ResidenteAvatar
               idTurma={Number(idTurma)}
               idOferta={Number(idOferta)}
@@ -248,7 +254,7 @@ const NotasRegistro: React.FC = () => {
           headCells={[
             {
               value: <Typography variant="body1">Foto</Typography>,
-              align: 'left',
+              align: 'center',
             },
             {
               value: (
