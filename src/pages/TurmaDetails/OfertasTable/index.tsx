@@ -81,10 +81,31 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     [turmaId]
   );
 
-  const handleChips = () =>
-    toPairs(filtros)
+  const handleChips = useCallback(() => {
+    const periodos = {
+      P1: 'Primeiro ano',
+      P2: 'Segundo ano',
+      P3: 'Terceiro ano',
+    };
+
+    const handleValues = {
+      periodo: (value: string) => periodos[value as 'P1' | 'P2' | 'P3'],
+      inicio: (value: string) => value,
+      fim: (value: string) => value,
+    };
+
+    return toPairs(filtros)
       .filter((pair) => pair[1])
-      .map((pair) => ({ label: pair[0], value: pair[1] }));
+      .map((pair) => {
+        const selecteFunction =
+          handleValues[pair[0] as keyof FiltrosOfertasModalData];
+
+        return {
+          label: pair[0],
+          value: selecteFunction(pair[1]),
+        };
+      });
+  }, [filtros]);
 
   const handleRows = () => {
     if (ofertas) {

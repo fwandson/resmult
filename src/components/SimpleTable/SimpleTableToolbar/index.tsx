@@ -58,7 +58,7 @@ const SimpleTableToolbar: React.FC<SimpleTableToolbarProps> = ({
           </Tooltip>
         )}
       </Box>
-      <Box display="flex" width="100%">
+      <Box display="flex" width="100%" mt={1}>
         <Grid container spacing={1} component={Box}>
           {chips?.map((chip) => {
             const aux =
