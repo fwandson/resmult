@@ -1,11 +1,12 @@
+import { AppBar, makeStyles, Toolbar } from '@material-ui/core';
 import clsx from 'clsx';
-import { AppBar, Toolbar, makeStyles, Typography } from '@material-ui/core';
-// import Logo from 'src/components/Logo';
+import { Link as RouterLink } from 'react-router-dom';
+import Logo from 'src/components/Logo';
+import NAMES from 'src/routes/names';
 
 const useStyles = makeStyles({
   root: {},
   toolbar: {
-    height: 64,
     justifyContent: 'center',
   },
 });
@@ -17,7 +18,9 @@ const TopBar: React.FC<any> = ({ className, ...rest }) => {
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
       <Toolbar className={classes.toolbar}>
-        <Typography variant="h2">Sagu</Typography>
+        <RouterLink to={NAMES.HOME}>
+          <Logo />
+        </RouterLink>
       </Toolbar>
     </AppBar>
   );
