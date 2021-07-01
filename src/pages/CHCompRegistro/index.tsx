@@ -24,6 +24,7 @@ import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import { find, reduce } from 'lodash';
 import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import ResidenteInfo from 'src/components/ResidenteInfo';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -127,24 +128,14 @@ const CHCompRegistro: React.FC = () => {
               photourl={residente.person.photourl}
             />
           </Box>,
-          <Box
+          <ResidenteInfo
             key="residente"
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
-            <Typography>{residente.person.name}</Typography>
-            <Box display="flex" alignItems="center">
-              <Typography variant="body1" color="textSecondary">
-                #{residente.id}
-              </Typography>
-              <Box m="4px" />
-              <Typography variant="body2" color="textSecondary">
-                {residente.enfase.descricao}
-              </Typography>
-            </Box>
-          </Box>,
+            data={{
+              id: residente.id,
+              name: residente.person.name,
+              enfase: residente.enfase.descricao,
+            }}
+          />,
           <Box
             key="chPendente"
             display="flex"

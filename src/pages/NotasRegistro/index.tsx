@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import { uniqueId } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
@@ -14,6 +13,7 @@ import FiltrosResidentesModal, {
 } from 'src/components/modals/FiltrosResidentesModal';
 import OfertaInfo from 'src/components/OfertaInfo';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import ResidenteInfo from 'src/components/ResidenteInfo';
 import SearchField from 'src/components/SearchField';
 import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
@@ -144,7 +144,7 @@ const NotasRegistro: React.FC = () => {
         })
         .map((residente, index) => [
           <Box
-            key={uniqueId()}
+            key="foto"
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -158,23 +158,16 @@ const NotasRegistro: React.FC = () => {
               photourl={residente.person.photourl}
             />
           </Box>,
+          <ResidenteInfo
+            key="residente"
+            data={{
+              id: residente.id,
+              name: residente.person.name,
+              enfase: residente.enfase.descricao,
+            }}
+          />,
           <Box
-            key={uniqueId()}
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            justifyContent="space-between"
-          >
-            <Typography>{residente.person.name}</Typography>
-            <Typography variant="caption" color="textSecondary">
-              #{residente.id}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {residente.enfase.descricao}
-            </Typography>
-          </Box>,
-          <Box
-            key={uniqueId()}
+            key="nota-atividade-produto"
             display="flex"
             flexDirection="column"
             justifyItems="flex-start"
@@ -188,7 +181,7 @@ const NotasRegistro: React.FC = () => {
             />
           </Box>,
           <Box
-            key={uniqueId()}
+            key="nota-avaliacao-discente"
             display="flex"
             flexDirection="column"
             justifyItems="flex-start"
