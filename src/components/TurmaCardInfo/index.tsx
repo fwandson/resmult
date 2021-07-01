@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Typography } from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useHistory } from 'react-router';
 import NAMES from 'src/routes/names';
+import LabelAndInfo from '../LabelAndInfo';
 import {
   CardActions,
   ChipFim,
@@ -10,42 +11,53 @@ import {
   InfoWrapper,
 } from './styles';
 
-export interface TurmaCardInfoProps {
+export interface TurmaCardInfoData {
   id: number;
-  codigo: string;
-  nome: string;
-  inicio: string;
-  fim: string;
-  numPeríodos: number;
-  numVagasOcupadas: number;
+  codigoTurma: string;
+  descricao: string;
+  dataInicio: string;
+  dataFim: string;
+  quantidadeperiodo: number;
+  componente: string;
+}
+
+export interface TurmaCardInfoProps {
+  data: TurmaCardInfoData;
 }
 
 const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
-  const { id, nome, codigo, inicio, fim, numPeríodos, numVagasOcupadas } =
-    props;
+  const { data } = props;
 
   const history = useHistory();
 
+  const handleGoToTurmaDetails = () => {
+    history.push(NAMES.TURMA_DETAILS.replace(':id', String(data.id)));
+  };
+
   return (
-    <Card elevation={1}>
+    <Card>
       <CardContent>
         <Typography variant="body2" color="textSecondary">
-          {codigo}
+          {data.codigoTurma}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          {nome}
+          #{data.id} - {data.descricao}
         </Typography>
         <InfoWrapper>
-          <Typography variant="body2" color="textSecondary">
-            Período de duração: {numPeríodos}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            Vagas ocupadas: {numVagasOcupadas}
-          </Typography>
+          <LabelAndInfo
+            label="Período de duração"
+            info={String(data.quantidadeperiodo)}
+            color="textSecondary"
+          />
+          <LabelAndInfo
+            label="Componente"
+            info={String(data.componente)}
+            color="textSecondary"
+          />
         </InfoWrapper>
         <DatesWrapper>
-          <ChipInicio variant="outlined" label={`Início: ${inicio}`} />
-          <ChipFim variant="outlined" label={`Fim: ${fim}`} />
+          <ChipInicio variant="outlined" label={`Início: ${data.dataInicio}`} />
+          <ChipFim variant="outlined" label={`Fim: ${data.dataFim}`} />
         </DatesWrapper>
       </CardContent>
       <CardActions>
@@ -53,9 +65,7 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
           variant="text"
           color="secondary"
           endIcon={<ArrowForwardIcon />}
-          onClick={() =>
-            history.push(NAMES.TURMA_DETAILS.replace(':id', String(id)))
-          }
+          onClick={handleGoToTurmaDetails}
         >
           Gerenciar
         </Button>

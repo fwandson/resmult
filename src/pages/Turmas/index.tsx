@@ -32,15 +32,7 @@ const Turmas: React.FC = () => {
         <Grid container spacing={2}>
           {turmasData?.turmas.map((turma) => (
             <Grid key={turma.id} item xs={12} sm={6} md={4}>
-              <TurmaCardInfo
-                numPeríodos={turma.quantidadeperiodo}
-                numVagasOcupadas={10} // não tem essa informação na api
-                id={turma.id}
-                codigo={turma.codigoTurma}
-                nome={turma.descricao}
-                inicio={turma.dataInicio}
-                fim={turma.dataFim}
-              />
+              <TurmaCardInfo data={turma} />
             </Grid>
           ))}
         </Grid>
