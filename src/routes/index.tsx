@@ -6,10 +6,7 @@ import RouterWithLayout from './RouterWithLayout';
 import NAMES from './names';
 import NotFound from 'src/pages/NotFound';
 import Turmas from 'src/pages/Turmas';
-import Settings from 'src/pages/Settings';
-import Ofertas from 'src/pages/Ofertas';
 import TurmaDetails from 'src/pages/TurmaDetails';
-import TypographyPage from 'src/pages/Typography';
 import LoginLaytout from 'src/layouts/LoginLaytout';
 import FaltasRegistro from 'src/pages/FaltasRegistro';
 import NotasRegistro from 'src/pages/NotasRegistro';
@@ -45,13 +42,6 @@ const Routes = () => {
       />
       <RouterWithLayout
         layout={DashboardLayout}
-        path={NAMES.OFERTAS}
-        component={Ofertas}
-        isPrivate
-        exact
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
         path={NAMES.RESIDENTE_DETAILS}
         component={ResidenteDetails}
         isPrivate
@@ -77,18 +67,6 @@ const Routes = () => {
         component={CHCompRegistro}
         isPrivate
         exact
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.SETTINGS}
-        component={Settings}
-        isPrivate
-      />
-      <RouterWithLayout
-        layout={DashboardLayout}
-        path={NAMES.TYPOGRAPHY}
-        component={TypographyPage}
-        isPrivate
       />
       <RouterWithLayout
         layout={LoginLaytout}
