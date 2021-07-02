@@ -103,7 +103,7 @@ const CHCompTable: React.FC<CHCompTableProps> = (props) => {
               }}
             />
           </Box>,
-          <Box key="chComplementares" display="flex" flexDirection="column">
+          <Box key="chRegistradas" display="flex" flexDirection="column">
             <Typography variant="body1">
               {residente.cargahorariacomplementar.length}
             </Typography>
@@ -150,11 +150,11 @@ const CHCompTable: React.FC<CHCompTableProps> = (props) => {
           align: 'left',
         },
         {
-          value: <Typography variant="body1">CH Pendente</Typography>,
+          value: <Typography variant="body1">CH pendente</Typography>,
           align: 'left',
         },
         {
-          value: <Typography variant="body1">CH Complementares</Typography>,
+          value: <Typography variant="body1">CH registrada</Typography>,
           align: 'right',
         },
         {

@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Hidden } from '@material-ui/core';
 import { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
 import GenericContent from 'src/components/GenericContent';
@@ -17,6 +17,7 @@ import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
 import CHCompTable from './CHCompTable';
+import CHCompTableSmall from './CHCompTableSmall';
 
 interface CHCompRegistroParams {
   idTurma: string;
@@ -108,15 +109,27 @@ const CHCompRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-      <CHCompTable
-        idTurma={idTurma}
-        idOferta={idOferta}
-        searchValue={searchValueDebaunced}
-        filtros={filtros}
-        handleAddCHComplementar={handleAddCHComplementar}
-        handleViewCHComplementar={handleViewCHComplementar}
-        onClickFilterButton={() => setOpenFiltrosModal(true)}
-      />
+      <Hidden smDown>
+        <CHCompTable
+          idTurma={idTurma}
+          idOferta={idOferta}
+          searchValue={searchValueDebaunced}
+          filtros={filtros}
+          handleAddCHComplementar={handleAddCHComplementar}
+          handleViewCHComplementar={handleViewCHComplementar}
+          onClickFilterButton={() => setOpenFiltrosModal(true)}
+        />
+      </Hidden>
+      <Hidden mdUp>
+        <CHCompTableSmall
+          idTurma={idTurma}
+          idOferta={idOferta}
+          searchValue={searchValueDebaunced}
+          handleAddCHComplementar={handleAddCHComplementar}
+          handleViewCHComplementar={handleViewCHComplementar}
+        />
+      </Hidden>
+
       <Box m={2} />
       <FiltrosResidentesModal
         setOpen={setOpenFiltrosModal}
