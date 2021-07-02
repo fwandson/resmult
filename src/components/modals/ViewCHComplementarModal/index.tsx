@@ -52,7 +52,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   );
 
   return (
-    <Dialog open={open} {...rest} fullWidth>
+    <Dialog open={open} {...rest} fullWidth fullScreen>
       <DialogTitle>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Cargas horárias complementares</Typography>

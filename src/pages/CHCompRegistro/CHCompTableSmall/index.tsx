@@ -58,15 +58,15 @@ const CHCompTableSmall: React.FC<CHCompTableSmallProps> = (props) => {
         <Box key="actions" display="flex" justifyContent="flex-end">
           <ActionsMenu
             edge="end"
-            tooltipTitle="Lançamentos"
+            tooltipTitle="Ações"
             data={[
               {
-                label: 'Lançar Faltas',
+                label: 'Adicionar nova CH',
                 icon: <AddAlarmIcon />,
                 action: () => handleAddCHComplementar(residente),
               },
               {
-                label: 'Lançar Notas',
+                label: 'Ver CH registradas',
                 icon: <AlarmOnIcon />,
                 action: () => handleViewCHComplementar(residente),
               },
