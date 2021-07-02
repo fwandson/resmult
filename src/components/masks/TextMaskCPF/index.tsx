@@ -14,6 +14,7 @@ const TextMaskCPF: React.FC<TextMaskCPFProps> = (props) => {
       ref={(ref: any) => {
         inputRef(ref ? ref.inputElement : null);
       }}
+      guide={false}
       mask={[
         /\d/,
         /\d/,

@@ -2,7 +2,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ThemeProvider } from '@material-ui/styles';
 import ptBRLocale from 'date-fns/locale/pt-BR';
-import 'fontsource-roboto';
 import { BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Routes from 'src/routes';

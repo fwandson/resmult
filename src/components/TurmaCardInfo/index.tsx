@@ -46,7 +46,7 @@ const TurmaCardInfo: React.FC<TurmaCardInfoProps> = (props) => {
         <InfoWrapper>
           <LabelAndInfo
             label="Período de duração"
-            info={String(data.quantidadeperiodo)}
+            info={`${data.quantidadeperiodo} anos`}
             color="textSecondary"
           />
           <LabelAndInfo
