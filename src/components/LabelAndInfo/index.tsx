@@ -18,9 +18,13 @@ const LabelAndInfo: React.FC<LabelAndInfoProps> = (props) => {
   return (
     <Box display="flex">
       <Box mr={1}>
-        <Typography variant="body1" color={color}>{`${label}:`}</Typography>
+        <Typography
+          noWrap
+          variant="body1"
+          color={color}
+        >{`${label}:`}</Typography>
       </Box>
-      <Typography variant="body2" color={color}>
+      <Typography noWrap variant="body2" color={color}>
         {info}
       </Typography>
     </Box>

@@ -241,16 +241,14 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
         </form>
       </DialogContent>
       <DialogActions>
-        <Grid container justify="space-between">
-          <Button onClick={handleCancel}>Cancelar</Button>
-          <Button
-            color="secondary"
-            startIcon={<CheckIcon />}
-            onClick={handleSubmit(onSubmit)}
-          >
-            Confirmar
-          </Button>
-        </Grid>
+        <Button onClick={handleCancel}>Cancelar</Button>
+        <Button
+          color="secondary"
+          startIcon={<CheckIcon />}
+          onClick={handleSubmit(onSubmit)}
+        >
+          Confirmar
+        </Button>
       </DialogActions>
     </CustonDialog>
   );
