@@ -13,6 +13,7 @@ const TextMaskNota: React.FC<TextMaskNotaProps> = (props) => {
     integerLimit: 2,
     allowDecimal: true,
     decimalLimit: 1,
+    prefix: '',
   });
 
   return (
