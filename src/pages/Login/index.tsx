@@ -63,8 +63,7 @@ const Login: React.FC = () => {
       if (error.response.status === 401) {
         toast.error('CPF ou Senha inválidos');
       } else {
-        // TODO: pensar em alguma forma de trabalhar o tratamento dos erros
-        toast.error('Algo de inesperado aconteceu...');
+        toast.error(error.response.data.mensagem);
       }
     } finally {
       hideLoading();

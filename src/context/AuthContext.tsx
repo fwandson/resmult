@@ -2,8 +2,8 @@ import { createContext, useCallback, useContext, useState } from 'react';
 import api from 'src/api';
 import CONSTANTS from 'src/config';
 import resources from 'src/resources';
+import { cache } from 'swr';
 
-// Local history
 const { LH_TOKEN_NAME } = CONSTANTS;
 
 interface AuthContextState {
@@ -13,7 +13,6 @@ interface AuthContextState {
   signOut(): void;
 }
 
-// provalvemente isso será cpf
 interface UserData {
   username: string;
   password: string;
@@ -38,7 +37,6 @@ const AuthProvider: React.FC = ({ children }) => {
   });
 
   const signIn = useCallback(async ({ username, password }: UserData) => {
-    // TODO: Melhor transformar isso em um Hook
     const { autentication } = resources;
 
     const { data } = await autentication.login({
@@ -52,23 +50,26 @@ const AuthProvider: React.FC = ({ children }) => {
 
     // setando a local history da token
     localStorage.setItem(LH_TOKEN_NAME, access_token);
-
     // configurando o header do axios com a autorization JWT
     api.defaults.headers.authorization = `Bearer ${access_token}`;
   }, []);
 
-  // implementando
   const signOut = useCallback(async () => {
     setToken({} as TokenState);
+
+    // Limpa o cache do SWR
+    cache.clear();
+    // Remove a local history da token
     localStorage.removeItem(LH_TOKEN_NAME);
+    // Remove authorization do header
     api.defaults.headers.authorization = undefined;
   }, []);
 
   const userLogged = useCallback(() => {
     const token = localStorage.getItem(LH_TOKEN_NAME);
-    if (token) {
-      return true;
-    }
+
+    if (token) return true;
+
     return false;
   }, []);
 
