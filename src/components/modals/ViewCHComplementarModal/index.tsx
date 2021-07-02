@@ -1,6 +1,5 @@
 import {
   Box,
-  Dialog,
   DialogContent,
   DialogProps,
   DialogTitle,
@@ -13,6 +12,7 @@ import { find, reduce } from 'lodash';
 import { Dispatch, SetStateAction } from 'react';
 import CHComplementarCardInfo from 'src/components/CHComplementarCardInfo';
 import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import CustonDialog from 'src/components/CustonDialog';
 import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 
@@ -52,7 +52,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
   );
 
   return (
-    <Dialog open={open} {...rest} fullWidth fullScreen>
+    <CustonDialog open={open} {...rest}>
       <DialogTitle>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">Cargas horárias complementares</Typography>
@@ -137,7 +137,7 @@ const ViewCHComplementarModal: React.FC<ViewCHComplementarModalProps> = (
           </Typography>
         </Box>
       </DialogContent>
-    </Dialog>
+    </CustonDialog>
   );
 };
 

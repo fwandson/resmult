@@ -4,7 +4,7 @@ import theme from 'src/theme';
 const CustonDialog: React.FC<DialogProps> = (props) => {
   const { children, ...rest } = props;
 
-  const fullScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog {...rest} fullWidth fullScreen={fullScreen}>

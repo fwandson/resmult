@@ -1,34 +1,34 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  DialogProps,
-  Dialog,
-  DialogTitle,
-  Grid,
-  Typography,
-  IconButton,
-  DialogContent,
-  DialogActions,
-  Button,
-  MenuItem,
   Box,
-  InputAdornment,
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
   Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Typography,
 } from '@material-ui/core';
-import { Dispatch, SetStateAction, useCallback } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
+import { find } from 'lodash';
+import { Dispatch, SetStateAction, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import CHPendentesInfo from 'src/components/CHPendentesInfo';
+import CustonDialog from 'src/components/CustonDialog';
 import GenericInput from 'src/components/inputs/GenericInput';
-import { GetResidentesNames } from 'src/resources/turmas/types';
+import ResidenteAvatar from 'src/components/ResidenteAvatar';
+import { useLoading } from 'src/context/LoadingContext';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import useTiposCargaHorariaComplementar from 'src/hooks/useTiposCargaHorariaComplementar';
-import { yupResolver } from '@hookform/resolvers/yup';
-import schema from './schema';
-import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import resources from 'src/resources';
-import { useLoading } from 'src/context/LoadingContext';
-import { find } from 'lodash';
-import CHPendentesInfo from 'src/components/CHPendentesInfo';
-import { toast } from 'react-toastify';
+import { GetResidentesNames } from 'src/resources/turmas/types';
+import schema from './schema';
 
 export interface AddCHComplementarModalProps extends DialogProps {
   idTurma: number;
@@ -124,7 +124,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
   }, []);
 
   return (
-    <Dialog open={open} {...rest} fullWidth>
+    <CustonDialog open={open} {...rest}>
       <DialogTitle>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography variant="h5">
@@ -179,7 +179,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
         </Box>
         <form>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <GenericInput
                 variant="outlined"
                 label="Tipo CH complementar"
@@ -195,7 +195,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
                 ))}
               </GenericInput>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <GenericInput
                 variant="outlined"
                 label="Tipo CH"
@@ -252,7 +252,7 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           </Button>
         </Grid>
       </DialogActions>
-    </Dialog>
+    </CustonDialog>
   );
 };
 
