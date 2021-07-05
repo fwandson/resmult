@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
-interface TextMaskCPFProps {
+interface TextMaskNotaProps {
   inputRef: (ref: HTMLInputElement | null) => void;
 }
 
-const TextMaskCPF: React.FC<TextMaskCPFProps> = (props) => {
+const TextMaskNota: React.FC<TextMaskNotaProps> = (props) => {
   const { inputRef, ...rest } = props;
+
+  const mask = createNumberMask({
+    integerLimit: 2,
+    allowDecimal: true,
+    decimalLimit: 1,
+    prefix: '',
+  });
 
   return (
     <MaskedInput
@@ -15,24 +23,9 @@ const TextMaskCPF: React.FC<TextMaskCPFProps> = (props) => {
         inputRef(ref ? ref.inputElement : null);
       }}
       guide={false}
-      mask={[
-        /\d/,
-        /\d/,
-        /\d/,
-        '.',
-        /\d/,
-        /\d/,
-        /\d/,
-        '.',
-        /\d/,
-        /\d/,
-        /\d/,
-        '-',
-        /\d/,
-        /\d/,
-      ]}
+      mask={mask}
     />
   );
 };
 
-export default TextMaskCPF;
+export default TextMaskNota;

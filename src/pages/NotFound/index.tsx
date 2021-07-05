@@ -19,7 +19,7 @@ const NotFound = () => (
         <ImageWrapper>
           <img
             alt="Under development"
-            src="/static/images/undraw_page_not_found_su7k.svg"
+            src="/static/images/page_not_found.svg"
           />
         </ImageWrapper>
       </Container>

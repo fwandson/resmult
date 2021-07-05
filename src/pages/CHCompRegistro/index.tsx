@@ -1,9 +1,6 @@
-import { Box, Typography } from '@material-ui/core';
-import AddAlarmIcon from '@material-ui/icons/AddAlarm';
-import AlarmOnIcon from '@material-ui/icons/AlarmOn';
-import { useCallback, useMemo, useState } from 'react';
+import { Box, Hidden } from '@material-ui/core';
+import { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
-import CustonIconButton from 'src/components/CustonIconButton';
 import GenericContent from 'src/components/GenericContent';
 import AddCHComplementarModal from 'src/components/modals/AddCHComplementarModal';
 import FiltrosResidentesModal, {
@@ -11,25 +8,22 @@ import FiltrosResidentesModal, {
 } from 'src/components/modals/FiltrosResidentesModal';
 import ViewCHComplementarModal from 'src/components/modals/ViewCHComplementarModal';
 import OfertaInfo from 'src/components/OfertaInfo';
-import ResidenteAvatar from 'src/components/ResidenteAvatar';
 import SearchField from 'src/components/SearchField';
-import SimpleTable from 'src/components/SimpleTable';
 import CONSTANTS from 'src/config';
-import useEnfases from 'src/hooks/useEnfases';
 import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useResidentes from 'src/hooks/useResidentes';
 import { GetResidentesNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce/lib';
-import { find, reduce } from 'lodash';
-import CHPendentesInfo from 'src/components/CHPendentesInfo';
-import ResidenteInfo from 'src/components/ResidenteInfo';
+import CHCompTable from './CHCompTable';
+import CHCompTableSmall from './CHCompTableSmall';
 
 interface CHCompRegistroParams {
   idTurma: string;
   idOferta: string;
 }
+
 const CHCompRegistro: React.FC = () => {
   const { idTurma, idOferta } = useParams<CHCompRegistroParams>();
 
@@ -58,7 +52,6 @@ const CHCompRegistro: React.FC = () => {
   const oferta = findOferta({ id: Number(idOferta) });
 
   const {
-    searchResidentes,
     data: residentesDataReturn,
     mutate: residentesMutate,
     findResidente,
@@ -67,8 +60,6 @@ const CHCompRegistro: React.FC = () => {
     idOferta,
   });
 
-  const { findEnfase, data: enfaseDataReturn } = useEnfases();
-
   const {
     filtros,
     setOpen: setOpenFiltrosModal,
@@ -76,17 +67,6 @@ const CHCompRegistro: React.FC = () => {
   } = useFiltrosModal<FiltrosResidentesModalData>({
     enfase: '',
   });
-
-  const handleChipsTable = useCallback(() => {
-    if (filtros.enfase)
-      return [
-        {
-          label: 'Ênfase',
-          value: findEnfase({ id: Number(filtros.enfase) })?.descricao || '',
-        },
-      ];
-    return [];
-  }, [filtros, enfaseDataReturn]);
 
   const handleAddCHComplementar = useCallback(
     (residente: GetResidentesNames.Residente) => {
@@ -102,88 +82,6 @@ const CHCompRegistro: React.FC = () => {
       setOpenViewCHComplementarModal(true);
     },
     []
-  );
-
-  const handleRows = useMemo(
-    () =>
-      searchResidentes(searchValueDebaunced)
-        .filter((residente) => {
-          if (filtros.enfase)
-            return residente.enfase.id === Number(filtros.enfase);
-          return true;
-        })
-        .map((residente) => [
-          <Box
-            key="foto"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <ResidenteAvatar
-              idTurma={Number(idTurma)}
-              idOferta={Number(idOferta)}
-              idResidente={residente.id}
-              nomeResidente={residente.person.name[0]}
-              photourl={residente.person.photourl}
-            />
-          </Box>,
-          <ResidenteInfo
-            key="residente"
-            data={{
-              id: residente.id,
-              name: residente.person.name,
-              enfase: residente.enfase.descricao,
-            }}
-          />,
-          <Box
-            key="chPendente"
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-          >
-            <CHPendentesInfo
-              data={{
-                pratica: find(residente?.cargaHorariaPendente, { tipo: 'P' })
-                  ?.cargaHorariaPendente,
-                teoricoPratica: find(residente?.cargaHorariaPendente, {
-                  tipo: 'T',
-                })?.cargaHorariaPendente,
-                teoricoConceitual: find(residente?.cargaHorariaPendente, {
-                  tipo: 'C',
-                })?.cargaHorariaPendente,
-              }}
-            />
-          </Box>,
-          <Box key="chComplementares" display="flex" flexDirection="column">
-            <Typography variant="body1">
-              {residente.cargahorariacomplementar.length}
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              {reduce(
-                residente?.cargahorariacomplementar,
-                (sum, elem) => sum + Number(elem.cargaHoraria),
-                0
-              )}{' '}
-              h
-            </Typography>
-          </Box>,
-          <Box key="actions" display="flex" justifyContent="flex-end">
-            <CustonIconButton
-              tooltipTitle="Adicionar carga horária complementar"
-              onClick={() => handleAddCHComplementar(residente)}
-            >
-              <AddAlarmIcon />
-            </CustonIconButton>
-            <CustonIconButton
-              tooltipTitle="Visualizar cargas horárias complementares"
-              onClick={() => handleViewCHComplementar(residente)}
-            >
-              <AlarmOnIcon />
-            </CustonIconButton>
-          </Box>,
-        ]),
-    [searchValueDebaunced, residentesDataReturn, filtros.enfase]
   );
 
   return (
@@ -211,36 +109,26 @@ const CHCompRegistro: React.FC = () => {
         cargaHoraria={oferta?.cargahoraria}
         periodo={oferta?.semestre_descricao}
       />
-
-      <SimpleTable
-        title="Residentes"
-        hideTablePagination
-        onClickFilterButton={() => setOpenFiltrosModal(true)}
-        chips={handleChipsTable()}
-        headCells={[
-          {
-            value: <Typography variant="body1">Foto</Typography>,
-            align: 'center',
-          },
-          {
-            value: <Typography variant="body1">Residente / Ênfase</Typography>,
-            align: 'left',
-          },
-          {
-            value: <Typography variant="body1">CH Pendente</Typography>,
-            align: 'left',
-          },
-          {
-            value: <Typography variant="body1">CH Complementares</Typography>,
-            align: 'right',
-          },
-          {
-            value: <Typography variant="body1">Ações</Typography>,
-            align: 'right',
-          },
-        ]}
-        rows={handleRows}
-      />
+      <Hidden smDown>
+        <CHCompTable
+          idTurma={idTurma}
+          idOferta={idOferta}
+          searchValue={searchValueDebaunced}
+          filtros={filtros}
+          handleAddCHComplementar={handleAddCHComplementar}
+          handleViewCHComplementar={handleViewCHComplementar}
+          onClickFilterButton={() => setOpenFiltrosModal(true)}
+        />
+      </Hidden>
+      <Hidden mdUp>
+        <CHCompTableSmall
+          idTurma={idTurma}
+          idOferta={idOferta}
+          searchValue={searchValueDebaunced}
+          handleAddCHComplementar={handleAddCHComplementar}
+          handleViewCHComplementar={handleViewCHComplementar}
+        />
+      </Hidden>
 
       <Box m={2} />
       <FiltrosResidentesModal

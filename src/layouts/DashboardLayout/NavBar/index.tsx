@@ -72,9 +72,11 @@ const NavBar = ({ onMobileClose, openMobile }: any) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src="/static/images/avatars/avatar_12.png"
+          src={`http://localhost:81/miolo20/html/index.php?module=basic&action=main:getfile&&fileId=${userInfo.personid}`}
           to={NAMES.HOME}
-        />
+        >
+          {userInfo.nome[0]}
+        </Avatar>
         <Typography color="textPrimary" variant="h6">
           {userInfo.nome}
         </Typography>

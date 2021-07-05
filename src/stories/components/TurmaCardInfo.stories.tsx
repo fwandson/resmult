@@ -7,41 +7,8 @@ export default {
   title: 'Components/TurmaCardInfo',
   component: TurmaCardInfo,
   argTypes: {
-    id: {
-      description: 'Id da Turma',
-      control: {
-        type: 'number',
-      },
-    },
-    nome: {
-      description: 'Nome da Turma',
-    },
-    codigo: {
-      description: 'Código da Turma',
-    },
-    inicio: {
-      description: 'Data inicial',
-      control: {
-        type: 'date',
-      },
-    },
-    fim: {
-      description: 'Data final',
-      control: {
-        type: 'date',
-      },
-    },
-    numPeríodos: {
-      description: 'Número de períodos',
-      control: {
-        type: 'number',
-      },
-    },
-    numVagasOcupadas: {
-      description: 'Número de vagas ocupadas',
-      control: {
-        type: 'number',
-      },
+    data: {
+      description: 'Objeto das informações da Turma',
     },
   },
 } as Meta;
@@ -52,11 +19,13 @@ const Template: Story<TurmaCardInfoProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  id: 1,
-  codigo: 'T2HOSPITALAR',
-  nome: 'Turma || - Hospitalar',
-  inicio: '20/05/2021',
-  fim: '20/05/2021',
-  numPeríodos: 2,
-  numVagasOcupadas: 200,
+  data: {
+    id: 13,
+    codigoTurma: 'T7HOSPITALAR',
+    descricao: 'TURMA VII',
+    dataInicio: '02/03/2020',
+    dataFim: '28/02/2022',
+    quantidadeperiodo: 2,
+    componente: 'HOSPITALAR',
+  },
 };

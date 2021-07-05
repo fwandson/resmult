@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import CONSTANTS from 'src/config';
-import NAMES from 'src/routes/names';
 import { cache } from 'swr';
 
 const { LH_TOKEN_NAME } = CONSTANTS;
@@ -9,14 +8,12 @@ const delay = (amount: number) =>
   new Promise((resolve) => setTimeout(resolve, amount));
 
 export const handleUnauthorizedUser = () => {
-  // --> limpar o cache (limpando tudo)
+  // Limpar o cache (limpando tudo)
   cache.clear();
-  // --> Remove a token do local storage
+  // Remove a token do local storage
   localStorage.removeItem(LH_TOKEN_NAME);
-  // --> Remove authorization do header
+  // Remove authorization do header
   api.defaults.headers.authorization = undefined;
-  // --> redireciona para o login
-  window.location.replace(NAMES.LOGIN);
 };
 
 const api = axios.create({

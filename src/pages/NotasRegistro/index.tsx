@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import GenericContent from 'src/components/GenericContent';
-import GenericInput from 'src/components/inputs/GenericInput';
+import InputNota from 'src/components/inputs/InputNota';
 import ConfirmDialogModal from 'src/components/modals/ConfirmDialogModal';
 import FiltrosResidentesModal, {
   FiltrosResidentesModalData,
@@ -173,7 +173,7 @@ const NotasRegistro: React.FC = () => {
             flexDirection="column"
             justifyItems="flex-start"
           >
-            <GenericInput
+            <InputNota
               fullWidth
               variant="outlined"
               control={control}
@@ -187,7 +187,7 @@ const NotasRegistro: React.FC = () => {
             flexDirection="column"
             justifyItems="flex-start"
           >
-            <GenericInput
+            <InputNota
               fullWidth
               variant="outlined"
               control={control}

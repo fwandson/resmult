@@ -10,11 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
-import {
-  useCallback,
-  // useRef
-} from 'react';
-// import ReCAPTCHA from 'react-google-recaptcha';
+import { useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import { Link as LinkRouter } from 'react-router-dom';
@@ -32,8 +28,6 @@ interface RecuperarSenhaData {
 }
 
 const RecuperarSenha: React.FC = () => {
-  // const recaptchaRef = useRef<ReCAPTCHA>({} as ReCAPTCHA);
-
   const { showLoading, hideLoading } = useLoading();
 
   const { recuperarSenha } = resources;
@@ -57,12 +51,6 @@ const RecuperarSenha: React.FC = () => {
         cpf,
       });
 
-      // const token = await recaptchaRef.current.executeAsync();
-
-      // const isHuman = handleValidateHuman(token);
-
-      // recaptchaRef.current.reset();
-
       if (data.sucesso) {
         toast.success(
           'As instruções de recuperação de senha foram enviadas para o e-mail cadastrado no sistema'
@@ -76,25 +64,6 @@ const RecuperarSenha: React.FC = () => {
       hideLoading();
     }
   }, []);
-
-  // Precisa fazer isso no back end
-  // const handleValidateHuman = async (token: string | null) => {
-  //   const secret = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
-
-  //   // passar isso para o Axios
-  //   const response = await fetch(
-  //     `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,
-  //     {
-  //       method: 'POST',
-  //     }
-  //   );
-
-  //   const data = await response.json();
-
-  //   console.log(data);
-
-  //   return data.success;
-  // };
 
   return (
     <>
@@ -160,11 +129,6 @@ const RecuperarSenha: React.FC = () => {
             Página de login
           </Link>
         </Container>
-        {/* <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey={process.env.REACT_APP_PUBLIC_RECAPTCHA_SITE_KEY as string}
-          size="invisible"
-        /> */}
       </ContainerWrapper>
     </>
   );
