@@ -1,0 +1,65 @@
+import { TextFieldProps } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core/';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import SearchField from 'src/components/SearchField';
+import CONSTANTS from 'src/config';
+
+<Meta title="DOCS/SearchField" component={SearchField} />
+
+# SearchField
+
+O `SearchField` é um campo de Texto para buscas.
+
+export const Template = (args) => {
+  return <SearchField {...args} />;
+};
+
+<Canvas>
+  <Story name="Default" args={{}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+Aqui podemos ver um exemplo de como usar ele;
+
+```tsx
+const [searchValue, setSearchValue] = useState('');
+
+// return do component
+return (
+  <Box>
+    <Typography gutterBottom>Campo de Texto para buscas</Typography>
+    <SearchField
+      {...args}
+      value={searchValue}
+      onChange={(e) => setSearchValue(e.target.value)}
+    />
+    <Typography>Value: {searchValue}</Typography>
+  </Box>
+);
+```
+
+Podemos tambem usar a lib `use-debounce` para adicionarmos um delay na
+atualização do valor. Isso é muito util para quando queremos usar `querys`
+juntamente com bustas em uma `API`.
+
+```tsx
+import { useDebounce } from 'use-debounce/lib';
+
+const [searchValue, setSearchValue] = useState('');
+
+// Adicionando um delay de 300 ms para atualizar o valor em searchValueDebaunced
+const [searchValueDebaunced] = useDebounce(searchValue, 300);
+
+// return do component
+return (
+  <Box>
+    <SearchField
+      {...args}
+      value={searchValue}
+      onChange={(e) => setSearchValue(e.target.value)}
+    />
+    <Typography>Value Debaunced: {searchValueDebaunced}</Typography>
+  </Box>
+);
+```
