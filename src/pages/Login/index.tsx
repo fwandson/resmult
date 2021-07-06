@@ -77,7 +77,7 @@ const Login: React.FC = () => {
       </Helmet>
       <ContainerWrapper>
         <Container maxWidth="sm">
-          <Logo />
+          <Logo style={{ width: 210, height: 88 }} />
           <Card
             component="form"
             onSubmit={handleSubmit(onSubmit)}
