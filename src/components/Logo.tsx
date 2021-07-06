@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ImgHTMLAttributes } from 'react';
 
-const Logo: React.FC = (props) => {
-  return <img alt="Logo" src="/static/logo.svg" {...props} />;
+const Logo: React.FC<ImgHTMLAttributes<HTMLImageElement>> = (props) => {
+  return <img alt="Logo" src="/static/sagu-logo.svg" {...props} />;
 };
 
 export default Logo;
