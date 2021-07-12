@@ -3,7 +3,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
-import { compareAsc, compareDesc, format } from 'date-fns';
+import { compareAsc, compareDesc, format, add } from 'date-fns';
 import { toPairs } from 'lodash';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
@@ -81,15 +81,18 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     [turmaId]
   );
 
-  const handleChips = useCallback(() => {
+  const handlePediodo = (periodo: 'P1' | 'P2' | 'P3') => {
     const periodos = {
       P1: 'Primeiro ano',
       P2: 'Segundo ano',
       P3: 'Terceiro ano',
     };
+    return periodos[periodo];
+  };
 
+  const handleChips = useCallback(() => {
     const handleValues = {
-      periodo: (value: string) => periodos[value as 'P1' | 'P2' | 'P3'],
+      periodo: (value: string) => handlePediodo(value as 'P1' | 'P2' | 'P3'),
       inicio: (value: string) => value,
       fim: (value: string) => value,
     };
@@ -112,7 +115,8 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
       return searchOfertas(searchValue)
         .filter((oferta) => {
           // os ids dos períodos estão como P1, P2 e P3
-          if (filtros.periodo) return `P${oferta.semestre}` === filtros.periodo;
+          if (filtros.periodo)
+            return oferta.atividadeModulo.periodo === filtros.periodo;
           return true;
         })
         .filter((oferta) => {
@@ -146,15 +150,20 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
               ANO
             </Typography>
             <Typography variant="caption">
-              {oferta.semestre_descricao}
+              {handlePediodo(
+                oferta.atividadeModulo.periodo as 'P1' | 'P2' | 'P3'
+              )}
             </Typography>
           </Box>,
           <Box key="inicio-fim" display="flex" flexDirection="column">
             <Typography variant="caption" color="textSecondary">
-              {format(new Date(oferta.dataInicio), 'dd/MM/yyyy')}
+              {format(
+                add(new Date(oferta.dataInicio), { days: 1 }),
+                'dd/MM/yyyy'
+              )}
             </Typography>
             <Typography variant="caption">
-              {format(new Date(oferta.dataFim), 'dd/MM/yyyy')}
+              {format(add(new Date(oferta.dataFim), { days: 1 }), 'dd/MM/yyyy')}
             </Typography>
           </Box>,
           <Tooltip
