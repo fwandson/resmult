@@ -232,37 +232,46 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
         title="Lista de ofertas"
         onClickFilterButton={() => setOpen(true)}
         chips={handleChips()}
+        initialOrderBy="idOerta"
         headCells={[
           {
+            id: 'idOerta',
             value: '#Id',
             align: 'left',
           },
           {
+            id: 'oferta',
             value: 'Oferta',
             align: 'left',
           },
           {
+            id: 'turmaModulo',
             value: 'Turma / Modulo',
 
             align: 'left',
           },
           {
+            id: 'periodo',
             value: 'Período',
             align: 'left',
           },
           {
+            id: 'inicioFim',
             value: 'Início/Fim',
             align: 'left',
           },
           {
+            id: 'ch',
             value: 'CH',
             align: 'center',
           },
           {
+            id: 'encerramento',
             value: 'Encerramento',
             align: 'center',
           },
           {
+            id: 'lancamentos',
             value: 'Lançamentos',
             align: 'right',
           },

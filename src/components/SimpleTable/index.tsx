@@ -2,24 +2,22 @@ import {
   TableContainer,
   Table,
   Paper,
-  TableHead,
   TableRow,
   TableCell,
   TableBody,
   TablePagination,
 } from '@material-ui/core';
-import { uniqueId } from 'lodash';
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import SimpleTableHead, {
+  SimpleTableHeadData,
+  Order,
+  RowElement,
+} from './SimpleTableHead';
 import SimpleTableToolbar from './SimpleTableToolbar';
-
-type RowElement = string | number | ReactNode;
 
 export interface SimpleTableProps {
   title: string;
-  headCells: {
-    value: RowElement;
-    align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
-  }[];
+  headCells: SimpleTableHeadData[];
   rows: RowElement[][];
   hideTablePagination?: boolean;
   onClickFilterButton?(): void;
@@ -27,6 +25,7 @@ export interface SimpleTableProps {
     value: string | number | Date;
     label: string;
   }>;
+  initialOrderBy: string;
 }
 
 // Ainda em fase de testes
@@ -38,11 +37,16 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     hideTablePagination,
     onClickFilterButton,
     chips,
+    initialOrderBy,
   } = props;
 
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [order, setOrder] = useState<Order>('asc');
+
+  const [orderBy, setOrderBy] = useState(initialOrderBy);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -51,6 +55,15 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: string
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
   const emptyRows =
@@ -65,15 +78,12 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         chips={chips}
       />
       <Table>
-        <TableHead>
-          <TableRow>
-            {headCells.map((cell) => (
-              <TableCell key={uniqueId()} align={cell.align}>
-                {cell.value}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+        <SimpleTableHead
+          data={headCells}
+          order="asc"
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
           {rows
             .slice(
