@@ -238,22 +238,25 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             id: 'idOerta',
             value: '#Id',
             align: 'left',
+            sorted: true,
           },
           {
             id: 'oferta',
             value: 'Oferta',
             align: 'left',
+            // sorted: true,
           },
           {
             id: 'turmaModulo',
             value: 'Turma / Modulo',
-
             align: 'left',
+            sorted: true,
           },
           {
             id: 'periodo',
             value: 'Período',
             align: 'left',
+            sorted: true,
           },
           {
             id: 'inicioFim',

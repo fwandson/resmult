@@ -37,26 +37,21 @@ const SimpleTableHead: React.FC<SimpleTableHeadProps> = (props) => {
   return (
     <TableHead>
       <TableRow>
-        {data.map((cell) =>
-          cell.sorted ? (
-            <TableSortLabel
-              active={orderBy === cell.id}
-              direction={orderBy === cell.id ? order : 'asc'}
-              onClick={createSortHandler(cell.id)}
-            >
-              {cell.value}
-              {orderBy === cell.value ? (
-                <span>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          ) : (
-            <TableCell key={uniqueId()} align={cell.align}>
-              {cell.value}
-            </TableCell>
-          )
-        )}
+        {data.map((cell) => (
+          <TableCell key={uniqueId()} align={cell.align}>
+            {cell.sorted ? (
+              <TableSortLabel
+                active={orderBy === cell.id}
+                direction={orderBy === cell.id ? order : 'asc'}
+                onClick={createSortHandler(cell.id)}
+              >
+                {cell.value}
+              </TableSortLabel>
+            ) : (
+              cell.value
+            )}
+          </TableCell>
+        ))}
       </TableRow>
     </TableHead>
   );
