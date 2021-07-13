@@ -144,27 +144,27 @@ const CHCompTable: React.FC<CHCompTableProps> = (props) => {
       headCells={[
         {
           id: 'foto',
-          value: <Typography variant="body1">Foto</Typography>,
+          value: 'Foto',
           align: 'center',
         },
         {
           id: 'residente',
-          value: <Typography variant="body1">Residente / Ênfase</Typography>,
+          value: 'Residente / Ênfase',
           align: 'left',
         },
         {
           id: 'chPendente',
-          value: <Typography variant="body1">CH pendente</Typography>,
+          value: 'CH pendente',
           align: 'left',
         },
         {
           id: 'chRegistrada',
-          value: <Typography variant="body1">CH registrada</Typography>,
+          value: 'CH registrada',
           align: 'right',
         },
         {
           id: 'actions',
-          value: <Typography variant="body1">Ações</Typography>,
+          value: 'Ações',
           align: 'right',
         },
       ]}

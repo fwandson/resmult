@@ -13,6 +13,7 @@ import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
 import OfertasTable from './OfertasTable';
 import OfertasTableSmall from './OfertasTableSmall';
+
 interface TurmaDetailsParams {
   id: string;
 }

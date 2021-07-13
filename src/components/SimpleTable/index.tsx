@@ -1,24 +1,26 @@
 import {
-  TableContainer,
-  Table,
   Paper,
-  TableRow,
-  TableCell,
+  Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TablePagination,
+  TableRow,
 } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
 import SimpleTableHead, {
-  SimpleTableHeadData,
+  CellElement,
   Order,
-  RowElement,
+  SimpleTableHeadData,
 } from './SimpleTableHead';
 import SimpleTableToolbar from './SimpleTableToolbar';
+
+import { sortBy } from 'lodash';
 
 export interface SimpleTableProps {
   title: string;
   headCells: SimpleTableHeadData[];
-  rows: RowElement[][];
+  rows: CellElement[][];
   hideTablePagination?: boolean;
   onClickFilterButton?(): void;
   chips?: Array<{
@@ -28,7 +30,6 @@ export interface SimpleTableProps {
   initialOrderBy: string;
 }
 
-// Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
   const {
     headCells,
@@ -57,12 +58,11 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     setPage(0);
   };
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: string
-  ) => {
+  const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
+
     setOrder(isAsc ? 'desc' : 'asc');
+
     setOrderBy(property);
   };
 
@@ -80,12 +80,12 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
       <Table>
         <SimpleTableHead
           data={headCells}
-          order="asc"
+          order={order}
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
         />
         <TableBody>
-          {rows
+          {sortBy(rows, orderBy)
             .slice(
               page * rowsPerPage,
               hideTablePagination

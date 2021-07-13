@@ -3,17 +3,20 @@ import {
   TableRow,
   TableCell,
   TableSortLabel,
+  Typography,
 } from '@material-ui/core';
 import { uniqueId } from 'lodash';
 import { ReactNode } from 'react';
 
-export type RowElement = string | number | ReactNode;
+export type RowElement = string | number;
+
+export type CellElement = string | number | ReactNode;
 
 export type Order = 'asc' | 'desc';
 
 export interface SimpleTableHeadData {
   id: string;
-  value: RowElement;
+  value: CellElement;
   align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
   sorted?: boolean;
 }
@@ -22,17 +25,11 @@ export interface SimpleTableHeadProps {
   data: SimpleTableHeadData[];
   order: Order;
   orderBy: string;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
+  onRequestSort: (property: string) => void;
 }
 
 const SimpleTableHead: React.FC<SimpleTableHeadProps> = (props) => {
   const { data, order, orderBy, onRequestSort } = props;
-
-  const createSortHandler = (property: string) => (
-    event: React.MouseEvent<unknown>
-  ) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>
@@ -42,13 +39,13 @@ const SimpleTableHead: React.FC<SimpleTableHeadProps> = (props) => {
             {cell.sorted ? (
               <TableSortLabel
                 active={orderBy === cell.id}
-                direction={orderBy === cell.id ? order : 'asc'}
-                onClick={createSortHandler(cell.id)}
+                direction={order}
+                onClick={() => onRequestSort(cell.id)}
               >
-                {cell.value}
+                <Typography variant="body1">{cell.value}</Typography>
               </TableSortLabel>
             ) : (
-              cell.value
+              <Typography variant="body1">{cell.value}</Typography>
             )}
           </TableCell>
         ))}

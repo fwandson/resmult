@@ -244,7 +244,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             id: 'oferta',
             value: 'Oferta',
             align: 'left',
-            // sorted: true,
+            sorted: true,
           },
           {
             id: 'turmaModulo',

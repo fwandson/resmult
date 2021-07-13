@@ -85,17 +85,17 @@ const CHCompTableSmall: React.FC<CHCompTableSmallProps> = (props) => {
       headCells={[
         {
           id: 'residente',
-          value: <Typography variant="body1">Residente / Ênfase</Typography>,
+          value: 'Residente / Ênfase',
           align: 'left',
         },
         {
           id: 'chRegistrada',
-          value: <Typography variant="body1">CH registrada</Typography>,
+          value: 'CH registrada',
           align: 'left',
         },
         {
           id: 'actions',
-          value: <Typography variant="body1">Ações</Typography>,
+          value: 'Ações',
           align: 'right',
         },
       ]}
