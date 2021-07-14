@@ -140,25 +140,31 @@ const CHCompTable: React.FC<CHCompTableProps> = (props) => {
       hideTablePagination
       onClickFilterButton={onClickFilterButton}
       chips={handleChipsTable()}
+      initialOrderBy="residente"
       headCells={[
         {
-          value: <Typography variant="body1">Foto</Typography>,
+          id: 'foto',
+          value: 'Foto',
           align: 'center',
         },
         {
-          value: <Typography variant="body1">Residente / Ênfase</Typography>,
+          id: 'residente',
+          value: 'Residente / Ênfase',
           align: 'left',
         },
         {
-          value: <Typography variant="body1">CH pendente</Typography>,
+          id: 'chPendente',
+          value: 'CH pendente',
           align: 'left',
         },
         {
-          value: <Typography variant="body1">CH registrada</Typography>,
+          id: 'chRegistrada',
+          value: 'CH registrada',
           align: 'right',
         },
         {
-          value: <Typography variant="body1">Ações</Typography>,
+          id: 'actions',
+          value: 'Ações',
           align: 'right',
         },
       ]}

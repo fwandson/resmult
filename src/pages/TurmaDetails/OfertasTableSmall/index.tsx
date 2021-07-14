@@ -104,16 +104,20 @@ const OfertasTableSmall: React.FC<OfertasTableSmallProps> = (props) => {
     <SimpleTable
       title="Lista de ofertas"
       hideTablePagination
+      initialOrderBy="oferta"
       headCells={[
         {
+          id: 'oferta',
           value: 'Oferta',
           align: 'left',
         },
         {
+          id: 'periodo',
           value: 'Período',
           align: 'left',
         },
         {
+          id: 'actions',
           value: '',
           align: 'right',
         },

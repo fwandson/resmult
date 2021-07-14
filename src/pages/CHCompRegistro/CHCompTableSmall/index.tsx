@@ -81,17 +81,21 @@ const CHCompTableSmall: React.FC<CHCompTableSmallProps> = (props) => {
     <SimpleTable
       title="Residentes"
       hideTablePagination
+      initialOrderBy="residente"
       headCells={[
         {
-          value: <Typography variant="body1">Residente / Ênfase</Typography>,
+          id: 'residente',
+          value: 'Residente / Ênfase',
           align: 'left',
         },
         {
-          value: <Typography variant="body1">CH registrada</Typography>,
+          id: 'chRegistrada',
+          value: 'CH registrada',
           align: 'left',
         },
         {
-          value: <Typography variant="body1">Ações</Typography>,
+          id: 'actions',
+          value: 'Ações',
           align: 'right',
         },
       ]}

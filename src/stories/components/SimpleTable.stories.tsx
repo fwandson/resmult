@@ -35,14 +35,17 @@ const Template: Story<SimpleTableProps> = (args) => <SimpleTable {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
+  initialOrderBy: 'nome',
   title,
   headCells: [
-    { value: 'Nome', align: 'left' },
+    { id: 'nome', value: 'Nome', align: 'left' },
     {
+      id: 'idade',
       value: 'Idade',
       align: 'left',
     },
     {
+      id: 'sexo',
       value: 'Sexo',
       align: 'right',
     },

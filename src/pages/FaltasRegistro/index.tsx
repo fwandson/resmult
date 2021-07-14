@@ -405,18 +405,22 @@ const FaltasRegistro: React.FC = () => {
           onClickFilterButton={() => setOpenFiltrosModal(true)}
           hideTablePagination
           chips={handleChipsTable()}
+          initialOrderBy="residente"
           headCells={[
             {
+              id: 'foto',
               value: <Typography variant="body1">Foto</Typography>,
               align: 'center',
             },
             {
+              id: 'residente',
               value: (
                 <Typography variant="body1">Residente / Ênfase</Typography>
               ),
               align: 'left',
             },
             {
+              id: 'pratica',
               value: (
                 <Tooltip title="Prática" placement="top-start">
                   <Box>
@@ -434,6 +438,7 @@ const FaltasRegistro: React.FC = () => {
               align: 'left',
             },
             {
+              id: 'teoricoConceitual',
               value: (
                 <Tooltip title="EAD + presencial" placement="top-start">
                   <Box>
@@ -453,6 +458,7 @@ const FaltasRegistro: React.FC = () => {
               align: 'left',
             },
             {
+              id: 'teoricoPratica',
               value: (
                 <Tooltip title="Campo + núcleo" placement="top-start">
                   <Box>
