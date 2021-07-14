@@ -1,4 +1,5 @@
-import { Box, Chip, Tooltip, Typography } from '@material-ui/core';
+/* eslint-disable react/display-name */
+import { Box, Button, Chip, Tooltip, Typography } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
@@ -114,7 +115,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     if (ofertas) {
       return searchOfertas(searchValue)
         .filter((oferta) => {
-          // os ids dos períodos estão como P1, P2 e P3
           if (filtros.periodo)
             return oferta.atividadeModulo.periodo === filtros.periodo;
           return true;
@@ -225,6 +225,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     return [];
   };
 
+  
   return (
     <>
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
@@ -238,25 +239,25 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             id: 'idOerta',
             value: '#Id',
             align: 'left',
-            // sorted: true,
+            sorted: true,
           },
           {
             id: 'oferta',
             value: 'Oferta',
             align: 'left',
-            // sorted: true,
+            sorted: true,
           },
           {
             id: 'turmaModulo',
             value: 'Turma / Modulo',
             align: 'left',
-            // sorted: true,
+            sorted: true,
           },
           {
             id: 'periodo',
             value: 'Período',
             align: 'left',
-            // sorted: true,
+            sorted: true,
           },
           {
             id: 'inicioFim',
@@ -280,6 +281,50 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
           },
         ]}
         rows={handleRows()}
+        rowsData={[
+          {
+            idOerta: 'idOerta',
+            turmaModulo: 'turmaModulo',
+            periodo: 'periodo',
+            ch: 'ch',
+            encerramento: 'encerramento',
+            lancamentos: 'lancamentos',
+          },
+          {
+            idOerta: 'idOerta',
+            turmaModulo: 'turmaModulo',
+            periodo: 'periodo',
+            ch: 'ch',
+            encerramento: 'encerramento',
+            lancamentos: 'lancamentos',
+          },
+          {
+            idOerta: 'idOerta',
+            turmaModulo: 'turmaModulo',
+            periodo: 'periodo',
+            ch: 'ch',
+            encerramento: 'encerramento',
+            lancamentos: 'lancamentos',
+          },
+          {
+            idOerta: 'idOerta',
+            turmaModulo: 'turmaModulo',
+            periodo: 'periodo',
+            ch: 'ch',
+            encerramento: 'encerramento',
+            lancamentos: 'lancamentos',
+          },
+        ]}
+        renderCells={{
+          idOerta: () => <Typography>idOerta</Typography>,
+          oferta: () => <Typography>oferta</Typography>,
+          turmaModulo: () => <Typography>turmaModulo</Typography>,
+          periodo: () => <Typography>periodo</Typography>,
+          inicioFim: () => <Typography>inicioFim</Typography>,
+          ch: () => <Typography>ch</Typography>,
+          encerramento: () => <Typography>encerramento</Typography>,
+          lancamentos: () => <Typography>lancamentos</Typography>,
+        }}
       />
     </>
   );

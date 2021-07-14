@@ -11,6 +11,7 @@ import useOfertas from 'src/hooks/useOfertas';
 import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
+import DataGridDemo from './DataGridDemo';
 import OfertasTable from './OfertasTable';
 import OfertasTableSmall from './OfertasTableSmall';
 
@@ -68,6 +69,9 @@ const TurmaDetails: React.FC = () => {
         inicio={turma?.dataInicio}
         fim={turma?.dataFim}
       />
+
+      <DataGridDemo />
+
       <Hidden smDown>
         <OfertasTable
           turmaId={Number(id)}

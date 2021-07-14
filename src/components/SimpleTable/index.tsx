@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Paper,
   Table,
@@ -7,7 +8,7 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import SimpleTableHead, {
   CellElement,
   Order,
@@ -28,6 +29,11 @@ export interface SimpleTableProps {
     label: string;
   }>;
   initialOrderBy: string;
+  rowsData?: any[]; // TODO: testando
+  renderRowsData?(rowsData: any): void;
+  renderCells?: {
+    [key: string]: () => JSX.Element;
+  };
 }
 
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
@@ -39,6 +45,9 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     onClickFilterButton,
     chips,
     initialOrderBy,
+    rowsData,
+    renderRowsData,
+    renderCells,
   } = props;
 
   const [page, setPage] = useState(0);
@@ -85,6 +94,13 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           onRequestSort={handleRequestSort}
         />
         <TableBody>
+
+          {headCells.map((elem) => (
+            <TableCell key={elem.id}>
+              {renderCells ? renderCells[elem.id]() : null}
+            </TableCell>
+          ))}
+
           {sortBy(rows, orderBy)
             .slice(
               page * rowsPerPage,
