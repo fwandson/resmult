@@ -245,18 +245,22 @@ const NotasRegistro: React.FC = () => {
           hideTablePagination
           onClickFilterButton={() => setOpenFiltrosModal(true)}
           chips={handleChipsTable()}
+          initialOrderBy="residente"
           headCells={[
             {
+              id: 'foto',
               value: <Typography variant="body1">Foto</Typography>,
               align: 'center',
             },
             {
+              id: 'residente',
               value: (
                 <Typography variant="body1">Residente / Ênfase</Typography>
               ),
               align: 'left',
             },
             {
+              id: 'notaAtividadeProduto',
               value: (
                 <Typography variant="body1">
                   Nota atividade do produto
@@ -265,6 +269,7 @@ const NotasRegistro: React.FC = () => {
               align: 'left',
             },
             {
+              id: 'notaAvaliaçãoDiscente',
               value: (
                 <Typography variant="body1">
                   Nota de avaliação discente

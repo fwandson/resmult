@@ -43,8 +43,6 @@ const RecuperarSenha: React.FC = () => {
     try {
       showLoading();
 
-      console.log(formaData);
-
       const cpf = formaData.cpf.replace(/[^0-9]/g, '');
 
       const { data } = await recuperarSenha.enviarEmail({

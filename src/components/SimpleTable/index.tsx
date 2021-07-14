@@ -1,35 +1,35 @@
 import {
-  TableContainer,
-  Table,
   Paper,
-  TableHead,
-  TableRow,
-  TableCell,
+  Table,
   TableBody,
+  TableCell,
+  TableContainer,
   TablePagination,
+  TableRow,
 } from '@material-ui/core';
-import { uniqueId } from 'lodash';
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import SimpleTableHead, {
+  CellElement,
+  Order,
+  SimpleTableHeadData,
+} from './SimpleTableHead';
 import SimpleTableToolbar from './SimpleTableToolbar';
 
-type RowElement = string | number | ReactNode;
+import { sortBy } from 'lodash';
 
 export interface SimpleTableProps {
   title: string;
-  headCells: {
-    value: RowElement;
-    align: 'inherit' | 'left' | 'center' | 'right' | 'justify' | undefined;
-  }[];
-  rows: RowElement[][];
+  headCells: SimpleTableHeadData[];
+  rows: CellElement[][];
   hideTablePagination?: boolean;
   onClickFilterButton?(): void;
   chips?: Array<{
     value: string | number | Date;
     label: string;
   }>;
+  initialOrderBy: string;
 }
 
-// Ainda em fase de testes
 const SimpleTable: React.FC<SimpleTableProps> = (props) => {
   const {
     headCells,
@@ -38,11 +38,16 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     hideTablePagination,
     onClickFilterButton,
     chips,
+    initialOrderBy,
   } = props;
 
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [order, setOrder] = useState<Order>('asc');
+
+  const [orderBy, setOrderBy] = useState(initialOrderBy);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -51,6 +56,14 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleRequestSort = (property: string) => {
+    const isAsc = orderBy === property && order === 'asc';
+
+    setOrder(isAsc ? 'desc' : 'asc');
+
+    setOrderBy(property);
   };
 
   const emptyRows =
@@ -65,17 +78,14 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
         chips={chips}
       />
       <Table>
-        <TableHead>
-          <TableRow>
-            {headCells.map((cell) => (
-              <TableCell key={uniqueId()} align={cell.align}>
-                {cell.value}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+        <SimpleTableHead
+          data={headCells}
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
-          {rows
+          {sortBy(rows, orderBy)
             .slice(
               page * rowsPerPage,
               hideTablePagination
