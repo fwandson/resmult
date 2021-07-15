@@ -8,15 +8,14 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { sortBy } from 'lodash';
+import { ChangeEvent, useState } from 'react';
 import SimpleTableHead, {
   CellElement,
   Order,
   SimpleTableHeadData,
 } from './SimpleTableHead';
 import SimpleTableToolbar from './SimpleTableToolbar';
-
-import { sortBy } from 'lodash';
 
 export interface SimpleTableProps {
   title: string;
@@ -45,8 +44,8 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     onClickFilterButton,
     chips,
     initialOrderBy,
-    rowsData,
-    renderRowsData,
+    // rowsData,
+    // renderRowsData,
     renderCells,
   } = props;
 
@@ -94,7 +93,6 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           onRequestSort={handleRequestSort}
         />
         <TableBody>
-
           {headCells.map((elem) => (
             <TableCell key={elem.id}>
               {renderCells ? renderCells[elem.id]() : null}

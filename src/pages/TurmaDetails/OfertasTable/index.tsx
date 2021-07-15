@@ -1,6 +1,5 @@
-/* eslint-disable react/display-name */
 import { Box, Chip, Tooltip, Typography } from '@material-ui/core';
-import { GridColDef } from '@material-ui/data-grid';
+import { GridCellParams, GridColDef } from '@material-ui/data-grid';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
@@ -28,16 +27,20 @@ interface OfertasTableProps {
   searchValue: string;
 }
 
+interface Oferta {
+  nome: string;
+  modulo: string;
+}
+
+interface Turma {
+  nome: string;
+  modulo: string;
+}
+
 interface RownsData {
   id: number;
-  oferta: {
-    modulo: string;
-    nome: string;
-  };
-  turma: {
-    nome: string;
-    modulo: string;
-  };
+  oferta: Oferta;
+  turma: Turma;
   periodo: string;
   datas: {
     inicio: string;
@@ -47,19 +50,55 @@ interface RownsData {
   encerramento: boolean;
 }
 
+const renderCellIdOferta = (params: GridCellParams) => (
+  <Typography variant="caption">{params.value}</Typography>
+);
+
+const renderCellOferta = (params: GridCellParams) => {
+  const { nome, modulo } = params.value as Oferta;
+
+  return (
+    <Box key="oferta" display="flex" flexDirection="column">
+      <Typography variant="caption" color="textSecondary">
+        {modulo}
+      </Typography>
+      <Typography variant="caption">{nome}</Typography>
+    </Box>
+  );
+};
+
+const renderCellTurma = (params: GridCellParams) => {
+  const { nome, modulo } = params.value as Turma;
+
+  return (
+    <Box key="oferta" display="flex" flexDirection="column">
+      <Typography variant="caption" color="textSecondary">
+        {modulo}
+      </Typography>
+      <Typography variant="caption">{nome}</Typography>
+    </Box>
+  );
+};
+
 const columns: GridColDef[] = [
-  { field: 'id', headerName: '#Id', width: 100, align: 'left' },
+  {
+    field: 'id',
+    headerName: '#Id',
+    align: 'left',
+    renderCell: renderCellIdOferta,
+  },
   {
     field: 'oferta',
     headerName: 'Oferta',
     align: 'left',
     width: 300,
-    // renderCell: renderCellOferta,
+    renderCell: renderCellOferta,
   },
   {
-    field: 'turmaModulo',
+    field: 'turma',
     headerName: 'Turma / Modulo',
     width: 200,
+    renderCell: renderCellTurma,
   },
   {
     field: 'periodo',
@@ -70,6 +109,7 @@ const columns: GridColDef[] = [
     field: 'datas',
     headerName: 'Início/Fim',
     width: 150,
+    sortable: false,
   },
   {
     field: 'ch',
@@ -79,12 +119,14 @@ const columns: GridColDef[] = [
   {
     field: 'encerramento',
     headerName: 'Encerramento',
+    align: 'center',
     width: 200,
   },
   {
     field: 'actions',
     headerName: 'Ações',
     width: 200,
+    sortable: false,
   },
 ];
 
@@ -92,19 +134,37 @@ const rows: RownsData[] = [
   {
     id: 1,
     oferta: {
-      modulo: '',
-      nome: '',
+      nome: 'MÓDULO TRANSVERSAL II',
+      modulo: 'COLABORAÇÃO INTERPROFISSIONAL E PROCESSO DE TRABALHO NA SAÚDE',
     },
     turma: {
-      nome: '',
-      modulo: '',
+      nome: 'T7HOSPITALAR',
+      modulo: 'MÓDULO TRANSVERSAL II',
     },
-    periodo: '',
+    periodo: 'Primeiro ano',
     datas: {
-      inicio: '',
-      fim: '',
+      inicio: '20/05/2020',
+      fim: '30/06/2020',
     },
-    ch: '',
+    ch: '360',
+    encerramento: false,
+  },
+  {
+    id: 2,
+    oferta: {
+      nome: 'MÓDULO TRANSVERSAL I',
+      modulo: 'TERRITÓRIO E SAÚDE',
+    },
+    turma: {
+      nome: 'T7HOSPITALAR',
+      modulo: 'MÓDULO TRANSVERSAL I',
+    },
+    periodo: 'Segundo ano',
+    datas: {
+      inicio: '20/05/2020',
+      fim: '30/06/2020',
+    },
+    ch: '360',
     encerramento: false,
   },
 ];
@@ -304,7 +364,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     <>
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
 
-      <CustomTable columns={columns} rows={rows} />
+      <CustomTable columns={columns} rows={rows} disableSelectionOnClick />
 
       <SimpleTable
         title="Lista de ofertas"
