@@ -1,5 +1,9 @@
 import { Box, Chip, Tooltip, Typography } from '@material-ui/core';
-import { GridCellParams, GridColDef } from '@material-ui/data-grid';
+import {
+  GridCellParams,
+  GridColDef,
+  GridValueGetterParams,
+} from '@material-ui/data-grid';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
@@ -37,19 +41,27 @@ interface Turma {
   modulo: string;
 }
 
+interface Datas {
+  inicio: string;
+  fim: string;
+}
+
+interface CargaHoraria {
+  value: number;
+  tooltipText: string;
+}
+
 interface RownsData {
   id: number;
   oferta: Oferta;
   turma: Turma;
   periodo: string;
-  datas: {
-    inicio: string;
-    fim: string;
-  };
-  ch: string;
+  datas: Datas;
+  ch: CargaHoraria;
   encerramento: boolean;
 }
 
+// TODO: colocar as render fn em um arquivo separado
 const renderCellIdOferta = (params: GridCellParams) => (
   <Typography variant="caption">{params.value}</Typography>
 );
@@ -58,7 +70,7 @@ const renderCellOferta = (params: GridCellParams) => {
   const { nome, modulo } = params.value as Oferta;
 
   return (
-    <Box key="oferta" display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column">
       <Typography variant="caption" color="textSecondary">
         {modulo}
       </Typography>
@@ -71,7 +83,7 @@ const renderCellTurma = (params: GridCellParams) => {
   const { nome, modulo } = params.value as Turma;
 
   return (
-    <Box key="oferta" display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column">
       <Typography variant="caption" color="textSecondary">
         {modulo}
       </Typography>
@@ -79,6 +91,82 @@ const renderCellTurma = (params: GridCellParams) => {
     </Box>
   );
 };
+
+const renderCellPeriodo = (params: GridCellParams) => (
+  <Box display="flex" flexDirection="column">
+    <Typography variant="caption" color="textSecondary">
+      ANO
+    </Typography>
+    <Typography variant="caption">{params.value}</Typography>
+  </Box>
+);
+
+const renderCellDatas = (params: GridCellParams) => {
+  const { inicio, fim } = params.value as Datas;
+
+  return (
+    <Box display="flex" flexDirection="column">
+      <Typography variant="caption" color="textSecondary">
+        {inicio}
+      </Typography>
+      <Typography variant="caption">{fim}</Typography>
+    </Box>
+  );
+};
+
+const renderCellCh = (params: GridCellParams) => {
+  const { value, tooltipText } = params.value as CargaHoraria;
+
+  return (
+    <Tooltip placement="top" title={tooltipText}>
+      <Box display="flex" alignItems="center">
+        <Typography variant="caption" noWrap>{`${value} h`}</Typography>
+        <Box m={1} />
+        <InfoIcon color="action" fontSize="small" />
+      </Box>
+    </Tooltip>
+  );
+};
+
+const renderCellEncerramento = (params: GridCellParams) => (
+  <Box display="flex" flexDirection="column">
+    <Typography variant="caption" color="textSecondary">
+      {params.value ? (
+        <Chip label="Encerrado" variant="outlined" color="secondary" />
+      ) : (
+        <Chip label="Aberto" variant="outlined" color="primary" />
+      )}
+    </Typography>
+  </Box>
+);
+
+// TODO: Será necessário passar isso para dentro do component
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const renderCellActions = (params: GridCellParams) => (
+  <Box key="lancamentos" display="flex" justifyContent="flex-end">
+    <CustonIconButton
+      tooltipTitle="Registro de faltas"
+      // onClick={() => handlerGoToRegistroFaltas(oferta.id)}
+    >
+      <EventAvailableIcon />
+    </CustonIconButton>
+    <CustonIconButton
+      tooltipTitle="Registro de notas"
+      // onClick={() => handlerGoToRegistroNotas(oferta.id)}
+    >
+      <LibraryAddSharpIcon />
+    </CustonIconButton>
+    <CustonIconButton
+      tooltipTitle="Registro de horas complementares"
+      // onClick={() => handlerGoToRegistroCHComp(oferta.id)}
+    >
+      <UpdateIcon />
+    </CustonIconButton>
+  </Box>
+);
+
+const valueGetterAction = (params: GridValueGetterParams) =>
+  params.getValue(params.id, 'id');
 
 const columns: GridColDef[] = [
   {
@@ -104,29 +192,34 @@ const columns: GridColDef[] = [
     field: 'periodo',
     headerName: 'Período',
     width: 150,
+    renderCell: renderCellPeriodo,
   },
   {
     field: 'datas',
     headerName: 'Início/Fim',
     width: 150,
     sortable: false,
+    renderCell: renderCellDatas,
   },
   {
     field: 'ch',
     headerName: 'CH',
     width: 150,
+    renderCell: renderCellCh,
   },
   {
     field: 'encerramento',
     headerName: 'Encerramento',
     align: 'center',
     width: 200,
+    renderCell: renderCellEncerramento,
   },
   {
     field: 'actions',
     headerName: 'Ações',
     width: 200,
-    sortable: false,
+    valueGetter: valueGetterAction,
+    renderCell: renderCellActions,
   },
 ];
 
@@ -146,7 +239,10 @@ const rows: RownsData[] = [
       inicio: '20/05/2020',
       fim: '30/06/2020',
     },
-    ch: '360',
+    ch: {
+      value: 360,
+      tooltipText: 'mensagem',
+    },
     encerramento: false,
   },
   {
@@ -164,8 +260,32 @@ const rows: RownsData[] = [
       inicio: '20/05/2020',
       fim: '30/06/2020',
     },
-    ch: '360',
-    encerramento: false,
+    ch: {
+      value: 360,
+      tooltipText: 'mensagem',
+    },
+    encerramento: true,
+  },
+  {
+    id: 3,
+    oferta: {
+      nome: 'MÓDULO TRANSVERSAL I',
+      modulo: 'TERRITÓRIO E SAÚDE',
+    },
+    turma: {
+      nome: 'T6HOSPITALAR',
+      modulo: 'MÓDULO TRANSVERSAL I',
+    },
+    periodo: 'Segundo ano',
+    datas: {
+      inicio: '20/05/2020',
+      fim: '30/06/2020',
+    },
+    ch: {
+      value: 360,
+      tooltipText: 'mensagem',
+    },
+    encerramento: true,
   },
 ];
 
@@ -245,6 +365,32 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
         };
       });
   }, [filtros]);
+
+  const handleGenerateRows = useCallback((): RownsData[] => {
+    if (!ofertas) return [];
+
+    return searchOfertas(searchValue).map((oferta) => ({
+      id: oferta.id,
+      oferta: {
+        nome: '',
+        modulo: '',
+      },
+      turma: {
+        nome: '',
+        modulo: '',
+      },
+      periodo: '',
+      datas: {
+        inicio: '',
+        fim: '',
+      },
+      ch: {
+        value: 360,
+        tooltipText: 'Mensagem aqui',
+      },
+      encerramento: true,
+    }));
+  }, [ofertas, searchValue]);
 
   const handleRows = () => {
     if (ofertas) {
@@ -364,7 +510,11 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     <>
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
 
-      <CustomTable columns={columns} rows={rows} disableSelectionOnClick />
+      <CustomTable
+        columns={columns}
+        rows={handleGenerateRows()}
+        disableSelectionOnClick
+      />
 
       <SimpleTable
         title="Lista de ofertas"

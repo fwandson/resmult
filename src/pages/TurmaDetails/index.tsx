@@ -1,7 +1,6 @@
 import { Box, Hidden } from '@material-ui/core';
 import { useState } from 'react';
 import { useParams } from 'react-router';
-// import CustomTable from 'src/components/CustomTable';
 import GenericContent from 'src/components/GenericContent';
 import SearchField from 'src/components/SearchField';
 import TurmaInfo from 'src/components/TurmaInfo';
@@ -77,7 +76,7 @@ const TurmaDetails: React.FC = () => {
           searchValue={searchValueDebaunced}
         />
       </Hidden>
-      
+
       <Hidden mdUp>
         <OfertasTableSmall
           turmaId={Number(id)}
