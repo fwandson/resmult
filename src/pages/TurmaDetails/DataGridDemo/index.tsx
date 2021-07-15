@@ -1,9 +1,9 @@
-/* eslint-disable react/display-name */
 import { Typography, Box } from '@material-ui/core';
 import {
   DataGrid,
   GridColDef,
   GridValueGetterParams,
+  GridCellParams,
 } from '@material-ui/data-grid';
 
 interface Teste {
@@ -11,15 +11,29 @@ interface Teste {
   idade: number;
 }
 
+const renderCellTeste = (params: GridCellParams) => {
+  const { idade, nome } = params.value as Teste;
+
+  return (
+    <Box display="flex">
+      <Typography>{idade}</Typography>
+      <Typography>{nome}</Typography>
+    </Box>
+  );
+};
+
+const renderCellFirstName = (params: GridCellParams) => {
+  return <Typography>{params.value}</Typography>;
+};
+
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90, align: 'center' },
+  { field: 'id', headerName: 'ID', width: 100, align: 'left' },
   {
     field: 'firstName',
     headerName: 'First name',
     width: 150,
     editable: true,
-
-    renderCell: (params) => <Typography>Teste{params.value}</Typography>,
+    renderCell: renderCellFirstName,
   },
   {
     field: 'lastName',
@@ -51,17 +65,7 @@ const columns: GridColDef[] = [
     type: 'object',
     width: 250,
     editable: false,
-    renderCell: (params) => {
-      const { value } = params;
-
-      if (!value) return;
-
-      return (
-        <Box>
-          <Typography>{(value as Teste).idade}</Typography>
-        </Box>
-      );
-    },
+    renderCell: renderCellTeste,
   },
 ];
 
@@ -71,17 +75,30 @@ const rows = [
     lastName: 'Snow',
     firstName: 'Jon',
     age: 35,
-    teste: { name: 'Ericson', idade: 33 },
+    teste: { nome: 'Ericson', idade: 33 },
   },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  {
+    id: 2,
+    lastName: 'Lannister',
+    firstName: 'Cersei',
+    age: 42,
+    teste: { nome: 'Ericson', idade: 33 },
+  },
+  {
+    id: 3,
+    lastName: 'Lannister',
+    firstName: 'Cersei',
+    age: 42,
+    teste: { nome: 'Ericson', idade: 33 },
+  },
 ];
+
 const DataGridDemo: React.FC = () => {
   return (
     <DataGrid
       rows={rows}
       columns={columns}
-      pageSize={10}
+      pageSize={5}
       disableSelectionOnClick
     />
   );

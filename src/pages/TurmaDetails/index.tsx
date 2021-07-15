@@ -1,6 +1,7 @@
 import { Box, Hidden } from '@material-ui/core';
 import { useState } from 'react';
 import { useParams } from 'react-router';
+// import CustomTable from 'src/components/CustomTable';
 import GenericContent from 'src/components/GenericContent';
 import SearchField from 'src/components/SearchField';
 import TurmaInfo from 'src/components/TurmaInfo';
@@ -11,7 +12,6 @@ import useOfertas from 'src/hooks/useOfertas';
 import useTurmas from 'src/hooks/useTurmas';
 import NAMES from 'src/routes/names';
 import { useDebounce } from 'use-debounce';
-import DataGridDemo from './DataGridDemo';
 import OfertasTable from './OfertasTable';
 import OfertasTableSmall from './OfertasTableSmall';
 
@@ -70,8 +70,6 @@ const TurmaDetails: React.FC = () => {
         fim={turma?.dataFim}
       />
 
-      <DataGridDemo />
-
       <Hidden smDown>
         <OfertasTable
           turmaId={Number(id)}
@@ -79,6 +77,7 @@ const TurmaDetails: React.FC = () => {
           searchValue={searchValueDebaunced}
         />
       </Hidden>
+      
       <Hidden mdUp>
         <OfertasTableSmall
           turmaId={Number(id)}

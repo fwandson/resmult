@@ -1,13 +1,15 @@
 /* eslint-disable react/display-name */
-import { Box, Button, Chip, Tooltip, Typography } from '@material-ui/core';
+import { Box, Chip, Tooltip, Typography } from '@material-ui/core';
+import { GridColDef } from '@material-ui/data-grid';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
-import { compareAsc, compareDesc, format, add } from 'date-fns';
+import { add, compareAsc, compareDesc, format } from 'date-fns';
 import { toPairs } from 'lodash';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
+import CustomTable from 'src/components/CustomTable';
 import CustonIconButton from 'src/components/CustonIconButton';
 import FiltrosOfertasModal, {
   FiltrosOfertasModalData,
@@ -18,12 +20,94 @@ import useOfertas from 'src/hooks/useOfertas';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import { GetOfertasNames } from 'src/resources/turmas/types';
 import NAMES from 'src/routes/names';
+import { handlePediodo } from 'src/utils';
 
 interface OfertasTableProps {
   turmaId: number;
   ofertas: GetOfertasNames.Return | undefined;
   searchValue: string;
 }
+
+interface RownsData {
+  id: number;
+  oferta: {
+    modulo: string;
+    nome: string;
+  };
+  turma: {
+    nome: string;
+    modulo: string;
+  };
+  periodo: string;
+  datas: {
+    inicio: string;
+    fim: string;
+  };
+  ch: string;
+  encerramento: boolean;
+}
+
+const columns: GridColDef[] = [
+  { field: 'id', headerName: '#Id', width: 100, align: 'left' },
+  {
+    field: 'oferta',
+    headerName: 'Oferta',
+    align: 'left',
+    width: 300,
+    // renderCell: renderCellOferta,
+  },
+  {
+    field: 'turmaModulo',
+    headerName: 'Turma / Modulo',
+    width: 200,
+  },
+  {
+    field: 'periodo',
+    headerName: 'Período',
+    width: 150,
+  },
+  {
+    field: 'datas',
+    headerName: 'Início/Fim',
+    width: 150,
+  },
+  {
+    field: 'ch',
+    headerName: 'CH',
+    width: 150,
+  },
+  {
+    field: 'encerramento',
+    headerName: 'Encerramento',
+    width: 200,
+  },
+  {
+    field: 'actions',
+    headerName: 'Ações',
+    width: 200,
+  },
+];
+
+const rows: RownsData[] = [
+  {
+    id: 1,
+    oferta: {
+      modulo: '',
+      nome: '',
+    },
+    turma: {
+      nome: '',
+      modulo: '',
+    },
+    periodo: '',
+    datas: {
+      inicio: '',
+      fim: '',
+    },
+    ch: '',
+    encerramento: false,
+  },
+];
 
 const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   const { ofertas, turmaId, searchValue } = props;
@@ -81,15 +165,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     },
     [turmaId]
   );
-
-  const handlePediodo = (periodo: 'P1' | 'P2' | 'P3') => {
-    const periodos = {
-      P1: 'Primeiro ano',
-      P2: 'Segundo ano',
-      P3: 'Terceiro ano',
-    };
-    return periodos[periodo];
-  };
 
   const handleChips = useCallback(() => {
     const handleValues = {
@@ -225,10 +300,12 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     return [];
   };
 
-  
   return (
     <>
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
+
+      <CustomTable columns={columns} rows={rows} />
+
       <SimpleTable
         title="Lista de ofertas"
         onClickFilterButton={() => setOpen(true)}
@@ -315,16 +392,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             lancamentos: 'lancamentos',
           },
         ]}
-        renderCells={{
-          idOerta: () => <Typography>idOerta</Typography>,
-          oferta: () => <Typography>oferta</Typography>,
-          turmaModulo: () => <Typography>turmaModulo</Typography>,
-          periodo: () => <Typography>periodo</Typography>,
-          inicioFim: () => <Typography>inicioFim</Typography>,
-          ch: () => <Typography>ch</Typography>,
-          encerramento: () => <Typography>encerramento</Typography>,
-          lancamentos: () => <Typography>lancamentos</Typography>,
-        }}
       />
     </>
   );
