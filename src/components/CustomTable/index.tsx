@@ -31,6 +31,9 @@ interface CustomTableProps
     | 'localeText'
     | 'pageSize'
     | 'rowsPerPageOptions'
+    | 'disableSelectionOnClick'
+    | 'autoHeight'
+    | 'disableColumnMenu'
   > {
   title: string;
 }

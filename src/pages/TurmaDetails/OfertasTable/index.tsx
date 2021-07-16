@@ -168,7 +168,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
           <Typography variant="caption" noWrap>
             {ch} h
           </Typography>
-          <Box m={1} />
+          <Box m="4px" />
           <InfoIcon color="action" fontSize="small" />
         </Box>
       </Tooltip>
@@ -187,7 +187,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     </Box>
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderCellActions = (params: GridCellParams) => (
     <Box key="lancamentos" display="flex" justifyContent="flex-end">
       <CustonIconButton
@@ -282,10 +281,10 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
           {
             field: 'datas',
             headerName: 'Início/Fim',
-            align: 'left',
+            align: 'center',
+            headerAlign: 'center',
             type: 'date',
-            headerAlign: 'left',
-            width: 120,
+            width: 150,
             renderCell: renderCellDatas,
             valueGetter: valueGetterDatas,
           },
