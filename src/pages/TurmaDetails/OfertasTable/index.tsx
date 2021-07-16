@@ -5,7 +5,6 @@ import InfoIcon from '@material-ui/icons/Info';
 import LibraryAddSharpIcon from '@material-ui/icons/LibraryAddSharp';
 import UpdateIcon from '@material-ui/icons/Update';
 import { add, format } from 'date-fns';
-// import { toPairs } from 'lodash';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import CustomTable from 'src/components/CustomTable';
@@ -95,27 +94,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     },
     [turmaId]
   );
-
-  // TODO: passar isso pelas props
-  // const handleChips = useCallback(() => {
-  //   const handleValues = {
-  //     periodo: (value: string) => handlePediodo(value as 'P1' | 'P2' | 'P3'),
-  //     inicio: (value: string) => value,
-  //     fim: (value: string) => value,
-  //   };
-
-  //   return toPairs(filtros)
-  //     .filter((pair) => pair[1])
-  //     .map((pair) => {
-  //       const selecteFunction =
-  //         handleValues[pair[0] as keyof FiltrosOfertasModalData];
-
-  //       return {
-  //         label: pair[0],
-  //         value: selecteFunction(pair[1]),
-  //       };
-  //     });
-  // }, [filtros]);
 
   const valueGetterActions = (params: GridValueGetterParams) => params.row.id;
 
@@ -257,120 +235,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     }));
   }, [ofertas, searchValue, searchOfertas]);
 
-  // const handleRows = () => {
-  //   if (ofertas) {
-  //     return searchOfertas(searchValue)
-  //       .filter((oferta) => {
-  //         if (filtros.periodo)
-  //           return oferta.atividadeModulo.periodo === filtros.periodo;
-  //         return true;
-  //       })
-  //       .filter((oferta) => {
-  //         if (filtros.inicio)
-  //           return compareAsc(new Date(oferta.dataInicio), filtros.inicio) >= 0;
-  //         return true;
-  //       })
-  //       .filter((oferta) => {
-  //         if (filtros.fim)
-  //           return compareDesc(new Date(oferta.dataFim), filtros.fim) >= 0;
-  //         return true;
-  //       })
-  //       .map((oferta) => [
-  //         <Box key="id" display="flex" flexDirection="column">
-  //           <Typography variant="caption">{oferta.id}</Typography>
-  //         </Box>,
-  //         <Box key="oferta" display="flex" flexDirection="column">
-  //           <Typography variant="caption" color="textSecondary">
-  //             {oferta.modulo.nome}
-  //           </Typography>
-  //           <Typography variant="caption">{oferta.nome}</Typography>
-  //         </Box>,
-  //         <Box key="turma-modulo" display="flex" flexDirection="column">
-  //           <Typography variant="caption" color="textSecondary">
-  //             {oferta.turma.codigoTurma}
-  //           </Typography>
-  //           <Typography variant="caption">{oferta.modulo.nome}</Typography>
-  //         </Box>,
-  //         <Box key="periodo" display="flex" flexDirection="column">
-  //           <Typography variant="caption" color="textSecondary">
-  //             ANO
-  //           </Typography>
-  //           <Typography variant="caption">
-  //             {handlePediodo(
-  //               oferta.atividadeModulo.periodo as 'P1' | 'P2' | 'P3'
-  //             )}
-  //           </Typography>
-  //         </Box>,
-  //         <Box key="inicio-fim" display="flex" flexDirection="column">
-  //           <Typography variant="caption" color="textSecondary">
-  //             {format(
-  //               add(new Date(oferta.dataInicio), { days: 1 }),
-  //               'dd/MM/yyyy'
-  //             )}
-  //           </Typography>
-  //           <Typography variant="caption">
-  //             {format(add(new Date(oferta.dataFim), { days: 1 }), 'dd/MM/yyyy')}
-  //           </Typography>
-  //         </Box>,
-  //         <Tooltip
-  //           key="ch"
-  //           placement="top"
-  //           title={`${oferta.tipoCargaHoraria
-  //             .map(
-  //               (ch) =>
-  //                 `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
-  //                   ch.cargahoraria
-  //                 } horas`
-  //             )
-  //             .join(', ')}`}
-  //         >
-  //           <Box display="flex" alignItems="center">
-  //             <Typography
-  //               variant="caption"
-  //               noWrap
-  //             >{`${oferta.cargahoraria} h`}</Typography>
-  //             <Box m={1} />
-  //             <InfoIcon color="action" fontSize="small" />
-  //           </Box>
-  //         </Tooltip>,
-  //         <Box key="encerramento" display="flex" flexDirection="column">
-  //           <Typography variant="caption" color="textSecondary">
-  //             {oferta.encerramento ? (
-  //               <Chip
-  //                 label={oferta.encerramento}
-  //                 variant="outlined"
-  //                 color="secondary"
-  //               />
-  //             ) : (
-  //               <Chip label="Aberto" variant="outlined" color="primary" />
-  //             )}
-  //           </Typography>
-  //         </Box>,
-  //         <Box key="lancamentos" display="flex" justifyContent="flex-end">
-  //           <CustonIconButton
-  //             tooltipTitle="Registro de faltas"
-  //             onClick={() => handlerGoToRegistroFaltas(oferta.id)}
-  //           >
-  //             <EventAvailableIcon />
-  //           </CustonIconButton>
-  //           <CustonIconButton
-  //             tooltipTitle="Registro de notas"
-  //             onClick={() => handlerGoToRegistroNotas(oferta.id)}
-  //           >
-  //             <LibraryAddSharpIcon />
-  //           </CustonIconButton>
-  //           <CustonIconButton
-  //             tooltipTitle="Registro de horas complementares"
-  //             onClick={() => handlerGoToRegistroCHComp(oferta.id)}
-  //           >
-  //             <UpdateIcon />
-  //           </CustonIconButton>
-  //         </Box>,
-  //       ]);
-  //   }
-  //   return [];
-  // };
-
   return (
     <>
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
@@ -419,9 +283,9 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             field: 'datas',
             headerName: 'Início/Fim',
             align: 'left',
+            type: 'date',
             headerAlign: 'left',
             width: 120,
-            filterable: false,
             renderCell: renderCellDatas,
             valueGetter: valueGetterDatas,
           },
@@ -457,8 +321,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
         ]}
         rows={handleGenerateRows()}
         rowHeight={80}
-        pageSize={5}
-        rowsPerPageOptions={[5, 10, 25, 50]}
       />
     </>
   );

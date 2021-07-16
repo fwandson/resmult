@@ -13,7 +13,7 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from '@material-ui/data-grid';
-import { CUSTOM_GRID_DEFAULT_LOCALE_TEXT } from 'src/config/CustomDataGridLocaleText';
+import { CUSTOM_GRID_DEFAULT_LOCALE_TEXT } from 'src/config';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface CustomTableProps extends DataGridProps {
+interface CustomTableProps
+  extends Omit<
+    DataGridProps,
+    | 'components'
+    | 'componentsProps'
+    | 'localeText'
+    | 'pageSize'
+    | 'rowsPerPageOptions'
+  > {
   title: string;
 }
 
@@ -67,6 +75,8 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
         },
       }}
       localeText={CUSTOM_GRID_DEFAULT_LOCALE_TEXT}
+      pageSize={5}
+      rowsPerPageOptions={[5, 10, 25, 50]}
     />
   );
 };
