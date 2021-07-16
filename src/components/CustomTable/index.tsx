@@ -50,8 +50,6 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
 
   const classes = useStyles();
 
-  const Toolbar = () => <CustomToolbar title={title} />;
-
   return (
     <DataGrid
       {...rest}
@@ -60,7 +58,12 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
       autoHeight
       disableColumnMenu
       components={{
-        Toolbar,
+        Toolbar: CustomToolbar,
+      }}
+      componentsProps={{
+        toolbar: {
+          title,
+        },
       }}
     />
   );
