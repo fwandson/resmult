@@ -13,6 +13,7 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from '@material-ui/data-grid';
+import { CUSTOM_GRID_DEFAULT_LOCALE_TEXT } from 'src/config/CustomDataGridLocaleText';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -65,6 +66,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
           title,
         },
       }}
+      localeText={CUSTOM_GRID_DEFAULT_LOCALE_TEXT}
     />
   );
 };

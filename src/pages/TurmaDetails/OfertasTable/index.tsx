@@ -26,7 +26,6 @@ interface OfertasTableProps {
   searchValue: string;
 }
 
-// TODO: não usar objetos nos argumentos dessa interface
 interface RownsData {
   id: number;
   oferta: string;
@@ -118,8 +117,11 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   //     });
   // }, [filtros]);
 
-  const valueGetterAction = (params: GridValueGetterParams) =>
-    params.getValue(params.id, 'id');
+  const valueGetterActions = (params: GridValueGetterParams) => params.row.id;
+
+  const valueGetterDatas = (params: GridValueGetterParams) => params.row.inicio;
+
+  const valueGetterTurma = (params: GridValueGetterParams) => params.row.modulo;
 
   const renderCellIdOferta = (params: GridCellParams) => (
     <Typography variant="caption">{params.value}</Typography>
@@ -130,22 +132,25 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     const modulo = params.row.modulo;
 
     return (
-      <Box display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" width="100%">
         <Typography variant="caption" color="textSecondary">
           {modulo}
         </Typography>
-        <Typography variant="caption">{oferta}</Typography>
+        <Typography variant="caption" noWrap>
+          {oferta}
+        </Typography>
       </Box>
     );
   };
 
   const renderCellTurma = (params: GridCellParams) => {
     const modulo = params.row.modulo;
+    const turma = params.row.turma;
 
     return (
       <Box display="flex" flexDirection="column">
         <Typography variant="caption" color="textSecondary">
-          {modulo}
+          {turma}
         </Typography>
         <Typography variant="caption">{modulo}</Typography>
       </Box>
@@ -378,6 +383,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             headerName: '#Id',
             align: 'left',
             headerAlign: 'left',
+            width: 80,
             filterable: false,
             renderCell: renderCellIdOferta,
           },
@@ -395,9 +401,9 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             headerName: 'Turma / Modulo',
             align: 'left',
             headerAlign: 'left',
-            width: 220,
             filterable: false,
             renderCell: renderCellTurma,
+            valueGetter: valueGetterTurma,
             flex: 1,
           },
           {
@@ -405,7 +411,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             headerName: 'Período',
             align: 'left',
             headerAlign: 'left',
-            width: 150,
+            width: 110,
             filterable: true,
             renderCell: renderCellPeriodo,
           },
@@ -415,9 +421,9 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             align: 'left',
             headerAlign: 'left',
             width: 120,
-            sortable: false,
             filterable: false,
             renderCell: renderCellDatas,
+            valueGetter: valueGetterDatas,
           },
           {
             field: 'ch',
@@ -442,15 +448,17 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
             headerName: 'Lançamentos',
             align: 'right',
             headerAlign: 'right',
-            width: 200,
+            width: 160,
             sortable: false,
             filterable: false,
-            valueGetter: valueGetterAction,
+            valueGetter: valueGetterActions,
             renderCell: renderCellActions,
           },
         ]}
         rows={handleGenerateRows()}
         rowHeight={80}
+        pageSize={5}
+        rowsPerPageOptions={[5, 10, 25, 50]}
       />
     </>
   );
