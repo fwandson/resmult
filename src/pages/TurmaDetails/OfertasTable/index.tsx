@@ -26,34 +26,17 @@ interface OfertasTableProps {
   searchValue: string;
 }
 
-interface Oferta {
-  nome: string;
-  modulo: string;
-}
-
-interface Turma {
-  nome: string;
-  modulo: string;
-}
-
-interface Datas {
-  inicio: string;
-  fim: string;
-}
-
-interface CargaHoraria {
-  value: number;
-  tooltipText: string;
-}
-
 // TODO: não usar objetos nos argumentos dessa interface
 interface RownsData {
   id: number;
-  oferta: Oferta;
-  turma: Turma;
+  oferta: string;
+  modulo: string;
+  turma: string;
   periodo: string;
-  datas: Datas;
-  ch: CargaHoraria;
+  inicio: Date;
+  fim: Date;
+  ch: number;
+  chTooltipText: string;
   encerramento: string | undefined;
 }
 
@@ -114,6 +97,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
     [turmaId]
   );
 
+  // TODO: passar isso pelas props
   // const handleChips = useCallback(() => {
   //   const handleValues = {
   //     periodo: (value: string) => handlePediodo(value as 'P1' | 'P2' | 'P3'),
@@ -142,27 +126,28 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   );
 
   const renderCellOferta = (params: GridCellParams) => {
-    const { nome, modulo } = params.value as Oferta;
+    const oferta = params.row.oferta;
+    const modulo = params.row.modulo;
 
     return (
       <Box display="flex" flexDirection="column">
         <Typography variant="caption" color="textSecondary">
           {modulo}
         </Typography>
-        <Typography variant="caption">{nome}</Typography>
+        <Typography variant="caption">{oferta}</Typography>
       </Box>
     );
   };
 
   const renderCellTurma = (params: GridCellParams) => {
-    const { nome, modulo } = params.value as Turma;
+    const modulo = params.row.modulo;
 
     return (
       <Box display="flex" flexDirection="column">
         <Typography variant="caption" color="textSecondary">
           {modulo}
         </Typography>
-        <Typography variant="caption">{nome}</Typography>
+        <Typography variant="caption">{modulo}</Typography>
       </Box>
     );
   };
@@ -177,26 +162,28 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   );
 
   const renderCellDatas = (params: GridCellParams) => {
-    const { inicio, fim } = params.value as Datas;
+    const inicio = params.row.inicio as Date;
+    const fim = params.row.fim as Date;
 
     return (
       <Box display="flex" flexDirection="column">
         <Typography variant="caption" color="textSecondary">
-          {inicio}
+          {format(inicio, 'dd/MM/yyyy')}
         </Typography>
-        <Typography variant="caption">{fim}</Typography>
+        <Typography variant="caption">{format(fim, 'dd/MM/yyyy')}</Typography>
       </Box>
     );
   };
 
   const renderCellCh = (params: GridCellParams) => {
-    const { value, tooltipText } = params.value as CargaHoraria;
+    const ch = params.row.ch;
+    const chTooltipText = params.row.chTooltipText;
 
     return (
-      <Tooltip placement="top" title={tooltipText}>
+      <Tooltip placement="top" title={chTooltipText as string}>
         <Box display="flex" alignItems="center">
           <Typography variant="caption" noWrap>
-            {value} h
+            {ch} h
           </Typography>
           <Box m={1} />
           <InfoIcon color="action" fontSize="small" />
@@ -244,35 +231,23 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   const handleGenerateRows = useCallback((): RownsData[] => {
     return searchOfertas(searchValue).map((oferta) => ({
       id: oferta.id,
-      oferta: {
-        nome: oferta.nome,
-        modulo: oferta.modulo.nome,
-      },
-      turma: {
-        nome: oferta.turma.codigoTurma,
-        modulo: oferta.modulo.nome,
-      },
+      oferta: oferta.nome,
+      modulo: oferta.modulo.nome,
+      turma: oferta.turma.codigoTurma,
       periodo: handlePediodo(
         oferta.atividadeModulo.periodo as 'P1' | 'P2' | 'P3'
       ),
-      datas: {
-        inicio: format(
-          add(new Date(oferta.dataFim), { days: 1 }),
-          'dd/MM/yyyy'
-        ),
-        fim: format(add(new Date(oferta.dataFim), { days: 1 }), 'dd/MM/yyyy'),
-      },
-      ch: {
-        value: Number(oferta.cargahoraria),
-        tooltipText: `${oferta.tipoCargaHoraria
-          .map(
-            (ch) =>
-              `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
-                ch.cargahoraria
-              } horas`
-          )
-          .join(', ')}`,
-      },
+      inicio: add(new Date(oferta.dataInicio), { days: 1 }),
+      fim: add(new Date(oferta.dataFim), { days: 1 }),
+      ch: Number(oferta.cargahoraria),
+      chTooltipText: `${oferta.tipoCargaHoraria
+        .map(
+          (ch) =>
+            `${findTipoCargaHoraria({ id: ch.tipo })?.descricao}: ${
+              ch.cargahoraria
+            } horas`
+        )
+        .join(', ')}`,
       encerramento: oferta.encerramento,
     }));
   }, [ofertas, searchValue, searchOfertas]);
@@ -396,7 +371,7 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
       <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
 
       <CustomTable
-        title="Mais alguma coisa para testar"
+        title="Lista de ofertas"
         columns={[
           {
             field: 'id',
