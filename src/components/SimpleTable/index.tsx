@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Paper,
   Table,
@@ -7,6 +8,7 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
+import { sortBy } from 'lodash';
 import { ChangeEvent, useState } from 'react';
 import SimpleTableHead, {
   CellElement,
@@ -14,8 +16,6 @@ import SimpleTableHead, {
   SimpleTableHeadData,
 } from './SimpleTableHead';
 import SimpleTableToolbar from './SimpleTableToolbar';
-
-import { sortBy } from 'lodash';
 
 export interface SimpleTableProps {
   title: string;

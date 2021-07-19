@@ -68,6 +68,7 @@ const TurmaDetails: React.FC = () => {
         inicio={turma?.dataInicio}
         fim={turma?.dataFim}
       />
+
       <Hidden smDown>
         <OfertasTable
           turmaId={Number(id)}
@@ -75,6 +76,7 @@ const TurmaDetails: React.FC = () => {
           searchValue={searchValueDebaunced}
         />
       </Hidden>
+
       <Hidden mdUp>
         <OfertasTableSmall
           turmaId={Number(id)}
