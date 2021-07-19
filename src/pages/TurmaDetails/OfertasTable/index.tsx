@@ -9,10 +9,6 @@ import { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import CustomTable from 'src/components/CustomTable';
 import CustonIconButton from 'src/components/CustonIconButton';
-import FiltrosOfertasModal, {
-  FiltrosOfertasModalData,
-} from 'src/components/modals/FiltrosOfertasModal';
-import useFiltrosModal from 'src/hooks/useFiltrosModal';
 import useOfertas from 'src/hooks/useOfertas';
 import useTiposCargaHoraria from 'src/hooks/useTiposCargaHoraria';
 import { GetOfertasNames } from 'src/resources/turmas/types';
@@ -42,16 +38,6 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   const { ofertas, turmaId, searchValue } = props;
 
   const history = useHistory();
-
-  const {
-    filtros,
-    setOpen,
-    ...rest
-  } = useFiltrosModal<FiltrosOfertasModalData>({
-    periodo: '',
-    inicio: undefined,
-    fim: undefined,
-  });
 
   const { findTipoCargaHoraria } = useTiposCargaHoraria();
 
@@ -235,93 +221,89 @@ const OfertasTable: React.FC<OfertasTableProps> = (props) => {
   }, [ofertas, searchValue, searchOfertas]);
 
   return (
-    <>
-      <FiltrosOfertasModal setOpen={setOpen} filtros={filtros} {...rest} />
-
-      <CustomTable
-        title="Lista de ofertas"
-        columns={[
-          {
-            field: 'id',
-            headerName: '#Id',
-            align: 'left',
-            headerAlign: 'left',
-            width: 80,
-            filterable: false,
-            renderCell: renderCellIdOferta,
-          },
-          {
-            field: 'oferta',
-            headerName: 'Oferta',
-            align: 'left',
-            headerAlign: 'left',
-            width: 300,
-            renderCell: renderCellOferta,
-            flex: 2,
-          },
-          {
-            field: 'turma',
-            headerName: 'Turma / Modulo',
-            align: 'left',
-            headerAlign: 'left',
-            filterable: false,
-            renderCell: renderCellTurma,
-            valueGetter: valueGetterTurma,
-            flex: 1,
-          },
-          {
-            field: 'periodo',
-            headerName: 'Período',
-            align: 'left',
-            headerAlign: 'left',
-            width: 110,
-            filterable: true,
-            renderCell: renderCellPeriodo,
-          },
-          {
-            field: 'datas',
-            headerName: 'Início/Fim',
-            align: 'center',
-            headerAlign: 'center',
-            type: 'date',
-            width: 150,
-            renderCell: renderCellDatas,
-            valueGetter: valueGetterDatas,
-          },
-          {
-            field: 'ch',
-            headerName: 'CH',
-            type: 'number',
-            align: 'left',
-            headerAlign: 'left',
-            width: 100,
-            filterable: false,
-            renderCell: renderCellCh,
-          },
-          {
-            field: 'encerramento',
-            headerName: 'Encerramento',
-            align: 'center',
-            headerAlign: 'center',
-            width: 180,
-            renderCell: renderCellEncerramento,
-          },
-          {
-            field: 'actions',
-            headerName: 'Lançamentos',
-            align: 'right',
-            headerAlign: 'right',
-            width: 160,
-            sortable: false,
-            filterable: false,
-            valueGetter: valueGetterActions,
-            renderCell: renderCellActions,
-          },
-        ]}
-        rows={handleGenerateRows()}
-        rowHeight={80}
-      />
-    </>
+    <CustomTable
+      title="Lista de ofertas"
+      columns={[
+        {
+          field: 'id',
+          headerName: '#Id',
+          align: 'left',
+          headerAlign: 'left',
+          width: 80,
+          filterable: false,
+          renderCell: renderCellIdOferta,
+        },
+        {
+          field: 'oferta',
+          headerName: 'Oferta',
+          align: 'left',
+          headerAlign: 'left',
+          width: 300,
+          renderCell: renderCellOferta,
+          flex: 2,
+        },
+        {
+          field: 'turma',
+          headerName: 'Turma / Modulo',
+          align: 'left',
+          headerAlign: 'left',
+          filterable: false,
+          renderCell: renderCellTurma,
+          valueGetter: valueGetterTurma,
+          flex: 1,
+        },
+        {
+          field: 'periodo',
+          headerName: 'Período',
+          align: 'left',
+          headerAlign: 'left',
+          width: 110,
+          filterable: true,
+          renderCell: renderCellPeriodo,
+        },
+        {
+          field: 'datas',
+          headerName: 'Início/Fim',
+          align: 'center',
+          headerAlign: 'center',
+          type: 'date',
+          width: 150,
+          renderCell: renderCellDatas,
+          valueGetter: valueGetterDatas,
+        },
+        {
+          field: 'ch',
+          headerName: 'CH',
+          type: 'number',
+          align: 'left',
+          headerAlign: 'left',
+          width: 100,
+          filterable: false,
+          renderCell: renderCellCh,
+        },
+        {
+          field: 'encerramento',
+          headerName: 'Encerramento',
+          align: 'center',
+          headerAlign: 'center',
+          width: 180,
+          renderCell: renderCellEncerramento,
+        },
+        {
+          field: 'actions',
+          headerName: 'Lançamentos',
+          align: 'right',
+          headerAlign: 'right',
+          width: 160,
+          sortable: false,
+          filterable: false,
+          valueGetter: valueGetterActions,
+          renderCell: renderCellActions,
+        },
+      ]}
+      rows={handleGenerateRows()}
+      rowHeight={80}
+    />
   );
 };
 

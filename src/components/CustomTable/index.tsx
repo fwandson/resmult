@@ -8,11 +8,13 @@ import {
 import {
   DataGrid,
   DataGridProps,
+  GridPageChangeParams,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from '@material-ui/data-grid';
+import { useState } from 'react';
 import { CUSTOM_GRID_DEFAULT_LOCALE_TEXT } from 'src/config';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,6 +64,12 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
 
   const classes = useStyles();
 
+  const [pageSize, setPageSize] = useState(5);
+
+  const handlePageSizeChange = (params: GridPageChangeParams) => {
+    setPageSize(params.pageSize);
+  };
+
   return (
     <DataGrid
       {...rest}
@@ -78,7 +86,8 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
         },
       }}
       localeText={CUSTOM_GRID_DEFAULT_LOCALE_TEXT}
-      pageSize={5}
+      pageSize={pageSize}
+      onPageSizeChange={handlePageSizeChange}
       rowsPerPageOptions={[5, 10, 25, 50]}
     />
   );
