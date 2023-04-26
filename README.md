@@ -40,7 +40,7 @@ Entrar na pasta.
 
 Instala as dependências do projeto.
 
-### `cp .exemple.env .env`
+### `cp .env.example .env`
 
 Cria o arquivo de variáveis para o ambiente de `produção`. Configure tambem as variáveis para os ambientes de `desenvolvimento` e `testes` em `.env.development` e `.env.test` respectivamente.
 
