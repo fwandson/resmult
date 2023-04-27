@@ -8,7 +8,6 @@ import {
 import {
   DataGrid,
   DataGridProps,
-  GridPageChangeParams,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
@@ -66,8 +65,8 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
 
   const [pageSize, setPageSize] = useState(5);
 
-  const handlePageSizeChange = (params: GridPageChangeParams) => {
-    setPageSize(params.pageSize);
+  const handlePageSizeChange = (pageSize: number) => {
+    setPageSize(pageSize);
   };
 
   return (
