@@ -15,6 +15,7 @@
     "add": "^2.0.6",
     "axios": "^0.21.1",
     "babel-loader": "8.1.0",
+    "caniuse-lite": "^1.0.30001481",
     "date-fns": "^2.21.3",
     "history": "^5.0.0",
     "install": "^0.13.0",
