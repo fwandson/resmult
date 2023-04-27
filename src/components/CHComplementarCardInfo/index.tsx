@@ -45,6 +45,7 @@ export interface CHComplementarCardInfoFormData {
   descricao: string;
 }
 
+// TODO: ajustar esses tratamentos de erros
 const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
   props
 ) => {
@@ -116,7 +117,8 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
 
         setAsEditing(false);
       } catch (error) {
-        toast.error(error.response.data.mensagem);
+        // toast.error(error.response.data.mensagem);
+        toast.error('Algo inesperado aconteceu');
       } finally {
         hideLoading();
       }
@@ -148,7 +150,8 @@ const CHComplementarCardInfo: React.FC<CHComplementarCardInfoProps> = (
 
       toast.success(`CH Complementar #${data.id} removida com sucesso`);
     } catch (error) {
-      toast.error(error.response.data.mensagem);
+      // toast.error(error.response.data.mensagem);
+      toast.error('Algo inesperado aconteceu');
     } finally {
       hideLoading();
       setAsEditing(false);
