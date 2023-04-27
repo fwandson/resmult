@@ -5,11 +5,11 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TablePagination,
+  // TablePagination, // FIXME: Ver se isso é realmente necessário
   TableRow,
 } from '@material-ui/core';
 import { sortBy } from 'lodash';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import SimpleTableHead, {
   CellElement,
   Order,
@@ -41,22 +41,27 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
     initialOrderBy,
   } = props;
 
+  // Estou enviando momentaneamente para pode atualizar o serviço.
+  // FIXME: Resolver isso depois.
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState(0);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [order, setOrder] = useState<Order>('asc');
 
   const [orderBy, setOrderBy] = useState(initialOrderBy);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+  // const handleChangePage = (event: unknown, newPage: number) => {
+  //   setPage(newPage);
+  // };
 
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  // const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setRowsPerPage(parseInt(event.target.value, 10));
+  //   setPage(0);
+  // };
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -108,7 +113,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           )}
         </TableBody>
       </Table>
-      {!hideTablePagination && (
+      {/* {!hideTablePagination && (
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -122,7 +127,7 @@ const SimpleTable: React.FC<SimpleTableProps> = (props) => {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-      )}
+      )} */}
     </TableContainer>
   );
 };
