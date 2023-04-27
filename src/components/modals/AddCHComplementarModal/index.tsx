@@ -108,7 +108,8 @@ const AddCHComplementarModal: React.FC<AddCHComplementarModalProps> = (
           `CH Complementar #${response.data.cargaHorariaComplementar.id} adicionada com sucesso`
         );
       } catch (error) {
-        toast.error(error.response.data.mensagem);
+        // toast.error(error.response.data.mensagem);
+        toast.error('Algo de inesperado aconteceu');
       } finally {
         hideLoading();
         setOpen(false);

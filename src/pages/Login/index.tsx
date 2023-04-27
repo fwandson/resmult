@@ -60,11 +60,12 @@ const Login: React.FC = () => {
 
       history.push(NAMES.TURMAS);
     } catch (error) {
-      if (error.response.status === 401) {
-        toast.error('CPF ou Senha inválidos');
-      } else {
-        toast.error(error.response.data.mensagem);
-      }
+      // if (error.response.status === 401) {
+      //   toast.error('CPF ou Senha inválidos');
+      // } else {
+      //   toast.error(error.response.data.mensagem);
+      // }
+      toast.error('Algo de inesperado aconteceu');
     } finally {
       hideLoading();
     }

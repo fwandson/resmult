@@ -57,7 +57,8 @@ const RecuperarSenha: React.FC = () => {
         toast.error(`Mensagem: ${data.messagem}`);
       }
     } catch (error) {
-      toast.error(error.response.data.mensagem);
+      // toast.error(error.response.data.mensagem);
+      toast.error('Algo de inesperado aconteceu');
     } finally {
       hideLoading();
     }
