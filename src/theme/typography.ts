@@ -1,6 +1,7 @@
 import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 
 const typografy: TypographyOptions = {
+  fontSize: 12,
   h1: {
     fontWeight: 400,
     fontSize: 34,

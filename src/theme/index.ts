@@ -1,10 +1,11 @@
-import { createMuiTheme, colors } from '@material-ui/core';
+import { createTheme, colors } from '@material-ui/core';
 import shadows from './shadows';
 import typography from './typography';
 import spacing from './spacing';
 import { ptBR } from '@material-ui/core/locale';
 
-const theme = createMuiTheme(
+// TODO: criar depois a opção para colocar um thema darck
+const theme = createTheme(
   {
     palette: {
       common: {
