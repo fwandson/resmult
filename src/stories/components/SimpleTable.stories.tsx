@@ -10,11 +10,11 @@ export default {
     },
     headCells: {
       description: 'Células do cabeçario',
-      type: 'object',
+      // type: 'object',
     },
     rows: {
       description: 'Linhas',
-      type: 'array',
+      // type: 'array',
     },
   },
 } as Meta;
